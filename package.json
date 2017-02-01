@@ -1,0 +1,40 @@
+{
+  "name": "bartback",
+  "version": "1.0.0",
+  "description": "Bart app to find seats and report analytics",
+  "main": "app.js",
+  "scripts": {
+    "test": "NODE_ENV=test mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datadaveshin/bartback.git"
+  },
+  "keywords": [
+    "bart",
+    "transportation",
+    "app"
+  ],
+  "author": "David Shin",
+  "license": "All Rights Reserved",
+  "bugs": {
+    "url": "https://github.com/datadaveshin/bartback/issues"
+  },
+  "homepage": "https://github.com/datadaveshin/bartback#readme",
+  "dependencies": {
+    "bcrypt-as-promised": "^1.1.0",
+    "body-parser": "^1.16.0",
+    "chai": "^3.5.0",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.5",
+    "express": "^4.14.1",
+    "humps": "^2.0.0",
+    "knex": "^0.12.6",
+    "knex-csv-seeder": "^0.4.1",
+    "lodash": "^4.17.4",
+    "morgan": "^1.7.0",
+    "path": "^0.12.7",
+    "pg": "^6.1.2",
+    "supertest": "^3.0.0"
+  }
+}
