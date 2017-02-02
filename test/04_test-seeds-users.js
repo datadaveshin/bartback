@@ -1,0 +1,108 @@
+"use strict";
+
+// Set environment
+process.env.NODE_ENV = 'test';
+
+// Require
+const {suite, test} = require('mocha');
+const assert = require('chai').assert;
+const expect = require('chai').expect;
+const knex = require('../knex')
+const supertest = require('supertest');
+const app = require('../app');
+
+// Test seeds
+suite('Test Seeds - Users', () => {
+    before((done) => {
+        knex.migrate.latest()
+            .then(() => {
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    });
+
+    beforeEach((done) => {
+        knex.seed.run()
+            .then(() => {
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    });
+
+    test('users rows', (done) => {
+        knex('users').orderBy('id', 'ASC')
+        .then((actual) => {
+            const expected = [{
+              id: 1,
+              user_name: 'Dave11',
+              email: 'dave11@fakeyahoo.com',
+              hashed_password: '$2a$12$U5M88rMbp3gDmbO4YSdVIeSsaD/.USl1gXORZyQqixkyOfLiXPblK',
+              home_station: 'plza',
+              away_station: 'mont',
+              created_at: new Date('2016-12-08 12:10:00 UTC'),
+              updated_at: new Date('2016-12-08 12:10:00 UTC')
+            }, {
+              id: 2,
+              user_name: 'Tonka22',
+              email: 'tonka22@fakegmail.com',
+              hashed_password: '$2a$12$96rEOq0r5ExtJmkOCg94Z.CS3jbq91DvLBd4yti.a9blkbmDw.1iO',
+              home_station: '19th',
+              away_station: '16th',
+              created_at: new Date('2016-12-08 12:15:00 UTC'),
+              updated_at: new Date('2016-12-08 12:15:00 UTC')
+            }, {
+              id: 3,
+              user_name: 'Patty33',
+              email: 'patty33@fakeaol.com',
+              hashed_password: '$2a$12$X27Hv3Yshb6J9AqKUa1lDeVmqV0IU/MW4XtZkMuHZbqWiOTwwGx5u',
+              home_station: 'colm',
+              away_station: 'civc',
+              created_at: new Date('2016-12-08 12:20:00 UTC'),
+              updated_at: new Date('2016-12-08 12:20:00 UTC')
+            }, {
+              id: 4,
+              user_name: 'Wilson44',
+              email: 'wilson44@fakeyahoo.com',
+              hashed_password: '$2a$12$W3YqFsspNIbUbGdZKz3YgORfTagzsUtwFQ6qGMKwX4zeRq03JLDDC',
+              home_station: 'plza',
+              away_station: 'mont',
+              created_at: new Date('2016-12-08 12:25:00 UTC'),
+              updated_at: new Date('2016-12-08 12:25:00 UTC')
+            }, {
+              id: 5,
+              user_name: 'Santa55',
+              email: 'santa55@fakegmail.com',
+              hashed_password: '$2a$12$8nRosrnVKYtKRVXzuiw0SuxszzFST3rb9L.Zqsq628Pn67Hcfw/tG',
+              home_station: 'dbrk',
+              away_station: 'powl',
+              created_at: new Date('2016-12-08 12:30:00 UTC'),
+              updated_at: new Date('2016-12-08 12:30:00 UTC')
+            }, {
+              id: 6,
+              user_name: 'Mattie66',
+              email: 'mattie66@fakeaol.com',
+              hashed_password: '$2a$12$uP0WqNHWVSGSKTRUsuJSiee8ug4CRvDAk3OGWa6wEMe6CHbs9UmvK',
+              home_station: 'ssan',
+              away_station: 'powl',
+              created_at: new Date('2016-12-08 12:35:30 UTC'),
+              updated_at: new Date('2016-12-08 12:35:30 UTC')
+            }];
+
+            for (let i = 0; i < expected.length; i++) {
+                assert.deepEqual(
+                    actual[i],
+                    expected[i],
+                    `Row id=${i + 1} not the same`
+                );
+            }
+            done();
+        })
+        .catch((err) => {
+            done(err);
+        });
+    });
+});
