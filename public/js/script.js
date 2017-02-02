@@ -126,9 +126,14 @@ function genSelector(selectorName, attachmentPoint) {
 /**
 Setup Buttons
 */
-function addButton(aButtonID, buttonText, attachmentPoint) {
+function addButton(aButtonID, buttonText, attachmentPoint, columns = 3) {
+    if (columns === 3) {
+        var numColumns = "waves-effect btn col s4"
+    } else if (columns === 2) {
+        var numColumns = "waves-effect btn col s6"
+    }
     let newButton = $('<button>')
-    $(newButton).addClass("waves-effect btn col s4")
+    $(newButton).addClass(numColumns)
     $(newButton).attr("id", aButtonID)
     $(newButton).text(buttonText)
 
@@ -139,9 +144,11 @@ function addButton(aButtonID, buttonText, attachmentPoint) {
     console.log("$(sectionPart)", $(sectionPart));
 }
 
-addButton("realTime", "All Trains", "#point1");
-addButton("directTrains", "Direct", "#point1");
-addButton("getSeat", "Get Seat", "#point1");
+addButton("login", "Log In", "#point0", 2);
+addButton("register", "Register", "#point0", 2);
+addButton("realTime", "All Trains", "#point1", 2);
+addButton("directTrains", "Direct", "#point1", 2);
+// addButton("getSeat", "Get Seat", "#point1", 2);
 // addButton("aButtonID", "buttonText", "attachmentPoint");
 
 function test1() {
@@ -173,6 +180,12 @@ Application Loop
     // console.log("$(departure):", $(departure))
 
     // Set up
+
+    $('#login').click(function() {
+        // $("#div1").load("../users/index.ejs");
+        window.location.href = "http://localhost:3031/users/login"
+    });
+
     $('#realTime').click(function() {
         let departure = $('#Departure');
         let arrival = $('#Arrival')

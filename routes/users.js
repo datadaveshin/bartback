@@ -3,15 +3,26 @@
 // Require
 const express = require('express');
 const bcrypt = require('bcrypt-as-promised');
-const knex = require('../db/knex');
+const knex = require('../knex');
 const { camelizeKeys, decamelizeKeys } = require('humps');
 
 // Define router
 const router = express.Router();
 
+// show sign in form for existing user
+router.get('/login', function(req, res) {
+  var errorMsg = '';
+
+  if (req.query.login === 'invalid') {
+    errorMsg = 'Invalid attempt. Please check your credentials and try again.';
+  }
+
+  res.render('login', {msg: errorMsg});
+});
+
 // GET for new user Sign Up Page
 router.get('/new', (req, res) => {
-    res.render('signup');
+    res.render('register');
 });
 
 // POST for new user Sign Up Page
@@ -22,6 +33,8 @@ router.post('/', (req, res) => {
         let newUser = {
             userName: req.body.userName,
             email: req.body.email,
+            homeStation: req.body.homeStation,
+            awayStation: req.body.awayStation,
             hashedPassword: hashed
         }
     });
@@ -34,8 +47,10 @@ router.post('/', (req, res) => {
         delete user.hashedPassword;
 
         res.render('confirmation', {
-            user: user.userName,
+            userName: user.userName,
             email: user.userName,
+            homeStation: user.homeStation,
+            awayStation: user.awayStation,
             passwordStatus: 'saved',
             status: 'added'
         })
