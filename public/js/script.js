@@ -180,11 +180,14 @@ Application Loop
     // console.log("$(departure):", $(departure))
 
     // Set up
-
     $('#login').click(function() {
-        // $("#div1").load("../users/index.ejs");
-        window.location.href = "http://localhost:3031/users/login"
+        window.location.href = "http://localhost:3031/auth/login"
     });
+
+    $('#register').click(function() {
+        window.location.href = "http://localhost:3031/auth/new"
+    });
+
 
     $('#realTime').click(function() {
         let departure = $('#Departure');
