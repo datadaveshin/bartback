@@ -14,6 +14,7 @@ const PORT = '3031';
 // Require for routes
 const index = require('./routes/index');
 const auth = require('./routes/auth');
+const login = require('./routes/login');
 
 // Start app instance
 const app = express();
@@ -35,7 +36,6 @@ app.use(session(
     }
 ));
 
-
 // Start server
 app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
@@ -44,13 +44,14 @@ app.listen(PORT, () => {
 // Set views
 app.set('view engine', 'ejs')
 app.set('views', [
-    // path.join(__dirname, 'views/site/'),
     path.join(__dirname, 'views/')
 ]);
 
 // Routes
 app.use('/', index);
 app.use('/auth', auth);
+app.use('/login', login);
+
 
 // 404 messages to error handler
 app.use(function(req, res, next) {
