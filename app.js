@@ -27,14 +27,18 @@ app.use(logger('dev'));
 // app.use(cookieParser());
 
 // Set up session
+// app.set('trust proxy', 1) // trust first proxy
+// app.use(session(
+//     {
+//     secret: "OMD has a secret",
+//     saveUnitialized: true,
+//     resave: true,
+//     }
+// ));
+
+// Use the session middleware
 app.set('trust proxy', 1) // trust first proxy
-app.use(session(
-    {
-    secret: "OMD has a secret",
-    saveUnitialized: true,
-    resave: true,
-    }
-));
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
 
 // Start server
 app.listen(PORT, () => {
