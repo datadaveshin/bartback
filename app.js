@@ -3,8 +3,10 @@
 // Require
 const express = require('express');
 const path = require('path');
-const morgan = require('morgan');
+const logger = require('morgan');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 // Variables
 const PORT = '3031';
@@ -20,6 +22,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(logger('dev'));
+// app.use(cookieParser());
+
+// Set up session
+app.set('trust proxy', 1) // trust first proxy
+app.use(session(
+    {
+    secret: "OMD has a secret",
+    saveUnitialized: true,
+    resave: true,
+    }
+));
+
 
 // Start server
 app.listen(PORT, () => {

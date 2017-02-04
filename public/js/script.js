@@ -185,7 +185,7 @@ Application Loop
     });
 
     $('#register').click(function() {
-        window.location.href = "http://localhost:3031/auth/new"
+        window.location.href = "http://localhost:3031/auth/register"
     });
 
 

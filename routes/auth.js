@@ -9,56 +9,54 @@ const { camelizeKeys, decamelizeKeys } = require('humps');
 // Define router
 const router = express.Router();
 
-// show sign in form for existing user
-router.get('/login', function(req, res) {
-  var errorMsg = '';
 
-  if (req.query.login === 'invalid') {
-    errorMsg = 'Invalid attempt. Please check your credentials and try again.';
-  }
-
-  res.render('login', {msg: errorMsg});
-});
-
-// GET for new user Sign Up Page
-router.get('/new', (req, res) => {
+// Show registration page @ localhost:3031/auth/register
+router.get('/register', (req, res) => {
     res.render('register');
 });
 
-// POST for new user Sign Up Page
+// Receive information from Registration Page
 router.post('/', (req, res) => {
-    const password = req.body.pass;
+    // console.log("\n\n\n\n\n\n######## IN HERE ###############")
+    const password = req.body.password1;
+
+    // console.log("######## IN HERE ###############\n\n\n\n\n\n")
     bcrypt.hash(password, 12)
     .then((hashed) => {
+
         let newUser = {
             userName: req.body.userName,
             email: req.body.email,
             homeStation: req.body.homeStation,
             awayStation: req.body.awayStation,
             hashedPassword: hashed
-        }
-    });
-    return knex('users')
-    .insert(decamelizeKeys(newUser), ['user', 'email', 'bcryptPass'])
-    .then((row) => {
-        const user = camelizeKeys(row[0]);
-        delete user.createdAt;
-        delete user.updatedAt;
-        delete user.hashedPassword;
+        };
+        console.log("\n\n\n\n\n\n######## IN HERE ###############")
+        console.log("newUser", newUser)
+        console.log("######## IN HERE ###############\n\n\n\n\n\n")
 
-        res.render('confirmation', {
-            userName: user.userName,
-            email: user.userName,
-            homeStation: user.homeStation,
-            awayStation: user.awayStation,
-            passwordStatus: 'saved',
-            status: 'added'
-        })
+        return knex('users')
+        .insert(decamelizeKeys(newUser), ['id','user_name', 'email', 'home_station', 'away_station'])
+        res.redirect('/auth/login')
+    })
+    .then ((row) => {
+        // const user = camelizeKeys(row[0]);
+        // console.log("\n\n\n######## res.cookie.user ####", res.cookie.user)
+        // console.log("\n\n\n######## res.cookie.user ####", res.cookie)
+        // res.cookie.user = user.id
+        // console.log("\n\n\n######## res.cookie.user ####", res.cookie.user)
+
     })
     .catch(err => {
         console.log("NEW USER POST ERROR:", err);
         res.status(400).send(err);
     });
 });
+
+// Show Login form @ localhost:3031/auth/login
+router.get('/login', function(req, res) {
+    res.render('login');
+});
+
 
 module.exports = router;

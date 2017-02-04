@@ -29,6 +29,7 @@
     "cookie-parser": "^1.4.3",
     "ejs": "^2.5.5",
     "express": "^4.14.1",
+    "express-session": "^1.15.0",
     "humps": "^2.0.0",
     "knex": "^0.12.6",
     "knex-csv-seeder": "^0.4.1",
