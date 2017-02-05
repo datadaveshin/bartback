@@ -38,7 +38,11 @@ app.use(logger('dev'));
 
 // Use the session middleware
 app.set('trust proxy', 1) // trust first proxy
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 60000 }}))
 
 // Start server
 app.listen(PORT, () => {
