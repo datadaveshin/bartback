@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
             .insert(decamelizeKeys(newUser), ['id','user_name', 'email', 'home_station', 'away_station'])
     })
     .then(()=>{
-        res.redirect('/login')
+        res.redirect('/auth/login')
     })
     .catch(err => {
         res.status(400).send(err);

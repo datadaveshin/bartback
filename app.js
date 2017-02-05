@@ -15,7 +15,8 @@ const PORT = '3031';
 // Require for routes
 const index = require('./routes/index');
 const register = require('./routes/register');
-const login = require('./routes/login');
+// const login = require('./routes/login');
+const auth = require('./routes/auth');
 const secure = require('./routes/secure');
 
 // Start app instance
@@ -50,7 +51,8 @@ app.set('views', [
 // Routes
 app.use('/', index);
 app.use('/register', register);
-app.use('/login', login);
+// app.use('/login', login);
+app.use('/auth', auth);
 app.use('/secure', secure);
 
 

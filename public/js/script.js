@@ -181,7 +181,7 @@ Application Loop
 
     // Set up
     $('#login').click(function() {
-        window.location.href = "http://localhost:3031/login"
+        window.location.href = "http://localhost:3031/auth/login"
     });
 
     $('#register').click(function() {

@@ -10,12 +10,12 @@ const { camelizeKeys, decamelizeKeys } = require('humps');
 const router = express.Router();
 
 // Show Login Form @ localhost:3031/login
-router.get('/', function(req, res) {
+router.get('/login', function(req, res) {
     res.render('login');
 });
 
 // Recieve from Login Form
-router.post('/', (req, res, next) => {
+router.post('/login', (req, res, next) => {
 
   let senderEmail = req.body.email;
   let senderPassword = req.body.password;
@@ -26,7 +26,7 @@ router.post('/', (req, res, next) => {
     .first()
     .then((row) => {
         if (!row) {
-            res.redirect('/login');
+            res.redirect('/auth/login');
         }
         user = camelizeKeys(row);
         return bcrypt.compare(senderPassword, user.hashedPassword);
@@ -40,7 +40,7 @@ router.post('/', (req, res, next) => {
         res.redirect('/');
     })
     .catch(err => {
-        res.redirect('/login');
+        res.redirect('/auth/login');
     });
 });
 
