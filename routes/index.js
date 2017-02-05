@@ -14,7 +14,8 @@ router.get('/', (req, res) => {
    let sess = req.session;
    if (sess.user) {
        let message = JSON.stringify(sess.user);
-       res.send("I am Babu and " + message);
+    //    res.send("I am Babu and " + message);
+       res.redirect('/secure');
    } else {
        res.render('index');
    };

@@ -29,21 +29,25 @@ router.post('/', (req, res, next) => {
             res.redirect('/login');
         }
         user = camelizeKeys(row);
-        console.log("&& USER:", user)
         return bcrypt.compare(senderPassword, user.hashedPassword);
     })
     .then(() => {
-        // Use the session middleware
-        // router.set('trust proxy', 1) // trust first proxy
-        // router.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000, user: user }}))
-        req.session.user = user;
-        // res.send('Logged in as' + req.session.cookie.user);
-        // res.send('Logged in');
+        req.session.user = {
+            id: user.id,
+            userName: user.userName,
+            email: user.email
+        };
         res.redirect('/');
     })
     .catch(err => {
         res.redirect('/login');
     });
 });
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/');
+    })
+})
 
 module.exports = router;

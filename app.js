@@ -5,6 +5,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const ejs = require('ejs');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
@@ -13,8 +14,9 @@ const PORT = '3031';
 
 // Require for routes
 const index = require('./routes/index');
-const auth = require('./routes/auth');
+const register = require('./routes/register');
 const login = require('./routes/login');
+const secure = require('./routes/secure');
 
 // Start app instance
 const app = express();
@@ -27,16 +29,6 @@ app.use(logger('dev'));
 // app.use(cookieParser());
 
 // Set up session
-// app.set('trust proxy', 1) // trust first proxy
-// app.use(session(
-//     {
-//     secret: "OMD has a secret",
-//     saveUnitialized: true,
-//     resave: true,
-//     }
-// ));
-
-// Use the session middleware
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
     secret: 'keyboard cat',
@@ -50,15 +42,16 @@ app.listen(PORT, () => {
 })
 
 // Set views
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
 app.set('views', [
     path.join(__dirname, 'views/')
 ]);
 
 // Routes
 app.use('/', index);
-app.use('/auth', auth);
+app.use('/register', register);
 app.use('/login', login);
+app.use('/secure', secure);
 
 
 // 404 messages to error handler

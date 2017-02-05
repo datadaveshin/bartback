@@ -10,7 +10,7 @@ const { camelizeKeys, decamelizeKeys } = require('humps');
 const router = express.Router();
 
 // Registration Page Show @ localhost:3031/auth/register
-router.get('/register', (req, res) => {
+router.get('/', (req, res) => {
     res.render('register');
 });
 
