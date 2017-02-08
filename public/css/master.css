@@ -12,5 +12,40 @@ main {
     flex: 1 0 auto;
 }
 
+.destination {
+  padding: 0 12;
+}
+
+.bartTime {
+  border-radius: 50%;
+  background-color: blue;
+  display: inline-block;
+  /*width: 100px;*/
+  height: 100px;
+  font-size: 50px;
+}
+
+
+.forSquare {
+  width: 20px;
+  height: 20px;
+  /*background-color: blue;*/
+  border-radius: 50%;
+  border: thin solid black;
+  margin: 0 auto;
+  float: left;
+}
+
+.forTime {
+  padding-left: 5px;
+  float: left;
+  margin-bottom: 20px;
+}
+
+
+.report {
+  margin: initial;
+}
+
 /*Copyright David Shin 2017
 All Rights Reserved*/

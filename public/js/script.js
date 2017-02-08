@@ -281,40 +281,84 @@ Application Loop
         */
         function output1() {
             $$each(departureObjArr, function(departureObj) {
+                let minsArr = [];
                 var dest = departureObj.destination['#text']
                 console.log("\n#### DESTINATION!!!!!!", dest, "\n")
                 console.log("departureObj", departureObj)
                 console.log(departureObj.destination['#text'])
 
                 var est = departureObj.estimate;
-                console.log("est:", est)
+                console.log("THE est:", est)
+
                 if (Array.isArray(est)) {
-                    var mins = departureObj.estimate[0].minutes['#text']
-                    console.log(departureObj.estimate[0].minutes['#text'])
+                    var times = est.map(function(item){return item.minutes['#text']})
                     var routeColor = departureObj.estimate[0].color['#text']
                 } else if (typeof est === 'object') {
                     console.log("typeof est:", est)
-                    var mins = departureObj.estimate.minutes['#text']
-                    console.log(departureObj.estimate.minutes['#text'])
+                    var times = [departureObj.estimate.minutes['#text']]
+                    // var mins = departureObj.estimate.minutes['#text']
+                    // console.log(departureObj.estimate.minutes['#text'])
                     var routeColor = departureObj.estimate.color['#text']
                 }
                 // var body2 = $('body')
                 var point3 = $('#point3')
                 var div2 = $('<div id="results" class="container">')
-                var destinationResults = $('<h5>')
+                var destinationResultsDiv = $('<div class="destination">')
+                var destinationResults = $("<h5>")
                 var timeResults = $('<h6>')
+
+                var div2container = $('<div id="results" class="container">')
+                var div2row = $('<div class="row report">')
+
                 console.log("$(timeResults)", $(timeResults))
                 $(destinationResults).text(dest + " Train")
-                $(destinationResults).css("backgroundColor", routeColor)
 
-                if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
-                    $(destinationResults).css("color", "white");
-                }
+                // Toggle to bring back bart colors to destination
+                // $(destinationResults).css("backgroundColor", routeColor)
+                //
+                // if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
+                //     $(destinationResults).css("color", "white");
+                // }
 
-                $(timeResults).text(mins + " minutes");
-                $(point3).append(div2);
-                $(div2).append(destinationResults);
-                $(div2).append(timeResults);
+                $(point3).append(div2container);
+                $(div2container).append(destinationResultsDiv);
+                $(destinationResultsDiv).append(destinationResults);
+                $(div2container).append(div2row);
+                console.log("*********** times *********");
+                console.log(times);
+                console.log("div2container", div2container);
+                console.log("div2row", div2row);
+                times.forEach(function(time){
+                    var div2col = $('<div class="col l2 m3 s4">')
+                    var div2colA = $('<div class="forSquare">')
+                    var div2colB = $('<div class="forTime">')
+                    let processedTime;
+                    if (time === "Leaving") {
+                        processedTime = time;
+                    } else if (time === "1") {
+                        processedTime = time + " min";
+                    } else {
+                        processedTime = time + " mins";
+                    }
+                    div2colB.text(processedTime);
+
+                    // Toggle for routeColor for squares
+                    $(div2colA).css("backgroundColor", routeColor);
+
+                    // Toggle for random "busy" color for square
+                    let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                    if (val === 1) {
+                        $(div2colA).css("backgroundColor", 'red');
+                    } else if (val === 2) {
+                        $(div2colA).css("backgroundColor", 'yellow');
+                    } else {
+                        $(div2colA).css("backgroundColor", 'green');
+                    }
+
+                    $(div2row).append(div2col);
+                    $(div2col).append(div2colA);
+                    $(div2col).append(div2colB);
+                })
             })
         }
 
@@ -364,7 +408,13 @@ Application Loop
                         $(destinationResults).css("color", "white");
                     }
 
-                    $(timeResults).text(mins + " minutes");
+                    if (mins === "Leaving") {
+                        $(timeResults).text(mins);
+                    } else if (mins === "1") {
+                        $(timeResults).text(mins + " min");
+                    } else {
+                        $(timeResults).text(mins + " mins");
+                    }
                     $(point3).append(div2);
                     $(div2).append(destinationResults);
                     $(div2).append(timeResults);
@@ -393,7 +443,13 @@ Application Loop
                         $(destinationResults).css("color", "white");
                     }
 
-                    $(timeResults).text(mins + " minutes");
+                    if (mins === "Leaving") {
+                        $(timeResults).text(mins);
+                    } else if (mins === "1") {
+                        $(timeResults).text(mins + " min");
+                    } else {
+                        $(timeResults).text(mins + " mins");
+                    }
                     $(point3).append(div2);
                     $(div2).append(destinationResults);
                     $(div2).append(timeResults);
