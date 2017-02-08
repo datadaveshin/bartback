@@ -240,7 +240,7 @@ Application Loop
         //     success: depRealSuccess
         // };
         let departureObj = {
-            url: `http://localhost:3031/getinfo/${search}`,
+            url: `http://localhost:3031/getinfo/allroutes/${search}`,
             method: "GET",
             success: depRealSuccess
         };
