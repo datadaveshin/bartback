@@ -311,7 +311,7 @@ Application Loop
                 var div2row = $('<div class="row report">')
 
                 console.log("$(timeResults)", $(timeResults))
-                $(destinationResults).text(dest + " Train")
+                $(destinationResults).text(dest);
 
                 // Toggle to bring back bart colors to destination
                 // $(destinationResults).css("backgroundColor", routeColor)
