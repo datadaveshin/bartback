@@ -3,8 +3,8 @@
 // Require
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const express = require('express');
+const session = require('express-session');
 
 // Start instance
 const router = express.Router();
@@ -14,7 +14,6 @@ router.get('/', (req, res) => {
    let sess = req.session;
    if (sess.user) {
        let message = JSON.stringify(sess.user);
-    //    res.send("I am Babu and " + message);
        res.redirect('/secure');
    } else {
        res.render('index');

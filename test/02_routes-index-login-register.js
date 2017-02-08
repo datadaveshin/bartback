@@ -45,10 +45,10 @@ describe("Test GET route to index", () => {
 });
 
 // Test GET to simply return test from a test route
-xdescribe("Test GET route to about", () => {
+describe("Test GET route to about", () => {
     it("should return 200", done => {
         supertest(app)
-        .get('/about')
+        .get('/auth/login')
         .expect(200)
         .end((err, res) => {
             if (err) {return done(err)}
@@ -58,7 +58,7 @@ xdescribe("Test GET route to about", () => {
 
     it("should return html", done => {
         supertest(app)
-        .get('/about')
+        .get('/auth/login')
         .expect('Content-type', /html/)
         .end((err, res) => {
             if (err) {return done(err)}
@@ -68,7 +68,7 @@ xdescribe("Test GET route to about", () => {
 
     it("should deep equal json contents", done => {
         supertest(app)
-        .get('/about')
+        .get('/auth/login')
         .end((err, res) => {
             if (err) {return done(err)}
             expect(res.body).to.be.deep.equal({})
@@ -79,10 +79,10 @@ xdescribe("Test GET route to about", () => {
 
 
 // Test GET to simply return test from a test route
-xdescribe("Test GET route to contact", () => {
+describe("Test GET route to contact", () => {
     it("should return 200", done => {
         supertest(app)
-        .get('/contact')
+        .get('/register')
         .expect(200)
         .end((err, res) => {
             if (err) {return done(err)}
@@ -92,7 +92,7 @@ xdescribe("Test GET route to contact", () => {
 
     it("should return html", done => {
         supertest(app)
-        .get('/contact')
+        .get('/register')
         .expect('Content-type', /html/)
         .end((err, res) => {
             if (err) {return done(err)}
@@ -102,7 +102,7 @@ xdescribe("Test GET route to contact", () => {
 
     it("should deep equal json contents", done => {
         supertest(app)
-        .get('/contact')
+        .get('/register')
         .end((err, res) => {
             if (err) {return done(err)}
             expect(res.body).to.be.deep.equal({})
