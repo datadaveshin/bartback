@@ -231,14 +231,8 @@ Application Loop
 
     // console.log("$$ THE returnCondition $$", returnCondition);
 
-    function sendDepRealReq(search) {
     // Request Departure Object for AJAX
-        const getin = 'MW9S-E7SL-26DU-VV8V'
-        // let departureObj = {
-        //     url: `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${search}&key=${getin}`,
-        //     method: "GET",
-        //     success: depRealSuccess
-        // };
+    function sendDepRealReq(search) {
         let departureObj = {
             url: `http://localhost:3031/getinfo/allroutes/${search}`,
             method: "GET",
