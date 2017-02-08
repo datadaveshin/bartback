@@ -234,8 +234,13 @@ Application Loop
     function sendDepRealReq(search) {
     // Request Departure Object for AJAX
         const getin = 'MW9S-E7SL-26DU-VV8V'
+        // let departureObj = {
+        //     url: `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${search}&key=${getin}`,
+        //     method: "GET",
+        //     success: depRealSuccess
+        // };
         let departureObj = {
-            url: `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${search}&key=${getin}`,
+            url: `http://localhost:3031/getinfo/${search}`,
             method: "GET",
             success: depRealSuccess
         };
@@ -245,12 +250,10 @@ Application Loop
 
     function depRealSuccess(data) {
         console.log("data:", data)
-
         $( "div" ).remove( "#results" );
-
-        var xmlDoc = xmlToJson(data)
+        // var xmlDoc = xmlToJson(data)
+        var xmlDoc = data;
         console.log("xmlDoc", xmlDoc)
-
         let departureObjArr = [];
         if (Array.isArray(xmlDoc.root.station.etd)) {
             $$each(xmlDoc.root.station.etd, function(departureObj) {
@@ -260,10 +263,7 @@ Application Loop
             departureObjArr.push(xmlDoc.root.station.etd)
         }
         console.log("$$ THE returnCondition $$", returnCondition);
-
         console.log("OUR NEW departureObjArr", departureObjArr);
-
-
 
         /* PRINT RESULTS FOR RETURN CONDITION 1) */
         if (returnCondition === 1) {
@@ -282,7 +282,7 @@ Application Loop
         function output1() {
             $$each(departureObjArr, function(departureObj) {
                 let minsArr = [];
-                var dest = departureObj.destination['#text']
+                var dest = departureObj.destination
                 console.log("\n#### DESTINATION!!!!!!", dest, "\n")
                 console.log("departureObj", departureObj)
                 console.log(departureObj.destination['#text'])
@@ -291,14 +291,12 @@ Application Loop
                 console.log("THE est:", est)
 
                 if (Array.isArray(est)) {
-                    var times = est.map(function(item){return item.minutes['#text']})
-                    var routeColor = departureObj.estimate[0].color['#text']
+                    var times = est.map(function(item){return item.minutes})
+                    var routeColor = departureObj.estimate[0].color
                 } else if (typeof est === 'object') {
                     console.log("typeof est:", est)
-                    var times = [departureObj.estimate.minutes['#text']]
-                    // var mins = departureObj.estimate.minutes['#text']
-                    // console.log(departureObj.estimate.minutes['#text'])
-                    var routeColor = departureObj.estimate.color['#text']
+                    var times = [departureObj.estimate.minutes]
+                    var routeColor = departureObj.estimate.color
                 }
                 // var body2 = $('body')
                 var point3 = $('#point3')

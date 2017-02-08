@@ -18,6 +18,7 @@ const register = require('./routes/register');
 // const login = require('./routes/login');
 const auth = require('./routes/auth');
 const secure = require('./routes/secure');
+const getinfo = require('./routes/getinfo');
 
 // Start app instance
 const app = express();
@@ -42,6 +43,8 @@ app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
 })
 
+
+
 // Set views
 app.set('view engine', 'ejs');
 app.set('views', [
@@ -54,6 +57,7 @@ app.use('/register', register);
 // app.use('/login', login);
 app.use('/auth', auth);
 app.use('/secure', secure);
+app.use('/getinfo', getinfo);
 
 
 // 404 messages to error handler
@@ -62,6 +66,25 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
+// ## CORS middleware
+// For more info see: https://gist.github.com/cuppster/2344435
+//
+// see: http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
+};
+app.use(allowCrossDomain);
 
 // Export
 module.exports = app;
