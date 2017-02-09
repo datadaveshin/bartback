@@ -172,25 +172,31 @@ Application Loop
         console.log("Arrival Val~~~~~~~~~~~~~~~~~>", arrVal)
     }
 
-    // ==================================
-    // Get ETD for All trains at stations
-    // ==================================
+    // =============================================
+    // allTrains: Get ETD for All trains at stations
+    // =============================================
+    // $('#allTrains').click(function() {
+    //     getUserLocations();
+    //     if (depVal === "default" && arrVal === "default") {
+    //         returnCondition = 1;
+    //     }
+    //     else if (depVal !== "default" && arrVal === "default") {
+    //         returnCondition = 1;
+    //         sendRequest(depVal);
+    //     }
+    //     else if (depVal !== "default" && arrVal !== "default") {
+    //         returnCondition = 1;
+    //         reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
+    //         console.log("both in the house - reqDirection is", reqDirection);
+    //         sendRequest(depVal);
+    //     }
+    //
+    // });
+
     $('#allTrains').click(function() {
         getUserLocations();
-        if (depVal === "default" && arrVal === "default") {
-            returnCondition = 1;
-        }
-        else if (depVal !== "default" && arrVal === "default") {
-            returnCondition = 1;
-            sendRequest(depVal);
-        }
-        else if (depVal !== "default" && arrVal !== "default") {
-            returnCondition = 1;
-            reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
-            console.log("both in the house - reqDirection is", reqDirection);
-            sendRequest(depVal);
-        }
-
+        returnCondition = 1;
+        sendRequest(depVal);
     });
 
     // Request Departure Object for AJAX
@@ -204,9 +210,9 @@ Application Loop
         $.ajax(departureObj);
     };
 
-    // ====================================================
-    // Get ETD for trains for selected start and end points
-    // ====================================================
+    // ==================================================================
+    // routeAll: Get ETD for all trains for selected start and end points
+    // ==================================================================
 
     $('#routeAll').click(function() {
         getUserLocations();
@@ -236,6 +242,10 @@ Application Loop
         // Start the AJAX request
         $.ajax(departureObj);
     };
+
+    // ====================================================================
+    // direct: Get ETD for Direcct trains for selected start and end points
+    // ====================================================================
 
     $('#directTrains').click(function() {
         if (depVal === "default" && arrVal === "default") {
