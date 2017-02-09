@@ -119,8 +119,9 @@ function addButton(aButtonID, buttonText, attachmentPoint, columns = 3) {
 
 addButton("login", "Log In", "#point0", 2);
 addButton("register", "Register", "#point0", 2);
-addButton("realTime", "All Trains", "#point1", 2);
-addButton("directTrains", "Direct", "#point1", 2);
+addButton("allTrains", "All Trains", "#point1", 2);
+addButton("routeAll", "My Route", "#point1", 2);
+// addButton("directTrains", "Direct", "#point1", 2);
 // addButton("getSeat", "Get Seat", "#point1", 2);
 // addButton("aButtonID", "buttonText", "attachmentPoint");
 
@@ -161,36 +162,54 @@ Application Loop
         window.location.href = "http://localhost:3031/register"
     });
 
-
-    $('#realTime').click(function() {
+    // Global resets
+    function getUserLocations() {
         let departure = $('#Departure');
         let arrival = $('#Arrival')
         depVal = $(departure).val()
         arrVal = $(arrival).val()
         console.log("\n\n\n\nDeparture Val~~~~~~~~~~~~~~~~~>", depVal)
         console.log("Arrival Val~~~~~~~~~~~~~~~~~>", arrVal)
+    }
+
+    // ==================================
+    // Get ETD for All trains at stations
+    // ==================================
+    $('#allTrains').click(function() {
+        getUserLocations();
         if (depVal === "default" && arrVal === "default") {
             returnCondition = 1;
         }
         else if (depVal !== "default" && arrVal === "default") {
             returnCondition = 1;
-            sendDepRealReq(depVal);
+            sendRequest(depVal);
         }
         else if (depVal !== "default" && arrVal !== "default") {
             returnCondition = 1;
             reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
             console.log("both in the house - reqDirection is", reqDirection);
-            sendDepRealReq(depVal);
+            sendRequest(depVal);
         }
 
     });
 
-    $('#routeAll').click(function() {let departure = $('#Departure');
-        let arrival = $('#Arrival')
-        depVal = $(departure).val()
-        arrVal = $(arrival).val()
-        console.log("\n\n\n\nDeparture Val~~~~~~~~~~~~~~~~~>", depVal)
-        console.log("Arrival Val~~~~~~~~~~~~~~~~~>", arrVal)
+    // Request Departure Object for AJAX
+    function sendRequest(search) {
+        let departureObj = {
+            url: `http://localhost:3031/getinfo/alltrains/${search}`,
+            method: "GET",
+            success: depRealSuccess
+        };
+        // Start the AJAX request
+        $.ajax(departureObj);
+    };
+
+    // ====================================================
+    // Get ETD for trains for selected start and end points
+    // ====================================================
+
+    $('#routeAll').click(function() {
+        getUserLocations();
         if (depVal === "default" && arrVal === "default") {
             returnCondition = 1;
         }
@@ -199,20 +218,26 @@ Application Loop
             // sendDepRealReq(depVal);
         }
         else if (depVal !== "default" && arrVal !== "default") {
-            returnCondition = 2;
+            returnCondition = 1;
             reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
             console.log("both in the house - reqDirection is", reqDirection);
-            sendDepRealReq(depVal);
+            sendRequest2(depVal, arrVal);
         }
     });
 
+    // Request Departure Object for AJAX
+    function sendRequest2(depLocation, arrLocation) {
+        console.log("\n\n\n LOCATIONS !!!!!", depLocation, arrLocation);
+        let departureObj = {
+            url: `http://localhost:3031/getinfo/routeall/${depLocation}/${arrLocation}`,
+            method: "GET",
+            success: depRealSuccess
+        };
+        // Start the AJAX request
+        $.ajax(departureObj);
+    };
+
     $('#directTrains').click(function() {
-        let departure = $('#Departure');
-        let arrival = $('#Arrival')
-        depVal = $(departure).val()
-        arrVal = $(arrival).val()
-        console.log("\n\n\n\nDeparture Val~~~~~~~~~~~~~~~~~>", depVal)
-        console.log("Arrival Val~~~~~~~~~~~~~~~~~>", arrVal)
         if (depVal === "default" && arrVal === "default") {
             returnCondition = 1;
         }
@@ -230,12 +255,6 @@ Application Loop
     });
 
     $('#getSeat').click(function() {
-        let departure = $('#Departure');
-        let arrival = $('#Arrival')
-        depVal = $(departure).val()
-        arrVal = $(arrival).val()
-        console.log("\n\n\n\nDeparture Val~~~~~~~~~~~~~~~~~>", depVal)
-        console.log("Arrival Val~~~~~~~~~~~~~~~~~>", arrVal)
         if (depVal === "default" && arrVal === "default") {
             returnCondition = 1;
         }
@@ -252,22 +271,23 @@ Application Loop
 
     // console.log("$$ THE returnCondition $$", returnCondition);
 
-    // Request Departure Object for AJAX
-    function sendDepRealReq(search) {
-        let departureObj = {
-            url: `http://localhost:3031/getinfo/allroutes/${search}`,
-            method: "GET",
-            success: depRealSuccess
-        };
-        // Start the AJAX request
-        $.ajax(departureObj);
-    };
 
     function depRealSuccess(data) {
         console.log("data:", data)
         $( "div" ).remove( "#results" );
         // var xmlDoc = xmlToJson(data)
-        var xmlDoc = data;
+        var xmlDoc = data[0];
+
+        if (data.length === 2) {
+            console.log("\n\n\n\n\n @#$@#$@#$@#$@#$@#$@#$@#$");
+            console.log("\n @#$@#$@#$@#$@#$@#$@#$@#$");
+            console.log("part 1");
+            console.log(data[0]);
+            console.log("part 2");
+            console.log(data[1]);
+
+        }
+
         console.log("xmlDoc", xmlDoc)
         let departureObjArr = [];
         if (Array.isArray(xmlDoc.root.station.etd)) {
