@@ -21,9 +21,11 @@ router.get('/allroutes/:departureStation/', (req, res) => {
 
     return requestPromise(departureObj)
     .then((body) => {
-        // console.log("\n\n$%$%$%$ THE BODY $%$%$%$%$");
-        // console.log(body);
+        console.log("\n\n$%$%$%$ THE XML BODY $%$%$%$%$");
+        console.log(body);
         var returnJson = parser.toJson(body);
+        console.log("\n\n$%$%$%$ THE JSON BODY $%$%$%$%$");
+        console.log(returnJson);
         res.json(JSON.parse(returnJson ));
     });
 })
