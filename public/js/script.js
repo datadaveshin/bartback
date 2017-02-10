@@ -232,7 +232,7 @@ Application Loop
                 var dest = departureObj.destination
                 console.log("\n#### DESTINATION!!!!!!", dest, "\n")
                 console.log("departureObj", departureObj)
-                console.log(departureObj.destination['#text'])
+                console.log(departureObj.destination)
 
                 var est = departureObj.estimate;
                 console.log("THE est:", est)
@@ -381,13 +381,18 @@ Application Loop
             tripArr3.push(JSON.parse(item))
         })
 
+        let tripArr3direct = tripArr3.filter(function(item){
+            if (item.direct) { return item }
+        })
+
         console.log("\n\ntripArr2: ~~~~~~~~~~~*")
         console.log(tripArr2)
         console.log("\n\nmySet: ~~~~~~~~~~~*")
         console.log(mySet)
         console.log("\n\ntripArr3: ~~~~~~~~~~~*")
         console.log(tripArr3)
-
+        console.log("\n\ntripArr3direct: ~~~~~~~~~~~*")
+        console.log(tripArr3direct)
 
         let departureObjArr = [];
         if (Array.isArray(dataETD.root.station.etd)) {
@@ -411,7 +416,7 @@ Application Loop
                 var dest = departureObj.destination
                 console.log("\n#### DESTINATION!!!!!!", dest, "\n")
                 console.log("departureObj", departureObj)
-                console.log(departureObj.destination['#text'])
+                console.log(departureObj.destination)
 
                 var est = departureObj.estimate;
                 console.log("THE est:", est)
