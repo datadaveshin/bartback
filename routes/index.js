@@ -13,9 +13,11 @@ const router = express.Router();
 router.get('/', (req, res) => {
    let sess = req.session;
    if (sess.user) {
+       let userInfo = sess.user
        let message = JSON.stringify(sess.user);
-       res.redirect('/secure');
-    //    res.render('index', {something: something});
+    //    res.redirect('/secure');
+       res.render('index', {userName: userInfo.userName});
+       console.log("^^^^^^^^^^^^^^^^ USERNAME". userInfo.userName)
    } else {
        res.render('index');
    };

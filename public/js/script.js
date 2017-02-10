@@ -96,6 +96,10 @@ function genSelector(selectorName, attachmentPoint) {
     console.log("selectorSelect: ", selectorSelect)
 }
 
+// =======================
+// Check if user logged in
+// =======================
+
 /**
 Setup Buttons
 */
@@ -117,13 +121,25 @@ function addButton(aButtonID, buttonText, attachmentPoint, columns = 3) {
     console.log("$(sectionPart)", $(sectionPart));
 }
 
-addButton("login", "Log In", "#point0", 2);
-addButton("register", "Register", "#point0", 2);
-addButton("allTrains", "All Trains", "#point1", 2);
-addButton("routeAll", "My Route", "#point1", 2);
-// addButton("directTrains", "Direct", "#point1", 2);
-// addButton("getSeat", "Get Seat", "#point1", 2);
-// addButton("aButtonID", "buttonText", "attachmentPoint");
+
+let loggedIn = $('.loggedIn')
+console.log("\n\n\n\n ******** BEGIN LOGGED IN *********");
+console.log(loggedIn);
+console.log("\n\n\n\n ******** END LOGGED IN *********");
+
+let loggedInToo = $('#loggedInToo')
+if (loggedInToo.val() === "noname") {
+    console.log("noname in the house!!!!!!!!!");
+    addButton("login", "Log In", "#point0", 2);
+    addButton("register", "Register", "#point0", 2);
+    addButton("allTrains", "All Trains", "#point1", 2);
+    addButton("routeAll", "My Route", "#point1", 2);
+} else {
+    console.log(loggedInToo.val() + "in the house!!!!!");
+    addButton("allTrains", "All Trains", "#point1", 3);
+    addButton("routeAll", "My Route", "#point1", 3);
+    addButton("direct", "Direct", "#point1", 3);
+}
 
 function test1() {
     console.log("\nFUNCITON TEST1 IS WORKING!!!!!!!!!!!!!!!!!\n")
@@ -183,25 +199,25 @@ Application Loop
         let departureObj = {
             url: `http://localhost:3031/getinfo/alltrains/${search}`,
             method: "GET",
-            success: allTrainsSuccess
+            success: SuccessAllTrains
         };
         // Start the AJAX request
         $.ajax(departureObj);
     };
 
-    function allTrainsSuccess(data) {
+    function SuccessAllTrains(data) {
         console.log("\n\n\n\n\n $$$$$$ All Train data $$$$$$$$$")
         console.log(data);
-
+        let dataETD = data[0]
 
         $( "div" ).remove( "#results" );
         let departureObjArr = [];
-        if (Array.isArray(data.root.station.etd)) {
-            $$each(data.root.station.etd, function(departureObj) {
+        if (Array.isArray(dataETD.root.station.etd)) {
+            $$each(dataETD.root.station.etd, function(departureObj) {
                 departureObjArr.push(departureObj)
             });
-        } else if (typeof data.root.station.etd === 'object') {
-            departureObjArr.push(data.root.station.etd)
+        } else if (typeof dataETD.root.station.etd === 'object') {
+            departureObjArr.push(dataETD.root.station.etd)
         }
         console.log("$$ THE returnCondition $$", returnCondition);
         console.log("OUR NEW departureObjArr", departureObjArr);
@@ -212,7 +228,7 @@ Application Loop
         */
         function output1() {
             $$each(departureObjArr, function(departureObj) {
-                let minsArr = [];
+
                 var dest = departureObj.destination
                 console.log("\n#### DESTINATION!!!!!!", dest, "\n")
                 console.log("departureObj", departureObj)
@@ -318,10 +334,156 @@ Application Loop
         let departureObj = {
             url: `http://localhost:3031/getinfo/routeall/${depLocation}/${arrLocation}`,
             method: "GET",
-            success: depRealSuccess
+            success: SuccessRouteAll
         };
         // Start the AJAX request
         $.ajax(departureObj);
+    };
+
+    function SuccessRouteAll(data) {
+        let dataETD = data[0];
+        let dataPlanner = data[1]
+        console.log("\n\n\n\n\n $$$$$$ All Train ETD data $$$$$$$$$")
+        console.log(dataETD);
+        console.log("\n\n\n\n\n $$$$$$ All Train Planner data $$$$$$$$$")
+        console.log(dataPlanner);
+
+        $( "div" ).remove( "#results" );
+
+        let tripArr = dataPlanner.root.schedule.request.trip
+        let tripArr2 = tripArr.map(function(item){
+            if (Array.isArray(item.leg)) {
+                return {
+                    'direct': false,
+                    'line': item.leg[0].line,
+                    'trainHeadStation': item.leg[0].trainHeadStation,
+                    'destination': item.leg[0].destination,
+                    'transfercode': item.leg[0].transfercode
+                }
+            } else if (typeof item.leg === 'object') {
+                return {
+                    'direct': true,
+                    'line': item.leg.line,
+                    'trainHeadStation' : item.leg.trainHeadStation,
+                    'destination': item.leg.destination,
+                    'transfercode': item.leg.transfercode
+                }
+            }
+        })
+
+        var mySet = new Set();
+        tripArr2.forEach(function(item) {
+            mySet.add(JSON.stringify(item))
+        })
+
+        let tripArr3 = [];
+        mySet.forEach(function(item) {
+            tripArr3.push(JSON.parse(item))
+        })
+
+        console.log("\n\ntripArr2: ~~~~~~~~~~~*")
+        console.log(tripArr2)
+        console.log("\n\nmySet: ~~~~~~~~~~~*")
+        console.log(mySet)
+        console.log("\n\ntripArr3: ~~~~~~~~~~~*")
+        console.log(tripArr3)
+
+
+        let departureObjArr = [];
+        if (Array.isArray(dataETD.root.station.etd)) {
+            $$each(dataETD.root.station.etd, function(departureObj) {
+                departureObjArr.push(departureObj)
+            });
+        } else if (typeof dataETD.root.station.etd === 'object') {
+            departureObjArr.push(dataETD.root.station.etd)
+        }
+        console.log("$$ THE returnCondition $$", returnCondition);
+        console.log("OUR NEW departureObjArr", departureObjArr);
+
+
+
+        output2()
+        /*
+        OUTPUT1 - shows all trains for departure stop
+        */
+        function output2() {
+            $$each(departureObjArr, function(departureObj) {
+                var dest = departureObj.destination
+                console.log("\n#### DESTINATION!!!!!!", dest, "\n")
+                console.log("departureObj", departureObj)
+                console.log(departureObj.destination['#text'])
+
+                var est = departureObj.estimate;
+                console.log("THE est:", est)
+
+                if (Array.isArray(est)) {
+                    var times = est.map(function(item){return item.minutes})
+                    var routeColor = departureObj.estimate[0].color
+                } else if (typeof est === 'object') {
+                    console.log("typeof est:", est)
+                    var times = [departureObj.estimate.minutes]
+                    var routeColor = departureObj.estimate.color
+                }
+
+                var point3 = $('#point3')
+                var div2 = $('<div id="results" class="container">')
+                var destinationResultsDiv = $('<div class="destination">')
+                var destinationResults = $("<h5>")
+                var timeResults = $('<h6>')
+                var div2container = $('<div id="results" class="container">')
+                var div2row = $('<div class="row report">')
+
+                console.log("$(timeResults)", $(timeResults))
+                $(destinationResults).text(dest);
+
+                // *** Toggle to bring back bart colors to destination
+                // $(destinationResults).css("backgroundColor", routeColor)
+                //
+                // if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
+                //     $(destinationResults).css("color", "white");
+                // }
+
+                $(point3).append(div2container);
+                $(div2container).append(destinationResultsDiv);
+                $(destinationResultsDiv).append(destinationResults);
+                $(div2container).append(div2row);
+                console.log("*********** times *********");
+                console.log(times);
+                console.log("div2container", div2container);
+                console.log("div2row", div2row);
+                times.forEach(function(time){
+                    var div2col = $('<div class="col l2 m3 s4">')
+                    var div2colA = $('<div class="forSquare">')
+                    var div2colB = $('<div class="forTime">')
+                    let processedTime;
+                    if (time === "Leaving") {
+                        processedTime = time;
+                    } else if (time === "1") {
+                        processedTime = time + " min";
+                    } else {
+                        processedTime = time + " mins";
+                    }
+                    div2colB.text(processedTime);
+
+                    // *** Toggle for routeColor for squares
+                    $(div2colA).css("backgroundColor", routeColor);
+
+                    // *** Toggle for random "busy" color for square
+                    let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                    if (val === 1) {
+                        $(div2colA).css("backgroundColor", 'red');
+                    } else if (val === 2) {
+                        $(div2colA).css("backgroundColor", 'yellow');
+                    } else {
+                        $(div2colA).css("backgroundColor", 'green');
+                    }
+
+                    $(div2row).append(div2col);
+                    $(div2col).append(div2colA);
+                    $(div2col).append(div2colB);
+                })
+            })
+        }
     };
 
     // ====================================================================
