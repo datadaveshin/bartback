@@ -394,24 +394,63 @@ Application Loop
         console.log("\n\ntripArr3direct: ~~~~~~~~~~~*")
         console.log(tripArr3direct)
 
-        let departureObjArr = [];
+        let trip3trainHeads = tripArr3.map(function(item) {
+            return item.trainHeadStation
+        });
+        let trip3directTrainHeads = tripArr3direct.map(function(item) {
+            return item.trainHeadStation
+        });
+        console.log("\n\trip3trainHeads: ~~~~~~~~~~~*")
+        console.log(trip3trainHeads)
+        console.log("\n\trip3directTrainHeads: ~~~~~~~~~~~*")
+        console.log(trip3directTrainHeads)
+
+        let departureObjArrAllTrains = [];
         if (Array.isArray(dataETD.root.station.etd)) {
             $$each(dataETD.root.station.etd, function(departureObj) {
-                departureObjArr.push(departureObj)
+                departureObjArrAllTrains.push(departureObj)
             });
         } else if (typeof dataETD.root.station.etd === 'object') {
-            departureObjArr.push(dataETD.root.station.etd)
+            departureObjArrAllTrains.push(dataETD.root.station.etd)
         }
         console.log("$$ THE returnCondition $$", returnCondition);
-        console.log("OUR NEW departureObjArr", departureObjArr);
+        console.log("OUR NEW departureObjArrAllTrains", departureObjArrAllTrains);
 
+        let departureObjArrRouteAll = [];
+        if (Array.isArray(dataETD.root.station.etd)) {
+            $$each(dataETD.root.station.etd, function(departureObj) {
+                if (trip3trainHeads.indexOf(departureObj.abbreviation) > -1) {
+                    departureObjArrRouteAll.push(departureObj)
+                }
+            });
+        } else if (typeof dataETD.root.station.etd === 'object') {
+            if (trip3trainHeads.indexOf(dataETD.root.station.etd.abbreviation) > -1) {
+                departureObjArrRouteAll.push(dataETD.root.station.etd)
+            }
+        }
+        console.log("$$ THE returnCondition $$", returnCondition);
+        console.log("OUR NEW departureObjArrRouteAll", departureObjArrRouteAll);
 
+        let departureObjArrDirect = [];
+        if (Array.isArray(dataETD.root.station.etd)) {
+            $$each(dataETD.root.station.etd, function(departureObj) {
+                if (trip3directTrainHeads.indexOf(departureObj.abbreviation) > -1) {
+                    departureObjArrDirect.push(departureObj)
+                }
+            });
+        } else if (typeof dataETD.root.station.etd === 'object') {
+            if (trip3directTrainHeads.indexOf(dataETD.root.station.etd.abbreviation) > -1) {
+                departureObjArrDirect.push(dataETD.root.station.etd)
+            }
+        }
+        console.log("$$ THE returnCondition $$", returnCondition);
+        console.log("OUR NEW departureObjArrDirect", departureObjArrDirect);
 
-        output2()
+        output2(departureObjArrDirect)
         /*
         OUTPUT1 - shows all trains for departure stop
         */
-        function output2() {
+        function output2(departureObjArr) {
             $$each(departureObjArr, function(departureObj) {
                 var dest = departureObj.destination
                 console.log("\n#### DESTINATION!!!!!!", dest, "\n")
