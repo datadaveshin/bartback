@@ -191,125 +191,127 @@ Application Loop
     // =============================================
     $('#allTrains').click(function() {
         getUserLocations();
-        sendRequest(depVal);
+        returnCondition = 'all-trains'
+        let dummyArrival = "mont"
+        sendRequest2(depVal, dummyArrival);
     });
 
     // Request Departure Object for AJAX
-    function sendRequest(search) {
-        let departureObj = {
-            url: `http://localhost:3031/getinfo/alltrains/${search}`,
-            method: "GET",
-            success: SuccessAllTrains
-        };
-        // Start the AJAX request
-        $.ajax(departureObj);
-    };
+    // function sendRequest(search) {
+    //     let departureObj = {
+    //         url: `http://localhost:3031/getinfo/alltrains/${search}`,
+    //         method: "GET",
+    //         success: SuccessAllTrains
+    //     };
+    //     // Start the AJAX request
+    //     $.ajax(departureObj);
+    // };
 
-    function SuccessAllTrains(data) {
-        console.log("\n\n\n\n\n $$$$$$ All Train data $$$$$$$$$")
-        console.log(data);
-        let dataETD = data[0]
+    // function SuccessAllTrains(data) {
+    //     console.log("\n\n\n\n\n $$$$$$ All Train data $$$$$$$$$")
+    //     console.log(data);
+    //     let dataETD = data[0]
+    //
+    //     $( "div" ).remove( "#results" );
+    //     let departureObjArr = [];
+    //     if (Array.isArray(dataETD.root.station.etd)) {
+    //         $$each(dataETD.root.station.etd, function(departureObj) {
+    //             departureObjArr.push(departureObj)
+    //         });
+    //     } else if (typeof dataETD.root.station.etd === 'object') {
+    //         departureObjArr.push(dataETD.root.station.etd)
+    //     }
+    //     console.log("$$ THE returnCondition $$", returnCondition);
+    //     console.log("OUR NEW departureObjArr", departureObjArr);
+    //
+    //     output1()
+    //     /*
+    //     OUTPUT1 - shows all trains for departure stop
+    //     */
+    //     function output1() {
+    //         $$each(departureObjArr, function(departureObj) {
+    //
+    //             var dest = departureObj.destination
+    //             console.log("\n#### DESTINATION!!!!!!", dest, "\n")
+    //             console.log("departureObj", departureObj)
+    //             console.log(departureObj.destination)
+    //
+    //             var est = departureObj.estimate;
+    //             console.log("THE est:", est)
+    //
+    //             if (Array.isArray(est)) {
+    //                 var times = est.map(function(item){return item.minutes})
+    //                 var routeColor = departureObj.estimate[0].color
+    //             } else if (typeof est === 'object') {
+    //                 console.log("typeof est:", est)
+    //                 var times = [departureObj.estimate.minutes]
+    //                 var routeColor = departureObj.estimate.color
+    //             }
+    //
+    //             var point3 = $('#point3')
+    //             var div2 = $('<div id="results" class="container">')
+    //             var destinationResultsDiv = $('<div class="destination">')
+    //             var destinationResults = $("<h5>")
+    //             var timeResults = $('<h6>')
+    //             var div2container = $('<div id="results" class="container">')
+    //             var div2row = $('<div class="row report">')
+    //
+    //             console.log("$(timeResults)", $(timeResults))
+    //             $(destinationResults).text(dest);
+    //
+    //             // *** Toggle to bring back bart colors to destination
+    //             // $(destinationResults).css("backgroundColor", routeColor)
+    //             //
+    //             // if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
+    //             //     $(destinationResults).css("color", "white");
+    //             // }
+    //
+    //             $(point3).append(div2container);
+    //             $(div2container).append(destinationResultsDiv);
+    //             $(destinationResultsDiv).append(destinationResults);
+    //             $(div2container).append(div2row);
+    //             console.log("*********** times *********");
+    //             console.log(times);
+    //             console.log("div2container", div2container);
+    //             console.log("div2row", div2row);
+    //             times.forEach(function(time){
+    //                 var div2col = $('<div class="col l2 m3 s4">')
+    //                 var div2colA = $('<div class="forSquare">')
+    //                 var div2colB = $('<div class="forTime">')
+    //                 let processedTime;
+    //                 if (time === "Leaving") {
+    //                     processedTime = time;
+    //                 } else if (time === "1") {
+    //                     processedTime = time + " min";
+    //                 } else {
+    //                     processedTime = time + " mins";
+    //                 }
+    //                 div2colB.text(processedTime);
+    //
+    //                 // *** Toggle for routeColor for squares
+    //                 $(div2colA).css("backgroundColor", routeColor);
+    //
+    //                 // *** Toggle for random "busy" color for square
+    //                 let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+    //                 if (val === 1) {
+    //                     $(div2colA).css("backgroundColor", 'red');
+    //                 } else if (val === 2) {
+    //                     $(div2colA).css("backgroundColor", 'yellow');
+    //                 } else {
+    //                     $(div2colA).css("backgroundColor", 'green');
+    //                 }
+    //
+    //                 $(div2row).append(div2col);
+    //                 $(div2col).append(div2colA);
+    //                 $(div2col).append(div2colB);
+    //             })
+    //         })
+    //     }
+    // };
 
-        $( "div" ).remove( "#results" );
-        let departureObjArr = [];
-        if (Array.isArray(dataETD.root.station.etd)) {
-            $$each(dataETD.root.station.etd, function(departureObj) {
-                departureObjArr.push(departureObj)
-            });
-        } else if (typeof dataETD.root.station.etd === 'object') {
-            departureObjArr.push(dataETD.root.station.etd)
-        }
-        console.log("$$ THE returnCondition $$", returnCondition);
-        console.log("OUR NEW departureObjArr", departureObjArr);
-
-        output1()
-        /*
-        OUTPUT1 - shows all trains for departure stop
-        */
-        function output1() {
-            $$each(departureObjArr, function(departureObj) {
-
-                var dest = departureObj.destination
-                console.log("\n#### DESTINATION!!!!!!", dest, "\n")
-                console.log("departureObj", departureObj)
-                console.log(departureObj.destination)
-
-                var est = departureObj.estimate;
-                console.log("THE est:", est)
-
-                if (Array.isArray(est)) {
-                    var times = est.map(function(item){return item.minutes})
-                    var routeColor = departureObj.estimate[0].color
-                } else if (typeof est === 'object') {
-                    console.log("typeof est:", est)
-                    var times = [departureObj.estimate.minutes]
-                    var routeColor = departureObj.estimate.color
-                }
-
-                var point3 = $('#point3')
-                var div2 = $('<div id="results" class="container">')
-                var destinationResultsDiv = $('<div class="destination">')
-                var destinationResults = $("<h5>")
-                var timeResults = $('<h6>')
-                var div2container = $('<div id="results" class="container">')
-                var div2row = $('<div class="row report">')
-
-                console.log("$(timeResults)", $(timeResults))
-                $(destinationResults).text(dest);
-
-                // *** Toggle to bring back bart colors to destination
-                // $(destinationResults).css("backgroundColor", routeColor)
-                //
-                // if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
-                //     $(destinationResults).css("color", "white");
-                // }
-
-                $(point3).append(div2container);
-                $(div2container).append(destinationResultsDiv);
-                $(destinationResultsDiv).append(destinationResults);
-                $(div2container).append(div2row);
-                console.log("*********** times *********");
-                console.log(times);
-                console.log("div2container", div2container);
-                console.log("div2row", div2row);
-                times.forEach(function(time){
-                    var div2col = $('<div class="col l2 m3 s4">')
-                    var div2colA = $('<div class="forSquare">')
-                    var div2colB = $('<div class="forTime">')
-                    let processedTime;
-                    if (time === "Leaving") {
-                        processedTime = time;
-                    } else if (time === "1") {
-                        processedTime = time + " min";
-                    } else {
-                        processedTime = time + " mins";
-                    }
-                    div2colB.text(processedTime);
-
-                    // *** Toggle for routeColor for squares
-                    $(div2colA).css("backgroundColor", routeColor);
-
-                    // *** Toggle for random "busy" color for square
-                    let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-                    if (val === 1) {
-                        $(div2colA).css("backgroundColor", 'red');
-                    } else if (val === 2) {
-                        $(div2colA).css("backgroundColor", 'yellow');
-                    } else {
-                        $(div2colA).css("backgroundColor", 'green');
-                    }
-
-                    $(div2row).append(div2col);
-                    $(div2col).append(div2colA);
-                    $(div2col).append(div2colB);
-                })
-            })
-        }
-    };
-
-    // ==================================================================
-    // routeAll: Get ETD for all trains for selected start and end points
-    // ==================================================================
+    // =============================================================================
+    // routeAll and direct: Get ETD for all trains for selected start and end points
+    // =============================================================================
 
     $('#routeAll').click(function() {
         getUserLocations();
@@ -321,7 +323,25 @@ Application Loop
             // sendDepRealReq(depVal);
         }
         else if (depVal !== "default" && arrVal !== "default") {
+            console.log("ROUTE ALL ROUTE ALL ROUTE ALL");
+            returnCondition = 'route-all';
+            reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
+            console.log("both in the house - reqDirection is", reqDirection);
+            sendRequest2(depVal, arrVal);
+        }
+    });
+
+    $('#direct').click(function() {
+        getUserLocations();
+        if (depVal === "default" && arrVal === "default") {
             returnCondition = 1;
+        }
+        else if (depVal !== "default" && arrVal === "default") {
+            returnCondition = 1;
+            // sendDepRealReq(depVal);
+        }
+        else if (depVal !== "default" && arrVal !== "default") {
+            returnCondition = 'direct';
             reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
             console.log("both in the house - reqDirection is", reqDirection);
             sendRequest2(depVal, arrVal);
@@ -446,7 +466,16 @@ Application Loop
         console.log("$$ THE returnCondition $$", returnCondition);
         console.log("OUR NEW departureObjArrDirect", departureObjArrDirect);
 
-        output2(departureObjArrRouteAll)
+        if (returnCondition === 'all-trains') {
+            output2(departureObjArrAllTrains)
+        } else if (returnCondition === 'route-all') {
+            console.log("IS ROUTE ALL SELECTED?");
+            output2(departureObjArrRouteAll)
+        } else if (returnCondition === 'direct') {
+            output2(departureObjArrDirect)
+        }
+
+        // output2(departureObjArrRouteAll)
         /*
         OUTPUT1 - shows all trains for departure stop
         */
@@ -534,37 +563,37 @@ Application Loop
     // direct: Get ETD for Direcct trains for selected start and end points
     // ====================================================================
 
-    $('#directTrains').click(function() {
-        if (depVal === "default" && arrVal === "default") {
-            returnCondition = 1;
-        }
-        else if (depVal !== "default" && arrVal === "default") {
-            returnCondition = 1;
-            // sendDepRealReq(depVal);
-        }
-        else if (depVal !== "default" && arrVal !== "default") {
-            returnCondition = 2;
-            reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
-            console.log("both in the house - reqDirection is", reqDirection);
-            sendDepRealReq(depVal);
-        }
+    // $('#directTrains').click(function() {
+    //     if (depVal === "default" && arrVal === "default") {
+    //         returnCondition = 1;
+    //     }
+    //     else if (depVal !== "default" && arrVal === "default") {
+    //         returnCondition = 1;
+    //         // sendDepRealReq(depVal);
+    //     }
+    //     else if (depVal !== "default" && arrVal !== "default") {
+    //         returnCondition = 2;
+    //         reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
+    //         console.log("both in the house - reqDirection is", reqDirection);
+    //         sendDepRealReq(depVal);
+    //     }
+    //
+    // });
 
-    });
-
-    $('#getSeat').click(function() {
-        if (depVal === "default" && arrVal === "default") {
-            returnCondition = 1;
-        }
-        else if (depVal !== "default" && arrVal === "default") {
-            returnCondition = 1;
-        }
-        else if (depVal !== "default" && arrVal !== "default") {
-            returnCondition = 3;
-            reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
-            console.log("both in the house - reqDirection is", reqDirection);
-            sendDepRealReq(depVal);
-        }
-    });
+    // $('#getSeat').click(function() {
+    //     if (depVal === "default" && arrVal === "default") {
+    //         returnCondition = 1;
+    //     }
+    //     else if (depVal !== "default" && arrVal === "default") {
+    //         returnCondition = 1;
+    //     }
+    //     else if (depVal !== "default" && arrVal !== "default") {
+    //         returnCondition = 3;
+    //         reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
+    //         console.log("both in the house - reqDirection is", reqDirection);
+    //         sendDepRealReq(depVal);
+    //     }
+    // });
 
 })();
 
