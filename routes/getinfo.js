@@ -35,8 +35,8 @@ router.get('/alltrains/:departureStation/', (req, res) => {
         console.log("\n\n$%$%$%$ THE JSON BODY $%$%$%$%$");
         console.log(returnJson);
 
-        // res.json( [ JSON.parse(returnJson) ] );
-        res.json( [etdJSON] );
+        res.json( [ JSON.parse(returnJson) ] );
+        // res.json( [etdJSON] );
     });
 })
 
@@ -71,8 +71,8 @@ router.get('/routeall/:departureStation/:arrivalStation/', (req, res) => {
         console.log("\n\n$%$%$%$ THE SECOND PROMISE JSON $%$%$%$%$");
         console.log(returnJson2);
 
-        // res.json( [ JSON.parse(returnJson1), JSON.parse(returnJson2) ] )
-        res.json( [ etdJSON,  plannerJSON ] );
+        res.json( [ JSON.parse(returnJson1), JSON.parse(returnJson2) ] )
+        // res.json( [ etdJSON,  plannerJSON ] );
 
         // var returnJson = parser.toJson(body);
         // console.log("\n\n$%$%$%$ THE JSON BODY $%$%$%$%$");

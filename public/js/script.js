@@ -446,7 +446,7 @@ Application Loop
         console.log("$$ THE returnCondition $$", returnCondition);
         console.log("OUR NEW departureObjArrDirect", departureObjArrDirect);
 
-        output2(departureObjArrDirect)
+        output2(departureObjArrRouteAll)
         /*
         OUTPUT1 - shows all trains for departure stop
         */
