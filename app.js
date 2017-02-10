@@ -19,6 +19,7 @@ const register = require('./routes/register');
 const auth = require('./routes/auth');
 const secure = require('./routes/secure');
 const getinfo = require('./routes/getinfo');
+const preferences = require('./routes/preferences');
 
 // Start app instance
 const app = express();
@@ -58,6 +59,7 @@ app.use('/register', register);
 app.use('/auth', auth);
 app.use('/secure', secure);
 app.use('/getinfo', getinfo);
+app.use('/preferences', preferences);
 
 
 // 404 messages to error handler

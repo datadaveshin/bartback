@@ -9,9 +9,10 @@ const { camelizeKeys, decamelizeKeys } = require('humps');
 // Define router
 const router = express.Router();
 
-// Registration Page Show @ localhost:3031/auth/register
-router.get('/', (req, res) => {
-    res.render('register');
+// Show Login Form @ localhost:3031/login
+router.get('/', function(req, res) {
+    // res.render('preferences');
+    res.send('preferences');
 });
 
 // Receive from Registration Page
@@ -35,8 +36,7 @@ router.post('/', (req, res) => {
             .insert(decamelizeKeys(newUser), ['id','user_name', 'email', 'home_station', 'away_station'])
     })
     .then(()=>{
-        // res.redirect('/auth/login')
-        res.redirect('/preferences')
+        res.redirect('/auth/login')
     })
     .catch(err => {
         res.status(400).send(err);
