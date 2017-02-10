@@ -151,8 +151,6 @@ Application Loop
 (function() {
     console.log("\n\n\n##### ANONYMOUS LOOP FUNCTION WORKING!!!  #######\n")
 
-    // console.log("$(departure):", $(departure))
-
     // Set up
     $('#login').click(function() {
         window.location.href = "http://localhost:3031/auth/login"
@@ -175,27 +173,8 @@ Application Loop
     // =============================================
     // allTrains: Get ETD for All trains at stations
     // =============================================
-    // $('#allTrains').click(function() {
-    //     getUserLocations();
-    //     if (depVal === "default" && arrVal === "default") {
-    //         returnCondition = 1;
-    //     }
-    //     else if (depVal !== "default" && arrVal === "default") {
-    //         returnCondition = 1;
-    //         sendRequest(depVal);
-    //     }
-    //     else if (depVal !== "default" && arrVal !== "default") {
-    //         returnCondition = 1;
-    //         reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
-    //         console.log("both in the house - reqDirection is", reqDirection);
-    //         sendRequest(depVal);
-    //     }
-    //
-    // });
-
     $('#allTrains').click(function() {
         getUserLocations();
-        returnCondition = 1;
         sendRequest(depVal);
     });
 
@@ -204,10 +183,112 @@ Application Loop
         let departureObj = {
             url: `http://localhost:3031/getinfo/alltrains/${search}`,
             method: "GET",
-            success: depRealSuccess
+            success: allTrainsSuccess
         };
         // Start the AJAX request
         $.ajax(departureObj);
+    };
+
+    function allTrainsSuccess(data) {
+        console.log("\n\n\n\n\n $$$$$$ All Train data $$$$$$$$$")
+        console.log(data);
+
+
+        $( "div" ).remove( "#results" );
+        let departureObjArr = [];
+        if (Array.isArray(data.root.station.etd)) {
+            $$each(data.root.station.etd, function(departureObj) {
+                departureObjArr.push(departureObj)
+            });
+        } else if (typeof data.root.station.etd === 'object') {
+            departureObjArr.push(data.root.station.etd)
+        }
+        console.log("$$ THE returnCondition $$", returnCondition);
+        console.log("OUR NEW departureObjArr", departureObjArr);
+
+        output1()
+        /*
+        OUTPUT1 - shows all trains for departure stop
+        */
+        function output1() {
+            $$each(departureObjArr, function(departureObj) {
+                let minsArr = [];
+                var dest = departureObj.destination
+                console.log("\n#### DESTINATION!!!!!!", dest, "\n")
+                console.log("departureObj", departureObj)
+                console.log(departureObj.destination['#text'])
+
+                var est = departureObj.estimate;
+                console.log("THE est:", est)
+
+                if (Array.isArray(est)) {
+                    var times = est.map(function(item){return item.minutes})
+                    var routeColor = departureObj.estimate[0].color
+                } else if (typeof est === 'object') {
+                    console.log("typeof est:", est)
+                    var times = [departureObj.estimate.minutes]
+                    var routeColor = departureObj.estimate.color
+                }
+
+                var point3 = $('#point3')
+                var div2 = $('<div id="results" class="container">')
+                var destinationResultsDiv = $('<div class="destination">')
+                var destinationResults = $("<h5>")
+                var timeResults = $('<h6>')
+                var div2container = $('<div id="results" class="container">')
+                var div2row = $('<div class="row report">')
+
+                console.log("$(timeResults)", $(timeResults))
+                $(destinationResults).text(dest);
+
+                // *** Toggle to bring back bart colors to destination
+                // $(destinationResults).css("backgroundColor", routeColor)
+                //
+                // if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
+                //     $(destinationResults).css("color", "white");
+                // }
+
+                $(point3).append(div2container);
+                $(div2container).append(destinationResultsDiv);
+                $(destinationResultsDiv).append(destinationResults);
+                $(div2container).append(div2row);
+                console.log("*********** times *********");
+                console.log(times);
+                console.log("div2container", div2container);
+                console.log("div2row", div2row);
+                times.forEach(function(time){
+                    var div2col = $('<div class="col l2 m3 s4">')
+                    var div2colA = $('<div class="forSquare">')
+                    var div2colB = $('<div class="forTime">')
+                    let processedTime;
+                    if (time === "Leaving") {
+                        processedTime = time;
+                    } else if (time === "1") {
+                        processedTime = time + " min";
+                    } else {
+                        processedTime = time + " mins";
+                    }
+                    div2colB.text(processedTime);
+
+                    // *** Toggle for routeColor for squares
+                    $(div2colA).css("backgroundColor", routeColor);
+
+                    // *** Toggle for random "busy" color for square
+                    let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                    if (val === 1) {
+                        $(div2colA).css("backgroundColor", 'red');
+                    } else if (val === 2) {
+                        $(div2colA).css("backgroundColor", 'yellow');
+                    } else {
+                        $(div2colA).css("backgroundColor", 'green');
+                    }
+
+                    $(div2row).append(div2col);
+                    $(div2col).append(div2colA);
+                    $(div2col).append(div2colB);
+                })
+            })
+        }
     };
 
     // ==================================================================
@@ -279,354 +360,6 @@ Application Loop
         }
     });
 
-    // console.log("$$ THE returnCondition $$", returnCondition);
-
-
-    function depRealSuccess(data) {
-        console.log("data:", data)
-        $( "div" ).remove( "#results" );
-        // var xmlDoc = xmlToJson(data)
-        var xmlDoc = data[0];
-
-        if (data.length === 2) {
-            console.log("\n\n\n\n\n @#$@#$@#$@#$@#$@#$@#$@#$");
-            console.log("\n @#$@#$@#$@#$@#$@#$@#$@#$");
-            console.log("part 1");
-            console.log(data[0]);
-            console.log("part 2");
-            console.log(data[1]);
-
-        }
-
-        console.log("xmlDoc", xmlDoc)
-        let departureObjArr = [];
-        if (Array.isArray(xmlDoc.root.station.etd)) {
-            $$each(xmlDoc.root.station.etd, function(departureObj) {
-                departureObjArr.push(departureObj)
-            });
-        } else if (typeof xmlDoc.root.station.etd === 'object') {
-            departureObjArr.push(xmlDoc.root.station.etd)
-        }
-        console.log("$$ THE returnCondition $$", returnCondition);
-        console.log("OUR NEW departureObjArr", departureObjArr);
-
-        /* PRINT RESULTS FOR RETURN CONDITION 1) */
-        if (returnCondition === 1) {
-            output1();
-        }
-        else if (returnCondition === 2) {
-            output2();
-        }
-        else if (returnCondition === 3) {
-            output3();
-        }
-
-        /*
-        OUTPUT1 - shows all trains for departure stop
-        */
-        function output1() {
-            $$each(departureObjArr, function(departureObj) {
-                let minsArr = [];
-                var dest = departureObj.destination
-                console.log("\n#### DESTINATION!!!!!!", dest, "\n")
-                console.log("departureObj", departureObj)
-                console.log(departureObj.destination['#text'])
-
-                var est = departureObj.estimate;
-                console.log("THE est:", est)
-
-                if (Array.isArray(est)) {
-                    var times = est.map(function(item){return item.minutes})
-                    var routeColor = departureObj.estimate[0].color
-                } else if (typeof est === 'object') {
-                    console.log("typeof est:", est)
-                    var times = [departureObj.estimate.minutes]
-                    var routeColor = departureObj.estimate.color
-                }
-                // var body2 = $('body')
-                var point3 = $('#point3')
-                var div2 = $('<div id="results" class="container">')
-                var destinationResultsDiv = $('<div class="destination">')
-                var destinationResults = $("<h5>")
-                var timeResults = $('<h6>')
-
-                var div2container = $('<div id="results" class="container">')
-                var div2row = $('<div class="row report">')
-
-                console.log("$(timeResults)", $(timeResults))
-                $(destinationResults).text(dest);
-
-                // Toggle to bring back bart colors to destination
-                // $(destinationResults).css("backgroundColor", routeColor)
-                //
-                // if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
-                //     $(destinationResults).css("color", "white");
-                // }
-
-                $(point3).append(div2container);
-                $(div2container).append(destinationResultsDiv);
-                $(destinationResultsDiv).append(destinationResults);
-                $(div2container).append(div2row);
-                console.log("*********** times *********");
-                console.log(times);
-                console.log("div2container", div2container);
-                console.log("div2row", div2row);
-                times.forEach(function(time){
-                    var div2col = $('<div class="col l2 m3 s4">')
-                    var div2colA = $('<div class="forSquare">')
-                    var div2colB = $('<div class="forTime">')
-                    let processedTime;
-                    if (time === "Leaving") {
-                        processedTime = time;
-                    } else if (time === "1") {
-                        processedTime = time + " min";
-                    } else {
-                        processedTime = time + " mins";
-                    }
-                    div2colB.text(processedTime);
-
-                    // Toggle for routeColor for squares
-                    $(div2colA).css("backgroundColor", routeColor);
-
-                    // Toggle for random "busy" color for square
-                    let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-                    if (val === 1) {
-                        $(div2colA).css("backgroundColor", 'red');
-                    } else if (val === 2) {
-                        $(div2colA).css("backgroundColor", 'yellow');
-                    } else {
-                        $(div2colA).css("backgroundColor", 'green');
-                    }
-
-                    $(div2row).append(div2col);
-                    $(div2col).append(div2colA);
-                    $(div2col).append(div2colB);
-                })
-            })
-        }
-
-
-        function output2() {
-            departureObjArr = $$filter(departureObjArr, function(departureObj) {
-                let depAbbr = departureObj.abbreviation
-                console.log("Filter candidates", depAbbr['#text']);
-                // Change PREDICATE to reflect all trains going to abbreviation
-                if (reqDirection === "North") {
-                    return depAbbr['#text'] === "RICH"
-                } else if (clusterSanFran.indexOf(arrVal.toUpperCase()) !== -1) {
-                    return (clusterSanFran.indexOf(depAbbr['#text']) !== -1 || clusterSFIA.indexOf(depAbbr['#text']) !== -1)
-                } else if (clusterSFIA.indexOf(arrVal.toUpperCase()) !== -1) {
-                    return (clusterSFIA.indexOf(depAbbr['#text']) !== -1)
-                }
-            })
-            $$each(departureObjArr, function(departureObj) {
-                var dest = departureObj.destination['#text']
-                console.log("\n#### DESTINATION!!!!!!", dest, "\n")
-                console.log("departureObj", departureObj)
-                console.log(departureObj.destination['#text'])
-
-                var est = departureObj.estimate;
-                console.log("est:", est)
-                if (Array.isArray(est)) {
-                    $$each(est, function(anEst) {
-
-                    // var mins = departureObj.estimate[0].minutes['#text']
-                    // console.log(departureObj.estimate[0].minutes['#text'])
-                    // var routeColor = departureObj.estimate[0].color['#text']
-                    var mins = anEst.minutes['#text']
-                    console.log(anEst.minutes['#text'])
-                    var routeColor = anEst.color['#text']
-
-                    //### Repeated code
-                    var point3 = $('#point3')
-
-                    var div2 = $('<div id="results" class="container">')
-                    var destinationResults = $('<h5>')
-                    var timeResults = $('<h6>')
-                    console.log("$(timeResults)", $(timeResults))
-                    $(destinationResults).text(dest + " Train")
-                    $(destinationResults).css("backgroundColor", routeColor)
-
-                    if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
-                        $(destinationResults).css("color", "white");
-                    }
-
-                    if (mins === "Leaving") {
-                        $(timeResults).text(mins);
-                    } else if (mins === "1") {
-                        $(timeResults).text(mins + " min");
-                    } else {
-                        $(timeResults).text(mins + " mins");
-                    }
-                    $(point3).append(div2);
-                    $(div2).append(destinationResults);
-                    $(div2).append(timeResults);
-                    //### Repeated code
-
-                })
-
-
-                } else if (typeof est === 'object') {
-                    console.log("typeof est:", est)
-                    var mins = departureObj.estimate.minutes['#text']
-                    console.log(departureObj.estimate.minutes['#text'])
-                    var routeColor = departureObj.estimate.color['#text']
-
-                    //### Repeated code
-                    var point3 = $('#point3')
-
-                    var div2 = $('<div id="results" class="container">')
-                    var destinationResults = $('<h5>')
-                    var timeResults = $('<h6>')
-                    console.log("$(timeResults)", $(timeResults))
-                    $(destinationResults).text(dest + " Train")
-                    $(destinationResults).css("backgroundColor", routeColor)
-
-                    if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
-                        $(destinationResults).css("color", "white");
-                    }
-
-                    if (mins === "Leaving") {
-                        $(timeResults).text(mins);
-                    } else if (mins === "1") {
-                        $(timeResults).text(mins + " min");
-                    } else {
-                        $(timeResults).text(mins + " mins");
-                    }
-                    $(point3).append(div2);
-                    $(div2).append(destinationResults);
-                    $(div2).append(timeResults);
-                    //### Repeated code
-
-                }
-
-            });
-
-        }
-
-        function output3() {
-            console.log("IN OUTPUT 3 BLOCK 1");
-            var departureObjArr1 = $$filter(departureObjArr, function(departureObj) {
-                let depAbbr = departureObj.abbreviation
-                console.log("Filter candidates", depAbbr['#text']);
-                // Change PREDICATE to reflect all trains going to abbreviation
-                if (reqDirection === "North") {
-                    return depAbbr['#text'] === "RICH"
-                } else if (clusterSanFran.indexOf(arrVal.toUpperCase()) !== -1) {
-                    return (clusterSanFran.indexOf(depAbbr['#text']) !== -1 || clusterSFIA.indexOf(depAbbr['#text']) !== -1)
-                } else if (clusterSFIA.indexOf(arrVal.toUpperCase()) !== -1) {
-                    return (clusterSFIA.indexOf(depAbbr['#text']) !== -1)
-                }
-            })
-            $$each(departureObjArr1, function(departureObj) {
-                var dest = departureObj.destination['#text']
-                console.log("\n#### DESTINATION!!!!!!", dest, "\n")
-                console.log("departureObj", departureObj)
-                console.log(departureObj.destination['#text'])
-
-                var est = departureObj.estimate;
-                console.log("est:", est)
-                if (Array.isArray(est) === false) {
-                    est = [est];
-                }
-                // if (Array.isArray(est)) {
-                // $$each(est, function(anEst) {
-
-                    // var mins = departureObj.estimate[0].minutes['#text']
-                    // console.log(departureObj.estimate[0].minutes['#text'])
-                    // var routeColor = departureObj.estimate[0].color['#text']
-                    var mins = est[0].minutes['#text']
-                    console.log(est[0].minutes['#text'])
-                    var routeColor = est[0].color['#text']
-
-                    //### Repeated code
-                    var point3 = $('#point3')
-
-                    var div2 = $('<div id="results" class="container">')
-                    var destinationResults = $('<h5>')
-                    var timeResults = $('<h6>')
-                    console.log("$(timeResults)", $(timeResults))
-                    $(destinationResults).text(dest + " Train")
-                    $(destinationResults).css("backgroundColor", routeColor)
-
-                    if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
-                        $(destinationResults).css("color", "white");
-                    }
-
-                    $(timeResults).text(mins + " minutes");
-                    $(point3).append(div2);
-                    $(div2).append(destinationResults);
-                    $(div2).append(timeResults);
-                    //### Repeated code
-
-                // })
-
-            })
-
-
-            //########## Backwards block
-            console.log("IN OUTPUT 3 BLOCK 2");
-            var departureObjArr2 = $$filter(departureObjArr, function(departureObj) {
-                let depAbbr = departureObj.abbreviation
-                console.log("Filter candidates", depAbbr['#text']);
-                // Change PREDICATE to reflect all trains going to abbreviation
-                // if (reqDirection === "North") {
-                //     return depAbbr['#text'] === "RICH"
-                // } else
-
-                var testCase = "DALY"
-
-                if (clusterSanFran.indexOf(testCase) !== -1) {
-                    return (clusterSanFran.indexOf(testCase) !== -1 || clusterSFIA.indexOf(testCase) !== -1)
-                } else if (clusterSFIA.indexOf(testCase) !== -1) {
-                    return (clusterSFIA.indexOf(testCase) !== -1)
-                }
-            })
-            $$each(departureObjArr2, function(departureObj) {
-                var dest = departureObj.destination['#text']
-                console.log("\n#### DESTINATION!!!!!!", dest, "\n")
-                console.log("departureObj", departureObj)
-                console.log(departureObj.destination['#text'])
-
-                var est = departureObj.estimate;
-                console.log("est:", est)
-                if (Array.isArray(est) === false) {
-                    est = [est];
-                }
-                // if (Array.isArray(est)) {
-                // $$each(est, function(anEst) {
-
-                    // var mins = departureObj.estimate[0].minutes['#text']
-                    // console.log(departureObj.estimate[0].minutes['#text'])
-                    // var routeColor = departureObj.estimate[0].color['#text']
-                    var mins = est[0].minutes['#text']
-                    console.log(est[0].minutes['#text'])
-                    var routeColor = est[0].color['#text']
-
-                    //### Repeated code
-                    var point3 = $('#point3')
-
-                    var div2b = $('<div id="results" class="container">')
-                    var destinationResults = $('<h5>')
-                    var timeResults = $('<h6>')
-                    console.log("$(timeResults)", $(timeResults))
-                    $(destinationResults).text(dest + " Train")
-                    $(destinationResults).css("backgroundColor", routeColor)
-
-                    if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
-                        $(destinationResults).css("color", "white");
-                    }
-
-                    $(timeResults).text(mins + " minutes");
-                    $(point3).append(div2b);
-                    $(div2b).append(destinationResults);
-                    $(div2b).append(timeResults);
-                    //### Repeated code
-                // })
-            })
-            // ########## Backwards block end
-        }
-    };
 })();
 
 

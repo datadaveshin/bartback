@@ -30,7 +30,7 @@ router.get('/alltrains/:departureStation/', (req, res) => {
         var returnJson = parser.toJson(body);
         console.log("\n\n$%$%$%$ THE JSON BODY $%$%$%$%$");
         console.log(returnJson);
-        res.json([JSON.parse(returnJson)]);
+        res.json(JSON.parse(returnJson));
     });
 })
 
