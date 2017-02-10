@@ -22,20 +22,31 @@ router.get('/', (req, res) => {
    //     let userInfo = sess.user
    //     let message = JSON.stringify(sess.user);
     //    res.redirect('/secure');
-    if (req.session) {
+    if (req.session.user) {
 
         // console.log("^^^^^^^^^^^^^^^^ USERNAME", userInfo.userName)
         // res.render('preferences', {userName: userInfo.userName});
-        res.render('preferences');
+        res.render('preferences2');
     } else {
-        res.render('index');
+        res.redirect('/');
     };
 });
+
+router.post('/', (req, res) => {
+    let homeStation = req.body.home
+    let awayStation = req.body.away
+    console.log("\n\n\n\n:::::::::::THE HOME STATION IS POSTED :::::::::::");
+    console.log(homeStation);
+    console.log("\n\n\n\n:::::::::::THE AWAY STATION IS POSTED :::::::::::");
+    console.log(awayStation);
+
+    // res.send('YES')
+})
 
 
 
 // Receive from Registration Page
-router.post('/', (req, res) => {
+router.post('/example', (req, res) => {
     const password = req.body.password1;
     bcrypt.hash(password, 12)
     .then((hashed) => {

@@ -52,8 +52,8 @@ $$each(stationAbbrev, function(_dummy, idx) {
 console.log("stationObjArray:", stationObjArray)
 
 // Setup Selectors
-genSelector("Departure", "#point2")
-genSelector("Arrival", "#point2")
+// genSelector("Departure", "#point2")
+// genSelector("Arrival", "#point2")
 
 /**
 Generates and injects <select> tags to body
