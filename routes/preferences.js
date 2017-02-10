@@ -10,11 +10,29 @@ const { camelizeKeys, decamelizeKeys } = require('humps');
 const router = express.Router();
 
 // Show Login Form @ localhost:3031/login
-router.get('/', function(req, res) {
-    // res.render('preferences');
-    // res.send('preferences');
-    res.render('preferences');
+// router.get('/', function(req, res) {
+//     // res.render('preferences');
+//     // res.send('preferences');
+//     res.render('preferences');
+// });
+
+router.get('/', (req, res) => {
+   // let sess = req.session;
+   // if (sess.user) {
+   //     let userInfo = sess.user
+   //     let message = JSON.stringify(sess.user);
+    //    res.redirect('/secure');
+    if (req.session) {
+
+        // console.log("^^^^^^^^^^^^^^^^ USERNAME", userInfo.userName)
+        // res.render('preferences', {userName: userInfo.userName});
+        res.render('preferences');
+    } else {
+        res.render('index');
+    };
 });
+
+
 
 // Receive from Registration Page
 router.post('/', (req, res) => {

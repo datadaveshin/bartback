@@ -143,7 +143,6 @@ if (loggedInToo.val() === "noname") {
     addButton("direct", "Direct", "#point1", 3);
     let prefer = $("<li><a href='/preferences'>Preferences</a></li>")
     $(navInjector).append(prefer)
-    $(point5).append(prefer)
 }
 
 function test1() {
