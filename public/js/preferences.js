@@ -127,8 +127,6 @@ console.log("\n\n\n\n ******** BEGIN LOGGED IN *********");
 console.log(loggedIn);
 console.log("\n\n\n\n ******** END LOGGED IN *********");
 
-let navInjector = $('.nav-injector')
-
 let loggedInToo = $('#loggedInToo')
 if (loggedInToo.val() === "noname") {
     console.log("noname in the house!!!!!!!!!");
@@ -141,9 +139,6 @@ if (loggedInToo.val() === "noname") {
     addButton("allTrains", "All Trains", "#point1", 3);
     addButton("routeAll", "My Route", "#point1", 3);
     addButton("direct", "Direct", "#point1", 3);
-    let prefer = $("<li><a href='/preferences'>Preferences</a></li>")
-    $(navInjector).append(prefer)
-    $(point5).append(prefer)
 }
 
 function test1() {

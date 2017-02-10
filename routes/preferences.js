@@ -12,7 +12,8 @@ const router = express.Router();
 // Show Login Form @ localhost:3031/login
 router.get('/', function(req, res) {
     // res.render('preferences');
-    res.send('preferences');
+    // res.send('preferences');
+    res.render('preferences');
 });
 
 // Receive from Registration Page
