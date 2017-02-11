@@ -148,6 +148,8 @@ if (loggedInToo.val() === "noname") {
     addButton("allTrains", "All Trains", "#point1", 3);
     addButton("routeAll", "My Route", "#point1", 3);
     addButton("direct", "Direct", "#point1", 3);
+    addButton("homeToAway", "Home to Away", "#point1", 2);
+    addButton("awayToHome", "Away to Home", "#point1", 2);
     let prefer = $("<li><a href='/preferences'>Preferences</a></li>")
     $(navInjector).append(prefer)
 }
@@ -356,6 +358,42 @@ Application Loop
             reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
             console.log("both in the house - reqDirection is", reqDirection);
             sendRequest2(depVal, arrVal);
+        }
+    });
+
+
+    $('#homeToAway').click(function() {
+        getUserLocations();
+        if (depVal === "default" && arrVal === "default") {
+            returnCondition = 1;
+        }
+        else if (depVal !== "default" && arrVal === "default") {
+            returnCondition = 1;
+            // sendDepRealReq(depVal);
+        }
+        else if (depVal !== "default" && arrVal !== "default") {
+            returnCondition = 'direct';
+            reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
+            console.log("both in the house - reqDirection is", reqDirection);
+            sendRequest2(homeStation, awayStation);
+        }
+    });
+
+
+    $('#awayToHome').click(function() {
+        getUserLocations();
+        if (depVal === "default" && arrVal === "default") {
+            returnCondition = 1;
+        }
+        else if (depVal !== "default" && arrVal === "default") {
+            returnCondition = 1;
+            // sendDepRealReq(depVal);
+        }
+        else if (depVal !== "default" && arrVal !== "default") {
+            returnCondition = 'direct';
+            reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
+            console.log("both in the house - reqDirection is", reqDirection);
+            sendRequest2(awayStation, homeStation);
         }
     });
 

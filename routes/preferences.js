@@ -38,6 +38,9 @@ router.post('/', (req, res) => {
     let session = req.session
     let userID = req.session.user.id
 
+    req.session.home = homeStation;
+    req.session.away = awayStation;
+
     let prefsUpdate = {};
 
     if (homeStation) prefsUpdate.homeStation = homeStation
@@ -55,10 +58,11 @@ router.post('/', (req, res) => {
         .where('id', userID)
         .then(() => {
             // res.send('YES')
-            res.render('index', {
-                homeStation: homeStation,
-                awayStation: awayStation
-            })
+            // res.redirect('/', {
+            //     homeStation: homeStation,
+            //     awayStation: awayStation
+            // })
+            res.redirect('/')
         })
     // res.send('YES')
 })
