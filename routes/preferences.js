@@ -35,15 +35,42 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     let homeStation = req.body.home
     let awayStation = req.body.away
+    let session = req.session
+    let userID = req.session.user.id
+
+    let prefsUpdate = {};
+
+    if (homeStation) prefsUpdate.homeStation = homeStation
+    if (awayStation) prefsUpdate.awayStation = awayStation
+
     console.log("\n\n\n\n:::::::::::THE HOME STATION IS POSTED :::::::::::");
     console.log(homeStation);
     console.log("\n\n\n\n:::::::::::THE AWAY STATION IS POSTED :::::::::::");
     console.log(awayStation);
+    console.log("\n\n\n\n:::::::::::THE USER ID IS POSTED :::::::::::");
+    console.log(userID);
 
+    knex('users')
+        .update(decamelizeKeys(prefsUpdate), '*')
+        .where('id', userID)
+        .then(() => {
+            // res.send('YES')
+            res.render('index', {
+                homeStation: homeStation,
+                awayStation: awayStation
+            })
+        })
     // res.send('YES')
 })
 
-
+// .then(() => {
+//     req.session.user = {
+//         id: user.id,
+//         userName: user.userName,
+//         email: user.email
+//     };
+//     res.redirect('/');
+// })
 
 // Receive from Registration Page
 router.post('/example', (req, res) => {

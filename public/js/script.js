@@ -127,6 +127,13 @@ console.log("\n\n\n\n ******** BEGIN LOGGED IN *********");
 console.log(loggedIn);
 console.log("\n\n\n\n ******** END LOGGED IN *********");
 
+let homeStation = document.getElementById("homeStation").textContent
+
+let awayStation = document.getElementById("awayStation").textContent
+
+console.log("\n\n\n\n HOME AND AWAY STATIONS~~~~~~~~~~~~~~~>");
+console.log(homeStation, awayStation);
+
 let navInjector = $('.nav-injector')
 
 let loggedInToo = $('#loggedInToo')

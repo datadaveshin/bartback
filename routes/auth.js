@@ -35,8 +35,12 @@ router.post('/login', (req, res, next) => {
         req.session.user = {
             id: user.id,
             userName: user.userName,
-            email: user.email
+            email: user.email,
+            home: user.homeStation,
+            away: user.awayStation
         };
+        console.log("\n\n\n\n\n@#@#@#@#@#@#@ CURRENT USERS SMACK @#@#@#@", req.session.user);
+        console.log();
         res.redirect('/');
     })
     .catch(err => {

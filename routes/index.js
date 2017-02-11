@@ -16,10 +16,21 @@ router.get('/', (req, res) => {
        let userInfo = sess.user
        let message = JSON.stringify(sess.user);
     //    res.redirect('/secure');
-       res.render('index', {userName: userInfo.userName});
-       console.log("^^^^^^^^^^^^^^^^ USERNAME". userInfo.userName)
+       console.log("^^^^^^^^^^^^^^^^ USERNAME", userInfo.userName)
+       console.log("^^^^^^^^^^^^^^^^ HOME", userInfo.home)
+       console.log("^^^^^^^^^^^^^^^^ AWAY", userInfo.away)
+       console.log(sess);
+       console.log(userInfo);
+       res.render('index', {
+            userName: userInfo.userName,
+            homeStation: userInfo.home,
+            awayStation: userInfo.away});
    } else {
-       res.render('index');
+       res.render('index', {
+
+       homeStation: "",
+       awayStation: ""});
+    //    res.render('index')
    };
 });
 
