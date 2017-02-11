@@ -328,37 +328,41 @@ Application Loop
 
     $('#routeAll').click(function() {
         getUserLocations();
-        if (depVal === "default" && arrVal === "default") {
-            returnCondition = 1;
-        }
-        else if (depVal !== "default" && arrVal === "default") {
-            returnCondition = 1;
-            // sendDepRealReq(depVal);
-        }
-        else if (depVal !== "default" && arrVal !== "default") {
-            console.log("ROUTE ALL ROUTE ALL ROUTE ALL");
-            returnCondition = 'route-all';
-            reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
-            console.log("both in the house - reqDirection is", reqDirection);
-            sendRequest2(depVal, arrVal);
-        }
+        // if (depVal === "default" && arrVal === "default") {
+        //     returnCondition = 1;
+        // }
+        // else if (depVal !== "default" && arrVal === "default") {
+        //     returnCondition = 1;
+        //     // sendDepRealReq(depVal);
+        // }
+        // else if (depVal !== "default" && arrVal !== "default") {
+        //     console.log("ROUTE ALL ROUTE ALL ROUTE ALL");
+        //     returnCondition = 'route-all';
+        //     reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
+        //     console.log("both in the house - reqDirection is", reqDirection);
+        //     sendRequest2(depVal, arrVal);
+        // }
+        returnCondition = 'route-all';
+        sendRequest2(depVal, arrVal);
     });
 
     $('#direct').click(function() {
         getUserLocations();
-        if (depVal === "default" && arrVal === "default") {
-            returnCondition = 1;
-        }
-        else if (depVal !== "default" && arrVal === "default") {
-            returnCondition = 1;
-            // sendDepRealReq(depVal);
-        }
-        else if (depVal !== "default" && arrVal !== "default") {
-            returnCondition = 'direct';
-            reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
-            console.log("both in the house - reqDirection is", reqDirection);
-            sendRequest2(depVal, arrVal);
-        }
+        // if (depVal === "default" && arrVal === "default") {
+        //     returnCondition = 1;
+        // }
+        // else if (depVal !== "default" && arrVal === "default") {
+        //     returnCondition = 1;
+        //     // sendDepRealReq(depVal);
+        // }
+        // else if (depVal !== "default" && arrVal !== "default") {
+        //     returnCondition = 'direct';
+        //     reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
+        //     console.log("both in the house - reqDirection is", reqDirection);
+        //     sendRequest2(depVal, arrVal);
+        // }
+        returnCondition = 'direct';
+        sendRequest2(depVal, arrVal);
     });
 
 
