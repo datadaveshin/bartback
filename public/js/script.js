@@ -157,11 +157,6 @@ if (loggedInToo.val() === "noname") {
     $(navInjector).append(prefer)
 }
 
-function test1() {
-    console.log("\nFUNCITON TEST1 IS WORKING!!!!!!!!!!!!!!!!!\n")
-}
-test1();
-
 function checkDirection(here, there) {
     /* TODO use a full route array and check for here and there in it all of them, return a subArray, then do the calculation. For now, using route8 for a test*/
     let routeArr = route8 // THE TEST ARRAY TO BE REMOVED
@@ -242,7 +237,9 @@ Application Loop
         sendRequest2(awayStation, homeStation);
     });
 
-    // Request Departure Object for AJAX
+    // =============================================
+    // Request Object for AJAX call to backend
+    // =============================================
     function sendRequest2(depLocation, arrLocation) {
         console.log("\n\n\n LOCATIONS !!!!!", depLocation, arrLocation);
         let departureObj = {
@@ -254,6 +251,9 @@ Application Loop
         $.ajax(departureObj);
     };
 
+    // =============================================
+    // Fire upon Successful Call
+    // =============================================
     function SuccessRouteAll(data) {
         let dataETD = data[0];
         let dataPlanner = data[1]
@@ -369,10 +369,7 @@ Application Loop
             output2(departureObjArrDirect)
         }
 
-        // output2(departureObjArrRouteAll)
-        /*
-        OUTPUT1 - shows all trains for departure stop
-        */
+        // OUTPUT2 - Generates the output to view
         function output2(departureObjArr) {
             $$each(departureObjArr, function(departureObj) {
                 var dest = departureObj.destination
