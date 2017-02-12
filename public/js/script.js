@@ -200,7 +200,7 @@ Application Loop
     }
 
     // =============================================
-    // allTrains: Get ETD for All trains at stations
+    // Buttons for requesting calls
     // =============================================
     $('#allTrains').click(function() {
         getUserLocations();
@@ -211,10 +211,6 @@ Application Loop
             sendRequest2(depVal, dummyArrival);
         }
     });
-
-    // =============================================================================
-    // routeAll and direct: Get ETD for all trains for selected start and end points
-    // =============================================================================
 
     $('#routeAll').click(function() {
         getUserLocations();
@@ -232,42 +228,13 @@ Application Loop
         }
     });
 
-
     $('#homeToAway').click(function() {
-        getUserLocations();
-        // if (depVal === "default" && arrVal === "default") {
-        //     returnCondition = 1;
-        // }
-        // else if (depVal !== "default" && arrVal === "default") {
-        //     returnCondition = 1;
-        //     // sendDepRealReq(depVal);
-        // }
-        // else if (depVal !== "default" && arrVal !== "default") {
-        //     returnCondition = 'direct';
-        //     reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
-        //     console.log("both in the house - reqDirection is", reqDirection);
-        //     sendRequest2(homeStation, awayStation);
-        // }
         returnCondition = 'direct';
         sendRequest2(homeStation, awayStation);
     });
 
 
     $('#awayToHome').click(function() {
-        getUserLocations();
-        // if (depVal === "default" && arrVal === "default") {
-        //     returnCondition = 1;
-        // }
-        // else if (depVal !== "default" && arrVal === "default") {
-        //     returnCondition = 1;
-        //     // sendDepRealReq(depVal);
-        // }
-        // else if (depVal !== "default" && arrVal !== "default") {
-        //     returnCondition = 'direct';
-        //     reqDirection = checkDirection(depVal, arrVal) // Will return array later with all related lines to account for multiple trains
-        //     console.log("both in the house - reqDirection is", reqDirection);
-        //     sendRequest2(awayStation, homeStation);
-        // }
         returnCondition = 'direct';
         sendRequest2(awayStation, homeStation);
     });
