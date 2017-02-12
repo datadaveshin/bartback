@@ -96,7 +96,7 @@ console.log("\n\n\n\n ******** BEGIN LOGGED IN *********");
 console.log(loggedIn);
 console.log("\n\n\n\n ******** END LOGGED IN *********");
 
-// Get stations preferences from database
+// Get stations logout fLog Oute
 let homeStation = document.getElementById("homeStation").textContent
 let awayStation = document.getElementById("awayStation").textContent
 let homeToAwayButtonText = homeStation + " to " + awayStation;
@@ -118,15 +118,23 @@ if (loggedInToo.val() === "noname") {
     addButton("routeAll", "My Route", "#point1", 2);
 } else {
     console.log(loggedInToo.val() + "in the house!!!!!");
-    addButton("allTrains", "All Trains", "#point1", 3);
-    addButton("routeAll", "My Route", "#point1", 3);
-    addButton("direct", "Direct", "#point1", 3);
+    addButton("allTrains", "All Trains", "#point0", 3);
+    addButton("routeAll", "My Route", "#point0", 3);
+    addButton("direct", "Direct", "#point0", 3);
     addButton("homeToAway", homeToAwayButtonText, "#point1", 2);
     addButton("awayToHome", awayToHomeButtonText, "#point1", 2);
-    let preferenceLink = $("<li><a href='/preferences'>Preferences</a></li>")
+
+    let preferenceLink = $('<li><a href="/preferences" class="white-text">Preferences</a></li>')
     $(navInjector).append(preferenceLink)
+
     let preferenceLink2 = $("<li><a href='/preferences'>Preferences</a></li>")
     $(navInjector2).append(preferenceLink2)
+
+    let logoutLink = $('<li><a href="/auth/logout" class="white-text">Log Out</a></li>')
+    $(navInjector).append(logoutLink)
+
+    let logoutLink2 = $("<li><a href='/auth/logout'>Log Out</a></li>")
+    $(navInjector2).append(logoutLink2)
 }
 
 function checkDirection(here, there) {
@@ -164,11 +172,11 @@ function checkDirection(here, there) {
     // ================================================
     function getUserLocations() {
         let departure = $('#Departure');
-        let arrival = $('#Arrival')
-        depVal = $(departure).val()
-        arrVal = $(arrival).val()
-        console.log("\n\n\n\nDeparture Val~~~~~~~~~~~~~~~~~>", depVal)
-        console.log("Arrival Val~~~~~~~~~~~~~~~~~>", arrVal)
+        let arrival = $('#Arrival');
+        depVal = $(departure).val();
+        arrVal = $(arrival).val();
+        console.log("\n\n\n\nDeparture Val~~~~~~~~~~~~~~~~~>", depVal);
+        console.log("Arrival Val~~~~~~~~~~~~~~~~~>", arrVal);
     }
 
     // =============================================

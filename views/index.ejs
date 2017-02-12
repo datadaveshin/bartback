@@ -35,7 +35,6 @@
 
 <body>
     <!-- ###### NAV BAR ####### -->
-    <p></p>
     <nav>
         <div class="container">
             <div class="row">
@@ -45,13 +44,14 @@
 
 
                     <ul class="right hide-on-med-and-down nav-injector">
-                        <!-- <li class="active"><a href="/auth/login" class=''>Log In</a></li> -->
-                        <li><a href="/auth/login" class=''>Log In</a></li>
+                        <!-- <li class="active"><a href="/auth/login" class="white-text">Log In</a></li> -->
+                        <li><a href="/auth/login" class="white-text">Log In</a></li>
                         <li><a href='/register' class="white-text">Register</a></li>
                     </ul>
 
                     <ul class="side-nav nav-injector2" id="menu">
-                        <li><a class="active" href='/auth/login'>Log In</a></li>
+                        <!-- <li class="active"><a  href='/auth/login'>Log In</a></li> -->
+                        <li><a href='/auth/login'>Log In</a></li>
                         <li><a href='/register'>Register</a></li>
                     </ul>
                 </div>
@@ -68,50 +68,32 @@
             <p id="homeStation" hidden><%= homeStation%></p>
             <p id="awayStation" hidden><%= awayStation%></p>
             <h5 class="loggedIn"></h5>
-            <p></p>
+
             <div class="row">
                 <section id="point0"></section>
             </div>
-            <p></p>
+
             <div class="row">
                 <section id="point1"></section>
             </div>
-            <p></p>
+
             <div class="row">
                 <section id="point2"></section>
             </div>
-            <p></p>
+
             <div class="row">
                 <section id="point3"></section>
             </div>
-            <p></p>
+
             <div class="row">
                 <section id="point4"></section>
             </div>
-            <p></p>
+
         </div>
     </main>
 
-
     <!-- ###### FOOTER ####### -->
-    <footer class="page-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col l4 offset-l2 s12">
-                    <ul>
-                        <li><a class="grey-text text-lighten-3" href="#!">Instructions</a></li>
-                        <li><a class="grey-text text-lighten-3" href="/preferences">Preferences</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <div class="container">
-                © 2017 Copyright David Shin
-            </div>
-        </div>
-    </footer>
-
+    <%- include("footer") %>
 
     <!-- ###### JAVASCRIPT SCRIPTS ####### -->
     <script type="text/javascript" src="js/init.js"></script>

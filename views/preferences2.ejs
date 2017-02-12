@@ -35,12 +35,25 @@
 
 <body>
     <!-- ###### NAV BAR ####### -->
-    <p></p>
     <nav>
         <div class="container">
             <div class="row">
                 <div class="nav-wrapper col s12">
-                    <a href="#" class="brand-logo">BARTBack Prefeneces 2</a>
+                    <a href="#" class="brand-logo">BARTBack Preferences</a>
+                    <a href="#" data-activates="menu" class="button-collapse"><i class="material-icons">menu</i></a>
+
+
+                    <ul class="right hide-on-med-and-down nav-injector">
+                        <!-- <li class="active"><a href="/auth/login" class="white-text">Log In</a></li> -->
+                        <li><a href="/auth/login" class="white-text">Log In</a></li>
+                        <li><a href='/register' class="white-text">Register</a></li>
+                    </ul>
+
+                    <ul class="side-nav nav-injector2" id="menu">
+                        <!-- <li class="active"><a  href='/auth/login'>Log In</a></li> -->
+                        <li><a href='/auth/login'>Log In</a></li>
+                        <li><a href='/register'>Register</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -53,27 +66,27 @@
             <!-- <h5 class="loggedIn">Hi <%= typeof userName!= "undefined" ? userName : "noname" %>!</h5> -->
             <input type="hidden" name="" id="loggedInToo" value="<%= typeof userName!= "undefined" ? userName : "noname" %>">
             <h5 class="loggedIn"></h5>
-            <p></p>
+
             <div class="row">
                 <section id="point0"></section>
             </div>
-            <p></p>
+
             <div class="row">
                 <section id="point1"></section>
             </div>
-            <p></p>
+
             <div class="row">
                 <section id="point2"></section>
             </div>
-            <p></p>
+
             <div class="row">
                 <section id="point3"></section>
             </div>
-            <p></p>
+
             <div class="row">
                 <section id="point4"></section>
             </div>
-            <p></p>
+    
             <div class="form-container">
                 <form class="" action="/preferences" method="post">
                     <div class="input-field col s12">
@@ -116,26 +129,8 @@
         </div>
     </main>
 
-
     <!-- ###### FOOTER ####### -->
-    <footer class="page-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col l4 offset-l2 s12">
-                    <ul>
-                        <li><a class="grey-text text-lighten-3" href="#!">Instructions</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">About</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <div class="container">
-                © 2017 Copyright David Shin
-            </div>
-        </div>
-    </footer>
-
+    <%- include("footer") %>
 
     <!-- ###### JAVASCRIPT SCRIPTS ####### -->
     <script type="text/javascript" src="js/helperFunctions-1.js"></script>

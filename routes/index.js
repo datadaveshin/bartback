@@ -32,14 +32,19 @@ router.get('/', (req, res) => {
    };
 });
 
+// Instructions
+router.get('/instructions', (req, res, next) => {
+   res.render('instructions')
+})
+
 // About Page
-// router.get('/about', (req, res, next) => {
-//    res.render('about')
-// })
+router.get('/about', (req, res, next) => {
+   res.render('about')
+})
 
 // Contact Page
-// router.get('/contact', (req, res, next) => {
-//    res.render('contact')
-// })
+router.get('/contact', (req, res, next) => {
+   res.render('contact')
+})
 
 module.exports = router;
