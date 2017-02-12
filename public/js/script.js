@@ -106,6 +106,7 @@ console.log("\n\n\n\n HOME AND AWAY STATIONS~~~~~~~~~~~~~~~>");
 console.log(homeStation, awayStation);
 
 let navInjector = $('.nav-injector');
+let navInjector2 = $('.nav-injector2');
 
 let loggedInToo = $('#loggedInToo');
 
@@ -122,8 +123,10 @@ if (loggedInToo.val() === "noname") {
     addButton("direct", "Direct", "#point1", 3);
     addButton("homeToAway", homeToAwayButtonText, "#point1", 2);
     addButton("awayToHome", awayToHomeButtonText, "#point1", 2);
-    let prefer = $("<li><a href='/preferences'>Preferences</a></li>")
-    $(navInjector).append(prefer)
+    let preferenceLink = $("<li><a href='/preferences'>Preferences</a></li>")
+    $(navInjector).append(preferenceLink)
+    let preferenceLink2 = $("<li><a href='/preferences'>Preferences</a></li>")
+    $(navInjector2).append(preferenceLink2)
 }
 
 function checkDirection(here, there) {
