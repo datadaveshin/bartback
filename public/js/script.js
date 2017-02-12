@@ -1,47 +1,25 @@
 "use strict";
-/**
-Needed by Materialize to implement <select> tags
-*/
+//* Needed by Materialize to implement <select> tags
 $(document).ready(function() {
     $('select').material_select();
 });
 
 console.log('###$$$$$$@@@********  IN SCRIPT script.js *********@@@$$$$$$$###')
 
-/**
-Initialize Departure arrays and variables
-destArrBack0 is your station
-destArrBack1 is one station back, etc.
-*/
-var depVal = "default";
-var arrVal = "default";
-var reqDirection;
-var destArrBack0 = [];
-var destArrBack1 = [];
-var destArrBack2 = [];
-var destArrBack3 = [];
-
-/**
-Initialize returnCondition
-0 = no options
-1 = realtime full list for the Departure station
-2 = realtime filtered list for Departure station based on direction
-3 = get seat filters for direct trip, reverse directions
-*/
-var returnCondition = 0;
+//* Initialize Departure arrays and variables
+let depVal = "default";
+let arrVal = "default";
+let reqDirection;
+let returnCondition;
 
 
-/**
-Define a Station Class
-*/
+//* Define a Station Class
 function Station(abbrev, fullname) {
     this.abbrev = abbrev || "";
     this.fullname = fullname || "";
 }
 
-/**
-Array that contains a Station instance for each Bart Station
-*/
+//* Array that contains a Station instance for each Bart Station
 var stationObjArray = [];
 $$each(stationAbbrev, function(_dummy, idx) {
    let retArr = []
@@ -49,74 +27,65 @@ $$each(stationAbbrev, function(_dummy, idx) {
    stationObjArray.push(stationObj)
 })
 
-console.log("stationObjArray:", stationObjArray)
+console.log("stationObjArray:", stationObjArray);
 
 // Setup Selectors
 genSelector("Departure", "#point2")
 genSelector("Arrival", "#point2")
 
-/**
-Generates and injects <select> tags to body
-i: Name for the <select> `id` and `name` for reference
-o: Selector attached to element with each station as option
-TODO: inject these to a specific <div> in html
-TODO: use array as parameter to generalize
-*/
+//* Generates the <select> menu
 function genSelector(selectorName, attachmentPoint) {
-    // let body = $('body')
-    // let body = $('body')
-    let point1 = $(attachmentPoint)
-    let selectorDiv = $('<div>')
-    let selectorHeading = $('<h2>')
-    var selectorSelect = $('<select>')
-    let selectorDefaultOption = $('<option>')
+    // Build the elements
+    let point1 = $(attachmentPoint);
+    let selectorDiv = $('<div>');
+    let selectorHeading = $('<h2>');
+    var selectorSelect = $('<select>');
+    let selectorDefaultOption = $('<option>');
 
     // Set attributes, names, values
-    $(selectorDiv).attr("id", selectorName + "selector")
-    $(selectorDiv).attr("id", selectorName + "selector")
-    $(selectorDiv).addClass("container")
-    $(selectorSelect).attr("name", selectorName)
-    $(selectorSelect).attr("id", selectorName)
-    // $(selectorSelect).addClass("browser-default")
-    $(selectorDefaultOption).val("default")
-    $(selectorDefaultOption).text(selectorName + " Station")
+    $(selectorDiv).attr("id", selectorName + "selector");
+    $(selectorDiv).addClass("container");
+    $(selectorSelect).attr("name", selectorName);
+    $(selectorSelect).attr("id", selectorName);
+    $(selectorDefaultOption).val("default");
+    $(selectorDefaultOption).text(selectorName + " Station");
+
+    // Use to remove styling from materialize for <select>
+    // $(selectorSelect).addClass("browser-default");
 
     // Build Dom
-    $(point1).append(selectorDiv)
-    $(selectorDiv).append(selectorHeading)
-    $(selectorDiv).append(selectorSelect)
-    $(selectorSelect).append(selectorDefaultOption)
+    $(point1).append(selectorDiv);
+    $(selectorDiv).append(selectorHeading);
+    $(selectorDiv).append(selectorSelect);
+    $(selectorSelect).append(selectorDefaultOption);
 
+    // Fill in Options
     $$each(stationObjArray, function(statObj) {
         let selectorOption = $('<option>')
-        $(selectorOption).val(statObj.abbrev)
-        $(selectorOption).text(statObj.fullname)
-        $(selectorSelect).append(selectorOption)
+        $(selectorOption).val(statObj.abbrev);
+        $(selectorOption).text(statObj.fullname);
+        $(selectorSelect).append(selectorOption);
     })
-    console.log("selectorSelect: ", selectorSelect)
+    console.log("selectorSelect: ", selectorSelect);
 }
 
-// =======================
-// Check if user logged in
-// =======================
-
-/**
-Setup Buttons
-*/
+// =============
+// Setup Buttons
+// =============
 function addButton(aButtonID, buttonText, attachmentPoint, columns = 3) {
     if (columns === 3) {
         var numColumns = "waves-effect btn col s4"
     } else if (columns === 2) {
         var numColumns = "waves-effect btn col s6"
     }
-    let newButton = $('<button>')
-    $(newButton).addClass(numColumns)
-    $(newButton).attr("id", aButtonID)
-    $(newButton).text(buttonText)
+    let newButton = $('<button>');
+    $(newButton).addClass(numColumns);
+    $(newButton).attr("id", aButtonID);
+    $(newButton).text(buttonText);
 
     console.log("MY NEW BUTTON", newButton);
-    let sectionPart = $(attachmentPoint)
-    $(sectionPart).append(newButton)
+    let sectionPart = $(attachmentPoint);
+    $(sectionPart).append(newButton);
     console.log("sectionPart", sectionPart);
     console.log("$(sectionPart)", $(sectionPart));
 }
@@ -127,19 +96,19 @@ console.log("\n\n\n\n ******** BEGIN LOGGED IN *********");
 console.log(loggedIn);
 console.log("\n\n\n\n ******** END LOGGED IN *********");
 
+// Get stations preferences from database
 let homeStation = document.getElementById("homeStation").textContent
-
 let awayStation = document.getElementById("awayStation").textContent
-
 let homeToAwayButtonText = homeStation + " to " + awayStation;
 let awayToHomeButtonText = awayStation + " to " + homeStation;
 
 console.log("\n\n\n\n HOME AND AWAY STATIONS~~~~~~~~~~~~~~~>");
 console.log(homeStation, awayStation);
 
-let navInjector = $('.nav-injector')
+let navInjector = $('.nav-injector');
 
-let loggedInToo = $('#loggedInToo')
+let loggedInToo = $('#loggedInToo');
+
 if (loggedInToo.val() === "noname") {
     console.log("noname in the house!!!!!!!!!");
     addButton("login", "Log In", "#point0", 2);
@@ -160,8 +129,8 @@ if (loggedInToo.val() === "noname") {
 function checkDirection(here, there) {
     /* TODO use a full route array and check for here and there in it all of them, return a subArray, then do the calculation. For now, using route8 for a test*/
     let routeArr = route8 // THE TEST ARRAY TO BE REMOVED
-    let hereIdx = routeArr.indexOf(here)
-    let thereIdx = routeArr.indexOf(there)
+    let hereIdx = routeArr.indexOf(here);
+    let thereIdx = routeArr.indexOf(there);
     console.log("hereIdx", hereIdx, "thereIdx", thereIdx);
     if (thereIdx > hereIdx) {
         return "North"
@@ -172,9 +141,9 @@ function checkDirection(here, there) {
     }
 }
 
-/**
-Application Loop
-*/
+// ========================
+// Start Application Loop
+// ========================
 (function() {
     console.log("\n\n\n##### ANONYMOUS LOOP FUNCTION WORKING!!!  #######\n")
 
@@ -187,7 +156,9 @@ Application Loop
         window.location.href = "http://localhost:3031/register"
     });
 
-    // Global resets
+    // ================================================
+    // Global resets for departure and arrival stations
+    // ================================================
     function getUserLocations() {
         let departure = $('#Departure');
         let arrival = $('#Arrival')
@@ -255,6 +226,10 @@ Application Loop
     // Fire upon Successful Call
     // =============================================
     function SuccessRouteAll(data) {
+        // Remove previous etd data from view
+        $( "div" ).remove( "#results" );
+
+
         let dataETD = data[0];
         let dataPlanner = data[1]
         console.log("\n\n\n\n\n $$$$$$ All Train ETD data $$$$$$$$$")
@@ -262,7 +237,6 @@ Application Loop
         console.log("\n\n\n\n\n $$$$$$ All Train Planner data $$$$$$$$$")
         console.log(dataPlanner);
 
-        $( "div" ).remove( "#results" );
 
         let tripArr = dataPlanner.root.schedule.request.trip
         let tripArr2 = tripArr.map(function(item){
@@ -433,14 +407,14 @@ Application Loop
                     $(div2colA).css("backgroundColor", routeColor);
 
                     // *** Toggle for random "busy" color for square
-                    let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-                    if (val === 1) {
-                        $(div2colA).css("backgroundColor", 'red');
-                    } else if (val === 2) {
-                        $(div2colA).css("backgroundColor", 'yellow');
-                    } else {
-                        $(div2colA).css("backgroundColor", 'green');
-                    }
+                    // let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                    // if (val === 1) {
+                    //     $(div2colA).css("backgroundColor", 'red');
+                    // } else if (val === 2) {
+                    //     $(div2colA).css("backgroundColor", 'yellow');
+                    // } else {
+                    //     $(div2colA).css("backgroundColor", 'green');
+                    // }
                     $(div2row).append(div2col);
                     $(div2col).append(div2colA);
                     $(div2col).append(div2colB);
