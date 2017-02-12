@@ -13,8 +13,8 @@ Initialize Departure arrays and variables
 destArrBack0 is your station
 destArrBack1 is one station back, etc.
 */
-var depVal;
-var arrVal;
+var depVal = "default";
+var arrVal = "default";
 var reqDirection;
 var destArrBack0 = [];
 var destArrBack1 = [];
@@ -204,12 +204,13 @@ Application Loop
     // =============================================
     $('#allTrains').click(function() {
         getUserLocations();
-        returnCondition = 'all-trains'
-        let dummyArrival = "mont"
-        sendRequest2(depVal, dummyArrival);
+        console.log("WHAT IS DEPVAL NOW>>>>>>>>>", depVal);
+        if (depVal !== "default") {
+            returnCondition = 'all-trains'
+            let dummyArrival = "mont"
+            sendRequest2(depVal, dummyArrival);
+        }
     });
-
-
 
     // =============================================================================
     // routeAll and direct: Get ETD for all trains for selected start and end points
