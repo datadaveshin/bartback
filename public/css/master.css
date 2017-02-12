@@ -1,5 +1,7 @@
 .btn {
   /*margin: 1px;*/
+  background-color: #3E6B8D;
+  border-radius: 20px;
 }
 
 /*Makes a sticky footer - footer will stay at bottom of page*/
@@ -10,6 +12,30 @@ body {
 }
 main {
     flex: 1 0 auto;
+}
+
+html {
+    background-color: #ddd;
+    color: #555;
+    font-family: 'Lato', 'Arial', 'sans-serif';
+    font-size: 15px;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+}
+
+nav {
+  background-color: #19374E
+}
+
+footer.page-footer {
+  background-color: #0A1D2B
+}
+footer.page-footer .footer-copyright {
+  background-color: #19374E
+}
+
+.banner {
+    margin-top: 1.5em;
 }
 
 .destination {
