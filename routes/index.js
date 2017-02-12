@@ -1,8 +1,6 @@
 "use strict";
 
 // Require
-const logger = require('morgan');
-const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
 
