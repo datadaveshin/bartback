@@ -35,30 +35,7 @@
 
 <body>
     <!-- ###### NAV BAR ####### -->
-    <nav>
-        <div class="container">
-            <div class="row">
-                <div class="nav-wrapper col s12">
-                    <a href="#" class="brand-logo">BARTBack</a>
-                    <a href="#" data-activates="menu" class="button-collapse"><i class="material-icons">menu</i></a>
-
-
-                    <ul class="right hide-on-med-and-down nav-injector">
-                        <!-- <li class="active"><a href="/auth/login" class="white-text">Log In</a></li> -->
-                        <li><a href="/auth/login" class="white-text">Log In</a></li>
-                        <li><a href='/register' class="white-text">Register</a></li>
-                    </ul>
-
-                    <ul class="side-nav nav-injector2" id="menu">
-                        <!-- <li class="active"><a  href='/auth/login'>Log In</a></li> -->
-                        <li><a href='/auth/login'>Log In</a></li>
-                        <li><a href='/register'>Register</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-
+    <%- include("nav") %>
 
     <!-- ###### MAIN ####### -->
     <main>
