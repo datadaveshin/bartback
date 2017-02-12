@@ -131,6 +131,9 @@ let homeStation = document.getElementById("homeStation").textContent
 
 let awayStation = document.getElementById("awayStation").textContent
 
+let homeToAwayButtonText = homeStation + " to " + awayStation;
+let awayToHomeButtonText = awayStation + " to " + homeStation;
+
 console.log("\n\n\n\n HOME AND AWAY STATIONS~~~~~~~~~~~~~~~>");
 console.log(homeStation, awayStation);
 
@@ -148,8 +151,8 @@ if (loggedInToo.val() === "noname") {
     addButton("allTrains", "All Trains", "#point1", 3);
     addButton("routeAll", "My Route", "#point1", 3);
     addButton("direct", "Direct", "#point1", 3);
-    addButton("homeToAway", "Home to Away", "#point1", 2);
-    addButton("awayToHome", "Away to Home", "#point1", 2);
+    addButton("homeToAway", homeToAwayButtonText, "#point1", 2);
+    addButton("awayToHome", awayToHomeButtonText, "#point1", 2);
     let prefer = $("<li><a href='/preferences'>Preferences</a></li>")
     $(navInjector).append(prefer)
 }

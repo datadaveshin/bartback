@@ -38,8 +38,8 @@ router.post('/', (req, res) => {
     let session = req.session
     let userID = req.session.user.id
 
-    req.session.home = homeStation;
-    req.session.away = awayStation;
+    req.session.user.home = homeStation;
+    req.session.user.away = awayStation;
 
     let prefsUpdate = {};
 
