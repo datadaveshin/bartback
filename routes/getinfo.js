@@ -1,8 +1,8 @@
 "use strict";
 
 // For testing
-const etdJSON = require('../data/examples/exampleJson').etdJson2
-const plannerJSON = require('../data/examples/exampleJson').plannerJson2
+const etdJSON = require('../data/examples/exampleJson').etdJson2;
+const plannerJSON = require('../data/examples/exampleJson').plannerJson2;
 
 // Require
 const express = require('express');
@@ -11,7 +11,7 @@ const requestPromise = require('request-promise');
 const parser = require('xml2json');
 
 // API key
-const getin = 'MW9S-E7SL-26DU-VV8V'
+const getin = 'MW9S-E7SL-26DU-VV8V';
 
 // Start instance
 const router = express.Router();
@@ -20,7 +20,7 @@ const router = express.Router();
 // Get ETD for All trains at stations
 // ==================================
 router.get('/alltrains/:departureStation/', (req, res) => {
-    let departureStation = req.params.departureStation
+    let departureStation = req.params.departureStation;
 
     let requestObj = {
         url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
@@ -38,14 +38,14 @@ router.get('/alltrains/:departureStation/', (req, res) => {
         res.json( [ JSON.parse(returnJson) ] );
         // res.json( [etdJSON] );
     });
-})
+});
 
 // ====================================================
 // Get ETD for trains for selected start and end points
 // ====================================================
 router.get('/routeall/:departureStation/:arrivalStation/', (req, res) => {
-    let departureStation = req.params.departureStation
-    let arrivalStation = req.params.arrivalStation
+    let departureStation = req.params.departureStation;
+    let arrivalStation = req.params.arrivalStation;
     let requestObj1 = {
         url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
         method: "GET",
@@ -71,14 +71,9 @@ router.get('/routeall/:departureStation/:arrivalStation/', (req, res) => {
         console.log("\n\n$%$%$%$ THE SECOND PROMISE JSON $%$%$%$%$");
         console.log(returnJson2);
 
-        res.json( [ JSON.parse(returnJson1), JSON.parse(returnJson2) ] )
-        // res.json( [ etdJSON,  plannerJSON ] );
-
-        // var returnJson = parser.toJson(body);
-        // console.log("\n\n$%$%$%$ THE JSON BODY $%$%$%$%$");
-        // console.log(returnJson);
-        // res.json(JSON.parse(returnJson ));
+        // res.json( [ JSON.parse(returnJson1), JSON.parse(returnJson2) ] );
+        res.json( [ etdJSON,  plannerJSON ] );
     });
-})
+});
 
 module.exports = router;

@@ -39,7 +39,7 @@ router.post('/login', (req, res, next) => {
             home: user.homeStation,
             away: user.awayStation
         };
-        console.log("\n\n\n\n\n@#@#@#@#@#@#@ CURRENT USERS SMACK @#@#@#@", req.session.user);
+        console.log("\n\n\n\n\n@#@#@#@#@#@#@ CURRENT USER @#@#@#@", req.session.user);
         console.log();
         res.redirect('/');
     })
