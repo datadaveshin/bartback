@@ -96,9 +96,9 @@ console.log("\n\n\n\n ******** BEGIN LOGGED IN *********");
 console.log(loggedIn);
 console.log("\n\n\n\n ******** END LOGGED IN *********");
 
-// Get stations logout fLog Oute
-let homeStation = document.getElementById("homeStation").textContent
-let awayStation = document.getElementById("awayStation").textContent
+// Get stations
+let homeStation = document.getElementById("homeStation").textContent;
+let awayStation = document.getElementById("awayStation").textContent;
 let homeToAwayButtonText = homeStation + " to " + awayStation;
 let awayToHomeButtonText = awayStation + " to " + homeStation;
 
@@ -115,11 +115,11 @@ if (loggedInToo.val() === "noname") {
     addButton("login", "Log In", "#point0", 2);
     addButton("register", "Register", "#point0", 2);
     addButton("allTrains", "All Trains", "#point1", 2);
-    addButton("routeAll", "My Route", "#point1", 2);
+    addButton("routeAll", "Routes", "#point1", 2);
 } else {
     console.log(loggedInToo.val() + "in the house!!!!!");
     addButton("allTrains", "All Trains", "#point0", 3);
-    addButton("routeAll", "My Route", "#point0", 3);
+    addButton("routeAll", "Routes", "#point0", 3);
     addButton("direct", "Direct", "#point0", 3);
     addButton("homeToAway", homeToAwayButtonText, "#point1", 2);
     addButton("awayToHome", awayToHomeButtonText, "#point1", 2);

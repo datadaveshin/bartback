@@ -1,6 +1,7 @@
 .btn {
   /*margin: 1px;*/
-  background-color: #3E6B8D;
+  /*background-color: #3E6B8D;*/
+  background-color: #016592;
   border-radius: 20px;
 }
 
@@ -24,14 +25,25 @@ html {
 }
 
 nav {
-  background-color: #19374E
+  /*background-color: #19374E*/
+  background-color: #0A1D2B
 }
 
 footer.page-footer {
-  background-color: #0A1D2B
+  /*background-color: #0A1D2B*/
+  background-color: #19374E
 }
 footer.page-footer .footer-copyright {
-  background-color: #19374E
+  /*background-color: #19374E*/
+  background-color: #0A1D2B
+}
+
+.row {
+  margin-bottom: 0;
+}
+
+.pnt0 {
+  margin-bottom: 10px;
 }
 
 .banner {
@@ -70,7 +82,8 @@ footer.page-footer .footer-copyright {
 
 
 .report {
-  margin: initial;
+  /*margin: initial;*/
+  margin: 0;
 }
 
 /*Copyright David Shin 2017

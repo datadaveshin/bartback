@@ -1,46 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- ###### HEAD ####### -->
+<!-- @@@@@@ NOTE Login needs it's own HEAD because of the relative path to public/ @@@@@@ -->
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-  <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
-  <link rel="stylesheet" href="../css/master.css">
-  <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BARTBack</title>
+    <!-- ###### META ####### -->
+    <meta charset="UTF-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+
+    <!-- ## Materialize - Let browser know website is optimized for mobile ## -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ###### FONTS ####### -->
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
+
+    <!-- ###### CSS ####### -->
+    <link type="text/css" rel="stylesheet" href="../css/materialize.min.css" media="screen,projection" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css"  media="screen,projection"> -->
+    <link rel="stylesheet" href="../css/master.css" media="screen" title="no title">
+
+
+    <!-- ###### JQUERY AND MATERIALIZE JS ####### -->
+    <!-- jQuery JS - precede and use 2.1.1 version when using Materialize -->
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/materialize.min.js"></script>
+
+    <!-- ###### TITLE ####### -->
+    <title>BARTBack</title>
 </head>
+
 <body>
-  <main class="container">
-    <div class="row">
-      <div class="col s12 m12">
-        <h4>Log in</h4>
+  <!-- ###### NAV BAR ####### -->
+  <%- include("nav") %>
 
-          <form action="/auth/login" method="POST">
-            <div class="row">
-              <div class="input-field col s12 l6">
-                <label for="email">Email: </label>
-                <input type="text" autofocus="true" required name="email" id="email" class="validate">
-              </div>
-            </div>
+  <!-- ###### MAIN ####### -->
+  <main>
+      <%- include("banner") %>
+      <div class="container">
+        <div class="row">
+          <div class="col s12 m12">
+            <h4>Log in</h4>
 
-            <div class="row">
-              <div class="input-field col s12 l6">
-                <label for="password">Password: </label>
-                <input type="password" required name="password" id="password" class="validate">
-              </div>
-            </div>
+              <form action="/auth/login" method="POST">
+                <div class="row">
+                  <div class="input-field col s12 l6">
+                    <label for="email">Email: </label>
+                    <input type="text" autofocus="true" required name="email" id="email" class="validate">
+                  </div>
+                </div>
 
-            <div class="row center">
-              <button class="submit btn waves-effect waves-light" type="submit" name="action">Submit
-                <i class="material-icons right">send</i>
-              </button>
-            </div>
-        </form>
+                <div class="row">
+                  <div class="input-field col s12 l6">
+                    <label for="password">Password: </label>
+                    <input type="password" required name="password" id="password" class="validate">
+                  </div>
+                </div>
+
+                <div class="row center">
+                  <button class="submit btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                  </button>
+                </div>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
   </main>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="../js/materialize.js"></script>
+  <!-- ###### FOOTER ####### -->
+  <%- include("footer") %>
+
+  <!-- ###### JAVASCRIPT SCRIPTS ####### -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="../js/init.js"></script>
+  <script type="text/javascript" src="../js/materialize.js"></script>
 </body>
 </html>

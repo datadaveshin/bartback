@@ -1,71 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-<head>
-    <!-- ###### META ####### -->
-    <meta charset="UTF-8">
-    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
-
-    <!-- ## Materialize - Let browser know website is optimized for mobile ## -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- ###### FONTS ####### -->
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
-    <!-- ###### CSS ####### -->
-    <link type="text/css" rel="stylesheet" href="/css/materialize.min.css" media="screen,projection" />
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css"  media="screen,projection"> -->
-    <link rel="stylesheet" href="css/master.css" media="screen" title="no title">
-
-
-    <!-- ###### JQUERY AND MATERIALIZE JS ####### -->
-    <!-- jQuery JS - precede and use 2.1.1 version when using Materialize -->
-    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
-    <!-- <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/materialize.min.js"></script>
-
-    <!-- ###### TITLE ####### -->
-    <title>Bart To The Future</title>
-</head>
-
+<!-- ###### HEAD ####### -->
+<%- include("head") %>
 
 <body>
     <!-- ###### NAV BAR ####### -->
-    <nav>
-        <div class="container">
-            <div class="row">
-                <div class="nav-wrapper col s12">
-                    <a href="#" class="brand-logo">BARTBack Preferences</a>
-                    <a href="#" data-activates="menu" class="button-collapse"><i class="material-icons">menu</i></a>
-
-
-                    <ul class="right hide-on-med-and-down nav-injector">
-                        <!-- <li class="active"><a href="/auth/login" class="white-text">Log In</a></li> -->
-                        <li><a href="/auth/login" class="white-text">Log In</a></li>
-                        <li><a href='/register' class="white-text">Register</a></li>
-                    </ul>
-
-                    <ul class="side-nav nav-injector2" id="menu">
-                        <!-- <li class="active"><a  href='/auth/login'>Log In</a></li> -->
-                        <li><a href='/auth/login'>Log In</a></li>
-                        <li><a href='/register'>Register</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <%- include("nav") %>
 
 
     <!-- ###### MAIN ####### -->
     <main>
+        <%- include("banner") %>
         <div class="container">
             <!-- <h5 class="loggedIn">Hi <%= typeof userName!= "undefined" ? userName : "noname" %>!</h5> -->
             <input type="hidden" name="" id="loggedInToo" value="<%= typeof userName!= "undefined" ? userName : "noname" %>">
             <h5 class="loggedIn"></h5>
+
+            <h4>Preferences</h4>
 
             <div class="row">
                 <section id="point0"></section>
@@ -86,12 +38,12 @@
             <div class="row">
                 <section id="point4"></section>
             </div>
-    
+
             <div class="form-container">
                 <form class="" action="/preferences" method="post">
                     <div class="input-field col s12">
                         <select class="" name="home">
-                            <option value="" disabled selected>Choose your option</option>
+                            <option value="" disabled selected>Choose your home station</option>
                             <option value="12th">12th St. Oakland City Center</option>
                             <option value="16th">16th St. Mission (SF)</option>
                             <option value="19th">19th St. Oakland</option>
@@ -100,13 +52,50 @@
                             <option value="balb">Balboa Park (SF)</option>
                             <option value="bayf">Bay Fair (San Leandro)</option>
                             <option value="cast">Castro Valley</option>
-                            <option value="civc">Civic Center (SF)</option>
+                            <option value="civc">Civic Center / UN Plaza</option>
+                            <option value="cols">Coliseum</option>
+                            <option value="colm">Colma</option>
+                            <option value="conc">Concord</option>
+                            <option value="daly">Daly City</option>
+                            <option value="dbrk">Downtown Berkeley</option>
+                            <option value="dubl">Dublin / Pleasanton</option>
+                            <option value="deln">El Cerrito del Norte</option>
+                            <option value="plza">El Cerrito Plaza</option>
+                            <option value="embr">Embarcadero (SF)</option>
+                            <option value="frmt">Fremont</option>
+                            <option value="ftvl">Fruitvale (Oakland)</option>
+                            <option value="glen">Glen Park (SF)</option>
+                            <option value="hayw">Hayward</option>
+                            <option value="lafy">Lafayette</option>
+                            <option value="lake">Lake Merritt (Oakland)</option>
+                            <option value="mcar">MacArthur (Oakland)</option>
+                            <option value="mlbr">Millbrae</option>
+                            <option value="mont">Montgomery St. (SF)</option>
+                            <option value="nbrk">North Berkeley</option>
+                            <option value="ncon">North Concord / Martinez</option>
+                            <option value="oakl">Oakland Int'l Airport</option>
+                            <option value="orin">Orinda</option>
+                            <option value="pitt">Pittsburg / Bay Point</option>
+                            <option value="phil">Pleasant Hill / Contra Costa Centre</option>
+                            <option value="powl">Powell St. (SF)</option>
+                            <option value="rich">Richmond</option>
+                            <option value="rock">Rockridge (Oakland)</option>
+                            <option value="sbrn">San Bruno</option>
+                            <option value="sfia">San Francisco Int'l Airport</option>
+                            <option value="sanl">San Leandro</option>
+                            <option value="shay">South Hayward</option>
+                            <option value="ssan">South San Francisco</option>
+                            <option value="ucty">Union City</option>
+                            <option value="wcrk">Walnut Creek</option>
+                            <!-- <option value="warm">Warm Springs/South Fremont</option> -->
+                            <option value="wdub">West Dublin / Pleasanton</option>
+                            <option value="woak">West Oakland</option>
                         </select>
                         <label>Home Station</label>
                     </div>
                     <div class="input-field col s12">
                         <select class="" name="away">
-                            <option value="" disabled selected>Choose your option</option>
+                            <option value="" disabled selected>Choose your home station</option>
                             <option value="12th">12th St. Oakland City Center</option>
                             <option value="16th">16th St. Mission (SF)</option>
                             <option value="19th">19th St. Oakland</option>
@@ -115,7 +104,44 @@
                             <option value="balb">Balboa Park (SF)</option>
                             <option value="bayf">Bay Fair (San Leandro)</option>
                             <option value="cast">Castro Valley</option>
-                            <option value="civc">Civic Center (SF)</option>
+                            <option value="civc">Civic Center / UN Plaza</option>
+                            <option value="cols">Coliseum</option>
+                            <option value="colm">Colma</option>
+                            <option value="conc">Concord</option>
+                            <option value="daly">Daly City</option>
+                            <option value="dbrk">Downtown Berkeley</option>
+                            <option value="dubl">Dublin / Pleasanton</option>
+                            <option value="deln">El Cerrito del Norte</option>
+                            <option value="plza">El Cerrito Plaza</option>
+                            <option value="embr">Embarcadero (SF)</option>
+                            <option value="frmt">Fremont</option>
+                            <option value="ftvl">Fruitvale (Oakland)</option>
+                            <option value="glen">Glen Park (SF)</option>
+                            <option value="hayw">Hayward</option>
+                            <option value="lafy">Lafayette</option>
+                            <option value="lake">Lake Merritt (Oakland)</option>
+                            <option value="mcar">MacArthur (Oakland)</option>
+                            <option value="mlbr">Millbrae</option>
+                            <option value="mont">Montgomery St. (SF)</option>
+                            <option value="nbrk">North Berkeley</option>
+                            <option value="ncon">North Concord / Martinez</option>
+                            <option value="oakl">Oakland Int'l Airport</option>
+                            <option value="orin">Orinda</option>
+                            <option value="pitt">Pittsburg / Bay Point</option>
+                            <option value="phil">Pleasant Hill / Contra Costa Centre</option>
+                            <option value="powl">Powell St. (SF)</option>
+                            <option value="rich">Richmond</option>
+                            <option value="rock">Rockridge (Oakland)</option>
+                            <option value="sbrn">San Bruno</option>
+                            <option value="sfia">San Francisco Int'l Airport</option>
+                            <option value="sanl">San Leandro</option>
+                            <option value="shay">South Hayward</option>
+                            <option value="ssan">South San Francisco</option>
+                            <option value="ucty">Union City</option>
+                            <option value="wcrk">Walnut Creek</option>
+                            <!-- <option value="warm">Warm Springs/South Fremont</option> -->
+                            <option value="wdub">West Dublin / Pleasanton</option>
+                            <option value="woak">West Oakland</option>
                         </select>
                         <label>Away Station</label>
                     </div>
@@ -136,6 +162,7 @@
     <script type="text/javascript" src="js/helperFunctions-1.js"></script>
     <script type="text/javascript" src="js/data.js"></script>
     <script type="text/javascript" src="js/preferences2.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
 </body>
 
 </html>
