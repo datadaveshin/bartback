@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
         .where('id', userID)
         .then(() => {
             res.redirect('/')
-        })
+        });
 })
 
 module.exports = router;
