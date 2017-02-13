@@ -104,6 +104,21 @@ let route20lower = upperToLower(route20upper);
 console.log("\nroute20upper", route20upper);
 console.log("\nroute20lower", route20lower);
 
+let allRoutesLower = [
+    route1lower,
+    route2lower,
+    route3lower,
+    route4lower,
+    route5lower,
+    route6lower,
+    route7lower,
+    route8lower,
+    route11lower,
+    route12lower,
+    route19lower,
+    route20lower,
+];
+
 // Make Clusters
 var clusterRICH = ["ASHB", "DBRK", "NBRK", "PLZA", "DELN", "RICH"]
 
