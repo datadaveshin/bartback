@@ -48,6 +48,12 @@ footer.page-footer .footer-copyright {
 
 .banner {
     margin-top: 1.5em;
+    /*position: relative;*/
+}
+
+img {
+    display: block;
+    margin: auto;
 }
 
 .destination {
@@ -62,7 +68,6 @@ footer.page-footer .footer-copyright {
   height: 100px;
   font-size: 50px;
 }
-
 
 .forSquare {
   width: 20px;
@@ -79,7 +84,6 @@ footer.page-footer .footer-copyright {
   float: left;
   margin-bottom: 20px;
 }
-
 
 .report {
   /*margin: initial;*/
