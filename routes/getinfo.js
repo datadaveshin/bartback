@@ -1,5 +1,10 @@
 "use strict";
 
+// ======================================================
+// TOGGLE TO GO BACK AND FORTH BETWEEN TEST AND LIVE MODE
+// ======================================================
+const TESTMODE = false;
+
 // For testing
 const etdJSON = require('../data/examples/exampleJson').etdJson2;
 const plannerJSON = require('../data/examples/exampleJson').plannerJson2;
@@ -19,26 +24,26 @@ const router = express.Router();
 // ==================================
 // Get ETD for All trains at stations
 // ==================================
-router.get('/alltrains/:departureStation/', (req, res) => {
-    let departureStation = req.params.departureStation;
-
-    let requestObj = {
-        url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
-        method: "GET",
-    };
-
-    return requestPromise(requestObj)
-    .then((body) => {
-        console.log("\n\n$%$%$%$ THE XML BODY $%$%$%$%$");
-        console.log(body);
-        var returnJson = parser.toJson(body);
-        console.log("\n\n$%$%$%$ THE JSON BODY $%$%$%$%$");
-        console.log(returnJson);
-
-        res.json( [ JSON.parse(returnJson) ] );
-        // res.json( [etdJSON] );
-    });
-});
+// router.get('/alltrains/:departureStation/', (req, res) => {
+//     let departureStation = req.params.departureStation;
+//
+//     let requestObj = {
+//         url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
+//         method: "GET",
+//     };
+//
+//     return requestPromise(requestObj)
+//     .then((body) => {
+//         console.log("\n\n$%$%$%$ THE XML BODY $%$%$%$%$");
+//         console.log(body);
+//         var returnJson = parser.toJson(body);
+//         console.log("\n\n$%$%$%$ THE JSON BODY $%$%$%$%$");
+//         console.log(returnJson);
+//
+//         res.json( [ JSON.parse(returnJson) ] );
+//         // res.json( [etdJSON] );
+//     });
+// });
 
 // ====================================================
 // Get ETD for trains for selected start and end points
@@ -71,8 +76,11 @@ router.get('/routeall/:departureStation/:arrivalStation/', (req, res) => {
         console.log("\n\n$%$%$%$ THE SECOND PROMISE JSON $%$%$%$%$");
         console.log(returnJson2);
 
-        // res.json( [ JSON.parse(returnJson1), JSON.parse(returnJson2) ] );
-        res.json( [ etdJSON,  plannerJSON ] );
+        if (TESTMODE) {
+            res.json( [ etdJSON,  plannerJSON ] );
+        } else {
+            res.json( [ JSON.parse(returnJson1), JSON.parse(returnJson2) ] );
+        }
     });
 });
 

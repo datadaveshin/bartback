@@ -13,8 +13,7 @@
         <%- include("banner") %>
 
         <div class="container">
-            <!-- <h5 class="loggedIn">Hi <%= typeof userName!= "undefined" ? userName : "noname" %>!</h5> -->
-            <input type="hidden" name="" id="loggedInToo" value="<%= typeof userName!= "undefined" ? userName : "noname" %>">
+            <p id="userName" hidden><%= userName%></p>
             <p id="homeStation" hidden><%= homeStation%></p>
             <p id="awayStation" hidden><%= awayStation%></p>
             <h5 class="loggedIn"></h5>

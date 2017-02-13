@@ -90,27 +90,25 @@ function addButton(aButtonID, buttonText, attachmentPoint, columns = 3) {
     console.log("$(sectionPart)", $(sectionPart));
 }
 
-
-let loggedIn = $('.loggedIn')
-console.log("\n\n\n\n ******** BEGIN LOGGED IN *********");
-console.log(loggedIn);
-console.log("\n\n\n\n ******** END LOGGED IN *********");
-
 // Get stations
+let userName = document.getElementById("userName").textContent;
 let homeStation = document.getElementById("homeStation").textContent;
 let awayStation = document.getElementById("awayStation").textContent;
 let homeToAwayButtonText = homeStation + " to " + awayStation;
 let awayToHomeButtonText = awayStation + " to " + homeStation;
 
-console.log("\n\n\n\n HOME AND AWAY STATIONS~~~~~~~~~~~~~~~>");
-console.log(homeStation, awayStation);
+console.log("\n\n\n\n USER AND HOME AND AWAY STATIONS~~~~~~~~~~~~~~~>");
+console.log("userName:", userName);
+console.log("homeStation:", homeStation);
+console.log("awayStation:", awayStation);
 
 let navInjector = $('.nav-injector');
 let navInjector2 = $('.nav-injector2');
 
 let loggedInToo = $('#loggedInToo');
 
-if (loggedInToo.val() === "noname") {
+// if (loggedInToo.val() === "noname") {
+if (userName === "") {
     console.log("noname in the house!!!!!!!!!");
     addButton("login", "Log In", "#point0", 2);
     addButton("register", "Register", "#point0", 2);

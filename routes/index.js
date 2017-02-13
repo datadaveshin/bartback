@@ -23,6 +23,7 @@ router.get('/', (req, res) => {
             awayStation: userInfo.awayStation});
     } else {
         res.render('index', {
+                            userName: "",
                             homeStation: "",
                             awayStation: ""
                             }
