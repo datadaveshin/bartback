@@ -9,42 +9,41 @@ const router = express.Router();
 
 // Main Page
 router.get('/', (req, res) => {
-   let sess = req.session;
-   if (sess.user) {
-       let userInfo = sess.user
-       let message = JSON.stringify(sess.user);
-    //    res.redirect('/secure');
-       console.log("^^^^^^^^^^^^^^^^ USERNAME", userInfo.userName)
-       console.log("^^^^^^^^^^^^^^^^ HOME", userInfo.home)
-       console.log("^^^^^^^^^^^^^^^^ AWAY", userInfo.away)
-       console.log(sess);
-       console.log(userInfo);
-       res.render('index', {
+    let sess = req.session;
+    if (sess.user) {
+        let userInfo = sess.user;
+        console.log("^^^^^^^^^^^^^^^^ USERNAME", userInfo.userName);
+        console.log("^^^^^^^^^^^^^^^^ HOME", userInfo.homeStation);
+        console.log("^^^^^^^^^^^^^^^^ AWAY", userInfo.awayStation);
+        console.log(sess);
+        console.log(userInfo);
+        res.render('index', {
             userName: userInfo.userName,
-            homeStation: userInfo.home,
-            awayStation: userInfo.away});
-   } else {
-       res.render('index', {
-
-       homeStation: "",
-       awayStation: ""});
+            homeStation: userInfo.homeStation,
+            awayStation: userInfo.awayStation});
+    } else {
+        res.render('index', {
+                            homeStation: "",
+                            awayStation: ""
+                            }
+        );
     //    res.render('index')
-   };
+    }
 });
 
 // Instructions
-router.get('/instructions', (req, res, next) => {
-   res.render('instructions')
-})
+router.get('/instructions', (req, res) => {
+   res.render('instructions');
+});
 
 // About Page
-router.get('/about', (req, res, next) => {
-   res.render('about')
-})
+router.get('/about', (req, res) => {
+   res.render('about');
+});
 
 // Contact Page
-router.get('/contact', (req, res, next) => {
-   res.render('contact')
-})
+router.get('/contact', (req, res) => {
+   res.render('contact');
+});
 
 module.exports = router;

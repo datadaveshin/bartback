@@ -4,3 +4,4 @@ bin-private/
 report.md
 *pdf
 old/
+pg_upgrade_*

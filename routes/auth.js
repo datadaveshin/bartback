@@ -36,11 +36,11 @@ router.post('/login', (req, res, next) => {
             id: user.id,
             userName: user.userName,
             email: user.email,
-            home: user.homeStation,
-            away: user.awayStation
+            homeStation: user.homeStation,
+            awayStation: user.awayStation
         };
-        console.log("\n\n\n\n\n@#@#@#@#@#@#@ CURRENT USER @#@#@#@", req.session.user);
-        console.log();
+        console.log("\n\n\n\n\n@#@#@#@#@#@#@ CURRENT USER @#@#@#@");
+        console.log(req.session.user);
         res.redirect('/');
     })
     .catch(err => {
