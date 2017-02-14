@@ -30,8 +30,8 @@ $$each(stationAbbrev, function(_dummy, idx) {
 console.log("stationObjArray:", stationObjArray);
 
 // Setup Selectors
-genSelector("Departure", "#point2")
-genSelector("Arrival", "#point2")
+genSelector("Departure", "#point3")
+genSelector("Arrival", "#point3")
 
 //* Generates the <select> menu
 function genSelector(selectorName, attachmentPoint) {
@@ -116,11 +116,13 @@ if (userName === "") {
     addButton("routeAll", "Routes", "#point1", 2);
 } else {
     console.log(loggedInToo.val() + "in the house!!!!!");
-    addButton("allTrains", "All Trains", "#point0", 3);
-    addButton("routeAll", "Routes", "#point0", 3);
-    addButton("direct", "Direct", "#point0", 3);
-    addButton("homeToAway", homeToAwayButtonText, "#point1", 2);
-    addButton("awayToHome", awayToHomeButtonText, "#point1", 2);
+    addButton("homeToAway", homeToAwayButtonText, "#point0", 2);
+    addButton("awayToHome", awayToHomeButtonText, "#point0", 2);
+    addButton("allTrains", "All Trains", "#point1", 3);
+    addButton("routeAll", "Routes", "#point1", 3);
+    addButton("direct", "Direct", "#point1", 3);
+    addButton("bartBack", "BARTBack", "#point2", 2);
+    addButton("report", "Report", "#point2", 2);
 
     let preferenceLink = $('<li><a href="/preferences" class="white-text">Preferences</a></li>')
     $(navInjector).append(preferenceLink)
@@ -134,12 +136,78 @@ if (userName === "") {
     let logoutLink2 = $("<li><a href='/auth/logout'>Log Out</a></li>")
     $(navInjector2).append(logoutLink2)
 }
-
+//
+// function checkDirection(here, there) {
+//     /* TODO use a full route array and check for here and there in it all of them, return a subArray, then do the calculation. For now, using route8 for a test*/
+//     let routeArr = route8 // THE TEST ARRAY TO BE REMOVED
+//     let hereIdx = routeArr.indexOf(here);
+//     let thereIdx = routeArr.indexOf(there);
+//     console.log("hereIdx", hereIdx, "thereIdx", thereIdx);
+//     if (thereIdx > hereIdx) {
+//         return "North"
+//     } else if (thereIdx < hereIdx) {
+//         return "South"
+//     } else if (thereIdx === hereIdx) {
+//         return "Same"
+//     }
+// }
 function checkDirection(here, there) {
     /* TODO use a full route array and check for here and there in it all of them, return a subArray, then do the calculation. For now, using route8 for a test*/
-    let routeArr = route8 // THE TEST ARRAY TO BE REMOVED
-    let hereIdx = routeArr.indexOf(here);
-    let thereIdx = routeArr.indexOf(there);
+    // let routeArr = route8 // THE TEST ARRAY TO BE REMOVED
+    // let hereIdx = routeArr.indexOf(here);
+    // let thereIdx = routeArr.indexOf(there);
+
+    let routeCandidates = sfRoutes.filter(route => {
+        console.log("routz", route);
+        console.log("here", here, "there", there);
+        if (route.indexOf(here) > -1 && route.indexOf(there) > -1) {
+            return route
+        }
+    })
+
+    let backStations = {
+        back1: [],
+        back2: [],
+        back3: [],
+        back4: [],
+    }
+
+    let hereIdx;
+    let thereIdx;
+    routeCandidates.forEach(route => {
+        hereIdx = route.indexOf(here);
+        thereIdx = route.indexOf(there);
+        if (hereIdx < thereIdx) {
+            backStations.back1.push(route[hereIdx - 1])
+            backStations.back2.push(route[hereIdx - 2])
+            backStations.back3.push(route[hereIdx - 3])
+            backStations.back4.push(route[hereIdx - 4])
+        } else if (hereIdx > thereIdx) {
+            backStations.back1.push(route[hereIdx + 1])
+            backStations.back2.push(route[hereIdx + 2])
+            backStations.back3.push(route[hereIdx + 3])
+            backStations.back4.push(route[hereIdx + 4])
+        }
+    })
+
+    console.log("routeCandidates", routeCandidates);
+    console.log("backStations", backStations);
+
+    let backStations2 = [];
+    $$each(backStations, backArray => {
+        let filtered = backArray.filter(item => {
+            if (item) {
+                console.log("item:", item);
+                return item
+            };
+        });
+        console.log("filtered", filtered);
+        let backArr = Array.from(new Set(filtered))
+        backStations2.push(backArr)
+    })
+
+    console.log("backStations2", backStations2);
+
     console.log("hereIdx", hereIdx, "thereIdx", thereIdx);
     if (thereIdx > hereIdx) {
         return "North"
@@ -185,7 +253,12 @@ function checkDirection(here, there) {
         console.log("WHAT IS DEPVAL NOW>>>>>>>>>", depVal);
         if (depVal !== "default") {
             returnCondition = 'all-trains'
-            let dummyArrival = "mont"
+            let dummyArrival;
+            if (depVal === 'mont') {
+                dummyArrival = "plza"
+            } else {
+                dummyArrival = 'mont'
+            }
             sendRequest2(depVal, dummyArrival);
         }
     });
@@ -217,6 +290,15 @@ function checkDirection(here, there) {
         sendRequest2(awayStation, homeStation);
     });
 
+    $('#bartBack').click(function() {
+        getUserLocations();
+        returnCondition = 'direct';
+        if (depVal !== arrVal) {
+            checkDirection(depVal, arrVal)
+            sendRequest3(depVal, arrVal);
+        }
+    });
+
     // =============================================
     // Request Object for AJAX call to backend
     // =============================================
@@ -232,12 +314,32 @@ function checkDirection(here, there) {
     };
 
     // =============================================
+    // Request Object for AJAX call to backend
+    // =============================================
+    function sendRequest3(depLocation, arrLocation) {
+        console.log("\n\n\n LOCATIONS !!!!!", depLocation, arrLocation);
+        let departureObj = {
+            url: `http://localhost:3031/getinfo/bartback/${depLocation}/${arrLocation}`,
+            method: "GET",
+            success: SuccessRouteAll2
+        };
+        // Start the AJAX request
+        $.ajax(departureObj);
+    };
+
+    // =============================================
     // Fire upon Successful Call
     // =============================================
+
+    function SuccessRouteAll2(data) {
+        // data.forEach(trip => {
+        //     SuccessRouteAll([trip]);
+        // })
+    };
+
     function SuccessRouteAll(data) {
         // Remove previous etd data from view
         $( "div" ).remove( "#results" );
-
 
         let dataETD = data[0];
         let dataPlanner = data[1]
@@ -245,7 +347,6 @@ function checkDirection(here, there) {
         console.log(dataETD);
         console.log("\n\n\n\n\n $$$$$$ All Train Planner data $$$$$$$$$")
         console.log(dataPlanner);
-
 
         let tripArr = dataPlanner.root.schedule.request.trip
         let tripArr2 = tripArr.map(function(item){

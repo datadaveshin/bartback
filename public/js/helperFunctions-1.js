@@ -34,6 +34,11 @@ function $$filter(collection, predicate) {
     return isString ? retArr.join("") : retArr;
 }
 
+module.exports = {
+    $$each: $$each,
+    $$filter: $$filter
+}
+
 /*
 Copyright David Shin 2016
 All Rights Reserved

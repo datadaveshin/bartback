@@ -9,6 +9,13 @@ const TESTMODE = false;
 const etdJSON = require('../data/examples/exampleJson').etdJson2;
 const plannerJSON = require('../data/examples/exampleJson').plannerJson2;
 
+// ======================================================
+// GET STATION INFO
+// ======================================================
+const sfRoutes = require('../public/js/data.js').sfRoutes;
+const $$each = require('../public/js/helperFunctions-1.js').$$each;
+console.log("sfRoutes defined:", sfRoutes);
+
 // Require
 const express = require('express');
 const request = require('request');
@@ -63,23 +70,222 @@ router.get('/routeall/:departureStation/:arrivalStation/', (req, res) => {
     Promise.all([requestPromise(requestObj1), requestPromise(requestObj2)])
     // return requestPromise(requestObj)
     .then((promises) => {
-        console.log("\n\n$%$%$%$ THE FIRST PROMISE XML $%$%$%$%$");
-        console.log(promises[0]);
-        console.log("\n\n$%$%$%$ THE SECOND PROMISE XML $%$%$%$%$");
-        console.log(promises[1]);
+        // console.log("\n\n$%$%$%$ THE FIRST PROMISE XML $%$%$%$%$");
+        // console.log(promises[0]);
+        // console.log("\n\n$%$%$%$ THE SECOND PROMISE XML $%$%$%$%$");
+        // console.log(promises[1]);
 
         var returnJson1 = parser.toJson(promises[0]);
         var returnJson2 = parser.toJson(promises[1]);
 
         console.log("\n\n$%$%$%$ THE FIRST PROMISE JSON $%$%$%$%$");
         console.log(returnJson1);
-        console.log("\n\n$%$%$%$ THE SECOND PROMISE JSON $%$%$%$%$");
-        console.log(returnJson2);
+        // console.log("\n\n$%$%$%$ THE SECOND PROMISE JSON $%$%$%$%$");
+        // console.log(returnJson2);
 
         if (TESTMODE) {
             res.json( [ etdJSON,  plannerJSON ] );
         } else {
             res.json( [ JSON.parse(returnJson1), JSON.parse(returnJson2) ] );
+        }
+    });
+});
+
+// ====================================================
+// BARTBack for trains for selected start and end points
+// ====================================================
+function checkDirection(here, there, allowedRoutes) {
+    /* TODO use a full route array and check for here and there in it all of them, return a subArray, then do the calculation. For now, using route8 for a test*/
+    // let routeArr = route8 // THE TEST ARRAY TO BE REMOVED
+    // let hereIdx = routeArr.indexOf(here);
+    // let thereIdx = routeArr.indexOf(there);
+
+    let routeCandidates = allowedRoutes.filter(route => {
+        console.log("routz", route);
+        console.log("here", here, "there", there);
+        if (route.indexOf(here) > -1 && route.indexOf(there) > -1) {
+            return route
+        }
+    })
+
+    let backStations = {
+        back1: [],
+        back2: [],
+        back3: [],
+        back4: [],
+    }
+
+    let hereIdx;
+    let thereIdx;
+    routeCandidates.forEach(route => {
+        hereIdx = route.indexOf(here);
+        thereIdx = route.indexOf(there);
+        if (hereIdx < thereIdx) {
+            backStations.back1.push(route[hereIdx - 1])
+            backStations.back2.push(route[hereIdx - 2])
+            backStations.back3.push(route[hereIdx - 3])
+            backStations.back4.push(route[hereIdx - 4])
+        } else if (hereIdx > thereIdx) {
+            backStations.back1.push(route[hereIdx + 1])
+            backStations.back2.push(route[hereIdx + 2])
+            backStations.back3.push(route[hereIdx + 3])
+            backStations.back4.push(route[hereIdx + 4])
+        }
+    })
+
+    console.log("routeCandidates", routeCandidates);
+    console.log("backStations", backStations);
+
+    let backStations2 = [];
+    $$each(backStations, backArray => {
+        let filtered = backArray.filter(item => {
+            if (item) {
+                console.log("item:", item);
+                return item
+            };
+        });
+        console.log("filtered", filtered);
+        let backArr = Array.from(new Set(filtered))
+        if (backArr.length >= 1) {
+            backStations2.push(backArr)
+        }
+    })
+
+    console.log("backStations2", backStations2);
+
+    console.log("hereIdx", hereIdx, "thereIdx", thereIdx);
+    let direction;
+    if (thereIdx > hereIdx) {
+        direction = "North";
+    } else if (thereIdx < hereIdx) {
+        direction = "South";
+    } else if (thereIdx === hereIdx) {
+        direction = "Same";
+    }
+
+    return {backStations2: backStations2, direction: direction}
+}
+
+router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
+    let departureStation = req.params.departureStation;
+    let arrivalStation = req.params.arrivalStation;
+    console.log("goony goo goo: ",  departureStation, arrivalStation );
+    console.log("routz:", sfRoutes);
+
+    let routeInfo = checkDirection(departureStation, arrivalStation, sfRoutes)
+    let stationList = routeInfo.backStations2;
+    let destinationDirection = routeInfo.direction;
+
+    console.log("\n\ntypeof stationList:", typeof stationList, "stationList", stationList);
+
+    // Make these instances of a class later
+    let requestObjDep;
+    let requestObjArr;
+    let requestObj1;
+    let requestObj2;
+    let requestObj3;
+    let requestObj4;
+
+
+    requestObjDep = {
+        url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
+        method: "GET",
+    };
+
+    requestObjArr = {
+        // url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
+        url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${departureStation}&dest=${arrivalStation}&date=now&key=${getin}&b=2&a=2&l=1`,
+        method: "GET",
+    };
+
+    if (stationList[0]){
+        requestObj1 = {
+            url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[0]}&key=${getin}`,
+            method: "GET",
+        };
+    }
+
+    if (stationList[1]){
+        requestObj2 = {
+            url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[1]}&key=${getin}`,
+            method: "GET",
+        };
+    }
+
+    if (stationList[2]){
+        requestObj3 = {
+            url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[2]}&key=${getin}`,
+            method: "GET",
+        };
+    }
+
+    if (stationList[3]){
+        requestObj4 = {
+            url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[3]}&key=${getin}`,
+            method: "GET",
+        };
+    }
+    console.log("\n\n");
+    console.log("requestObjDep", requestObjDep);
+    console.log("requestObjArr", requestObjArr);
+    console.log("requestObj1", requestObj1);
+    console.log("requestObj2", requestObj2);
+    console.log("requestObj3", requestObj3);
+    console.log("requestObj4", requestObj4);
+
+    // stationList.forEach(backArray => {
+        // let retObj = {};
+        // let requestObj1 = {
+        //     url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
+        //     method: "GET",
+        // };
+    // });
+    // let requestObj1 = {
+    //     url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
+    //     method: "GET",
+    // };
+    // let requestObj2 = {
+    //     // url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
+    //     url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${departureStation}&dest=${arrivalStation}&date=now&key=${getin}&b=2&a=2&l=1`,
+    //     method: "GET",
+    // };
+    Promise.all([requestPromise(requestObjDep), requestPromise(requestObjArr), requestPromise(requestObj1), requestPromise(requestObj2), requestPromise(requestObj3), requestPromise(requestObj4)])
+    // return requestPromise(requestObj)
+    .then((promises) => {
+        // console.log("\n\n$%$%$%$ THE FIRST PROMISE XML $%$%$%$%$");
+        // console.log(promises[0]);
+        // console.log("\n\n$%$%$%$ THE SECOND PROMISE XML $%$%$%$%$");
+        // console.log(promises[1]);
+
+        var returnJsonDep = parser.toJson(promises[0]);
+        var returnJsonArr = parser.toJson(promises[1]);
+        var returnJson1 = parser.toJson(promises[2]);
+        var returnJson2 = parser.toJson(promises[3]);
+        var returnJson3 = parser.toJson(promises[4]);
+        var returnJson4 = parser.toJson(promises[5]);
+
+        console.log("\n\n$%$%$%$ THE DEP PROMISE JSON $%$%$%$%$");
+        console.log(returnJson1);
+        console.log("\n\n$%$%$%$ THE ARR PROMISE JSON $%$%$%$%$");
+        console.log(returnJson2);
+        console.log("\n\n$%$%$%$ THE FIRST PROMISE JSON $%$%$%$%$");
+        console.log(returnJson1);
+        console.log("\n\n$%$%$%$ THE SECOND PROMISE JSON $%$%$%$%$");
+        console.log(returnJson2);
+        console.log("\n\n$%$%$%$ THE FIRST PROMISE JSON $%$%$%$%$");
+        console.log(returnJson1);
+        console.log("\n\n$%$%$%$ THE SECOND PROMISE JSON $%$%$%$%$");
+        console.log(returnJson2);
+        console.log("\n\n$%$%$%$ THE FIRST PROMISE JSON $%$%$%$%$");
+        console.log(returnJson1);
+        console.log("\n\n$%$%$%$ THE SECOND PROMISE JSON $%$%$%$%$");
+        console.log(returnJson2);
+
+
+        if (TESTMODE) {
+            res.json( [ etdJSON,  plannerJSON ] );
+        } else {
+            res.json( [ JSON.parse(returnJsonDep), JSON.parse(returnJsonArr), JSON.parse(returnJson1), JSON.parse(returnJson2), JSON.parse(returnJson3), JSON.parse(returnJson4)] );
         }
     });
 });

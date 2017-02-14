@@ -119,9 +119,20 @@ let allRoutesLower = [
     route20lower,
 ];
 
+let sfRoutes = [
+    route2lower,
+    route6lower,
+    route8lower,
+    route12lower,
+];
+
 // Make Clusters
 var clusterRICH = ["ASHB", "DBRK", "NBRK", "PLZA", "DELN", "RICH"]
 
 var clusterSFIA = ["MLBR", "SFIA", "SBRN", "SSAN", "COLM"]
 
 var clusterSanFran = ["DALY", "BALB", "GLEN", "24TH", "16TH", "CIVC", "POWL", "MONT", "EMBR"]
+
+module.exports = {
+    sfRoutes: sfRoutes
+}
