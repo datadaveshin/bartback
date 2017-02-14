@@ -654,16 +654,17 @@ function checkDirection(here, there) {
         console.log("OUR NEW departureObjArrDirect", departureObjArrDirect);
 
         if (returnCondition === 'all-trains') {
-            output2(departureObjArrAllTrains)
+            output3(departureObjArrAllTrains)
         } else if (returnCondition === 'route-all') {
             console.log("IS ROUTE ALL SELECTED?");
-            output2(departureObjArrRouteAll)
+            output3(departureObjArrRouteAll)
         } else if (returnCondition === 'direct') {
-            output2(departureObjArrDirect)
+            output3(departureObjArrDirect)
         }
 
         // OUTPUT2 - Generates the output to view
-        function output2(departureObjArr) {
+        function output3(departureObjArr) {
+            var point3 = $('#point3')
             $$each(departureObjArr, function(departureObj) {
                 var dest = departureObj.destination
                 console.log("\n#### DESTINATION!!!!!!", dest, "\n")
@@ -682,23 +683,26 @@ function checkDirection(here, there) {
                     var routeColor = departureObj.estimate.color
                 }
 
-                var point3 = $('#point3')
-                var div2 = $('<div id="results" class="container">')
+                // var point3 = $('#point3')
+                // var div2 = $('<div id="results" class="container">')
+
+                var station = dataETD.root.station.name
+
+                var div2container = $('<div id="results" class="container">')
+
+                var stationResultsDiv = $('<div class="station">')
+                var stationResults = $("<h5>")
+
+
+
                 var destinationResultsDiv = $('<div class="destination">')
                 var destinationResults = $("<h5>")
-                var timeResults = $('<h6>')
-                var div2container = $('<div id="results" class="container">')
                 var div2row = $('<div class="row report">')
+                var timeResults = $('<h6>')
 
                 console.log("$(timeResults)", $(timeResults))
                 $(destinationResults).text(dest);
 
-                // *** Toggle to bring back bart colors to destination
-                // $(destinationResults).css("backgroundColor", routeColor)
-                //
-                // if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
-                //     $(destinationResults).css("color", "white");
-                // }
 
                 $(point3).append(div2container);
                 $(div2container).append(destinationResultsDiv);
@@ -723,17 +727,21 @@ function checkDirection(here, there) {
                     div2colB.text(processedTime);
 
                     // *** Toggle for routeColor for squares
-                    $(div2colA).css("backgroundColor", routeColor);
+                    // $(div2colA).css("backgroundColor", routeColor);
 
-                    // *** Toggle for random "busy" color for square
-                    // let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-                    // if (val === 1) {
-                    //     $(div2colA).css("backgroundColor", 'red');
-                    // } else if (val === 2) {
-                    //     $(div2colA).css("backgroundColor", 'yellow');
-                    // } else {
-                    //     $(div2colA).css("backgroundColor", 'green');
-                    // }
+                    if (userName === "") {
+                        $(div2colA).css("backgroundColor", routeColor);
+                    } else {
+                        let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                        if (val === 1) {
+                            $(div2colA).css("backgroundColor", 'red');
+                        } else if (val === 2) {
+                            $(div2colA).css("backgroundColor", 'yellow');
+                        } else {
+                            $(div2colA).css("backgroundColor", 'green');
+                        }
+                    }
+
                     $(div2row).append(div2col);
                     $(div2col).append(div2colA);
                     $(div2col).append(div2colB);
