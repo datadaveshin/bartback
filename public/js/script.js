@@ -467,7 +467,7 @@ function checkDirection(here, there) {
                     var routeColor = departureObj.estimate.color
                 }
 
-                var point3 = $('#point3')
+                var point4 = $('#point4')
                 var div2 = $('<div id="results" class="container">')
                 var destinationResultsDiv = $('<div class="destination">')
                 var destinationResults = $("<h5>")
@@ -485,7 +485,7 @@ function checkDirection(here, there) {
                 //     $(destinationResults).css("color", "white");
                 // }
 
-                $(point3).append(div2container);
+                $(point4).append(div2container);
                 $(div2container).append(destinationResultsDiv);
                 $(destinationResultsDiv).append(destinationResults);
                 $(div2container).append(div2row);
@@ -662,9 +662,9 @@ function checkDirection(here, there) {
             output3(departureObjArrDirect)
         }
 
-        // OUTPUT2 - Generates the output to view
+        // OUTPUT3 - Generates the output to view
         function output3(departureObjArr) {
-            var point3 = $('#point3')
+            var point4 = $('#point4')
             $$each(departureObjArr, function(departureObj) {
                 var dest = departureObj.destination
                 console.log("\n#### DESTINATION!!!!!!", dest, "\n")
@@ -691,22 +691,29 @@ function checkDirection(here, there) {
                 var div2container = $('<div id="results" class="container">')
 
                 var stationResultsDiv = $('<div class="station">')
-                var stationResults = $("<h5>")
-
+                var stationResults = $("<h6 class='station-results'>")
+                $(stationResults).text(station);
 
 
                 var destinationResultsDiv = $('<div class="destination">')
                 var destinationResults = $("<h5>")
+                $(destinationResults).text(dest);
+
+
                 var div2row = $('<div class="row report">')
                 var timeResults = $('<h6>')
 
                 console.log("$(timeResults)", $(timeResults))
-                $(destinationResults).text(dest);
 
 
-                $(point3).append(div2container);
+                $(point4).append(div2container);
+
+                $(div2container).append(stationResultsDiv);
+                $(stationResultsDiv).append(stationResults);
+
                 $(div2container).append(destinationResultsDiv);
                 $(destinationResultsDiv).append(destinationResults);
+
                 $(div2container).append(div2row);
                 console.log("*********** times *********");
                 console.log(times);

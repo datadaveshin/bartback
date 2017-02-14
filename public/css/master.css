@@ -60,6 +60,12 @@ img {
     margin: auto;
 }
 
+.station-results {
+  display: block;
+  margin: auto 0;
+  text-align: center;
+}
+
 .destination {
   padding: 0 12;
 }
