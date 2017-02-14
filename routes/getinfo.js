@@ -233,15 +233,17 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
         method: "GET",
     };
 
-    requestObjDep4 = {
-        url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[3]}&key=${getin}`,
-        method: "GET",
-    };
+    // requestObjDep4 = {
+    //     url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[3]}&key=${getin}`,
+    //     method: "GET",
+    // };
+    //
+    // requestObjPlan4 = {
+    //     url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${stationList[3]}&dest=${stationList[4]}&date=now&key=${getin}&b=2&a=2&l=1`,
+    //     method: "GET",
+    // };
 
-    requestObjPlan4 = {
-        url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${stationList[3]}&dest=${stationList[4]}&date=now&key=${getin}&b=2&a=2&l=1`,
-        method: "GET",
-    };
+
     //
     // if (stationList[0]){
     //     requestObj1 = {
@@ -286,8 +288,8 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
     console.log("requestObjPlan2", requestObjPlan2);
     console.log("requestObjDep3", requestObjDep3);
     console.log("requestObjPlan3", requestObjPlan3);
-    console.log("requestObjDep4", requestObjDep4);
-    console.log("requestObjPlan4", requestObjPlan4);
+    // console.log("requestObjDep4", requestObjDep4);
+    // console.log("requestObjPlan4", requestObjPlan4);
 
 
     // stationList.forEach(backArray => {
@@ -311,7 +313,7 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
         requestPromise(requestObjDep1), requestPromise(requestObjPlan1),
         requestPromise(requestObjDep2), requestPromise(requestObjPlan2),
         requestPromise(requestObjDep3), requestPromise(requestObjPlan3),
-        requestPromise(requestObjDep4), requestPromise(requestObjPlan4),
+        // requestPromise(requestObjDep4), requestPromise(requestObjPlan4),
     ])
     // return requestPromise(requestObj)
     .then((promises) => {
@@ -328,29 +330,29 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
         var returnJsonPlan2 = parser.toJson(promises[5]);
         var returnJsonDep3 = parser.toJson(promises[6]);
         var returnJsonPlan3 = parser.toJson(promises[7]);
-        var returnJsonDep4 = parser.toJson(promises[8]);
-        var returnJsonPlan4 = parser.toJson(promises[9]);
+        // var returnJsonDep4 = parser.toJson(promises[8]);
+        // var returnJsonPlan4 = parser.toJson(promises[9]);
 
         console.log("\n\n$%$%$%$ THE FIRST DEP PROMISE JSON $%$%$%$%$");
         console.log(returnJsonDep0);
         console.log("\n\n$%$%$%$ THE FIRST PLAN PROMISE JSON $%$%$%$%$");
         console.log(returnJsonPlan0);
 
-        console.log("\n\n$%$%$%$ THE LAST DEP PROMISE JSON $%$%$%$%$");
-        console.log(returnJsonDep4);
-        console.log("\n\n$%$%$%$ THE LAST PLAN PROMISE JSON $%$%$%$%$");
-        console.log(returnJsonPlan4);
+        // console.log("\n\n$%$%$%$ THE LAST DEP PROMISE JSON $%$%$%$%$");
+        // console.log(returnJsonDep4);
+        // console.log("\n\n$%$%$%$ THE LAST PLAN PROMISE JSON $%$%$%$%$");
+        // console.log(returnJsonPlan4);
 
         if (TESTMODE) {
             res.json( [ etdJSON,  plannerJSON ] );
         } else {
             // res.json( [ JSON.parse(returnJsonDep), JSON.parse(returnJsonArr), JSON.parse(returnJson1), JSON.parse(returnJson2), JSON.parse(returnJson3), JSON.parse(returnJson4)] );
             res.json([
-                [returnJsonDep0, returnJsonPlan0],
-                [returnJsonDep1, returnJsonPlan1],
-                [returnJsonDep2, returnJsonPlan2],
-                [returnJsonDep3, returnJsonPlan3],
-                [returnJsonDep4, returnJsonPlan4],
+                [JSON.parse(returnJsonDep0), JSON.parse(returnJsonPlan0)],
+                [JSON.parse(returnJsonDep1), JSON.parse(returnJsonPlan1)],
+                [JSON.parse(returnJsonDep2), JSON.parse(returnJsonPlan2)],
+                [JSON.parse(returnJsonDep3), JSON.parse(returnJsonPlan3)],
+                // [returnJsonDep4, returnJsonPlan4],
             ])
         }
     });

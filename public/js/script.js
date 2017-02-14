@@ -546,12 +546,16 @@ function checkDirection(here, there) {
         // Remove previous etd data from view
         $( "div" ).remove( "#results" );
 
-        let dataETD = data[0];
-        let dataPlanner = data[1]
+        let dataETD = data[0][0];
+        let dataPlanner = data[0][1];
         console.log("\n\n\n\n\n $$$$$$ All Train ETD data $$$$$$$$$")
         console.log(dataETD);
         console.log("\n\n\n\n\n $$$$$$ All Train Planner data $$$$$$$$$")
         console.log(dataPlanner);
+        console.log("\n\n\n\n\n $$$$$$ All Train Planner data.root $$$$$$$$$")
+        console.log(dataPlanner.root);
+        console.log("\n\n\n\n\n $$$$$$ All Train Planner data.root.schedule $$$$$$$$$")
+        console.log(dataPlanner.root.schedule);
 
         let tripArr = dataPlanner.root.schedule.request.trip
         let tripArr2 = tripArr.map(function(item){
