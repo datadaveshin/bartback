@@ -126,13 +126,13 @@ function checkDirection(here, there, allowedRoutes) {
             backStations.back2.push(route[hereIdx - 2])
             backStations.back3.push(route[hereIdx - 3])
             backStations.back4.push(route[hereIdx - 4])
-            backStations.back4.push(route[hereIdx - 5])
+            backStations.back5.push(route[hereIdx - 5])
         } else if (hereIdx > thereIdx) {
             backStations.back1.push(route[hereIdx + 1])
             backStations.back2.push(route[hereIdx + 2])
             backStations.back3.push(route[hereIdx + 3])
             backStations.back4.push(route[hereIdx + 4])
-            backStations.back4.push(route[hereIdx + 5])
+            backStations.back5.push(route[hereIdx + 5])
         }
     })
 
@@ -351,7 +351,6 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
                 [returnJsonDep2, returnJsonPlan2],
                 [returnJsonDep3, returnJsonPlan3],
                 [returnJsonDep4, returnJsonPlan4],
-                [returnJsonDep5, returnJsonPlan5],
             ])
         }
     });
