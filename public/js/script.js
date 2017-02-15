@@ -546,7 +546,12 @@ function checkDirection(here, there) {
         // Remove previous etd data from view
         $( "div" ).remove( "#results" );
 
+        var evenOddForStationLabels = 0;
+
         data.forEach(function(requestPair, idx) {
+
+            evenOddForStationLabels++
+
             let dataETDpre = requestPair[0];
             var dataPlannerPre = requestPair[1];
             console.log("\n\n\n\n\n $$$$$$ All Train ETD data $$$$$$$$$")
@@ -559,6 +564,7 @@ function checkDirection(here, there) {
             console.log(dataPlannerPre.root.schedule);
 
             setup(dataETDpre, dataPlannerPre)
+
         })
 
         function setup(dataETD, dataPlanner) {
@@ -702,10 +708,17 @@ function checkDirection(here, there) {
                 // var point3 = $('#point3')
                 // var div2 = $('<div id="results" class="container">')
 
-                let station = dataETD.root.station.name
-                // var station = dataETD.root.station.name
-                if (currStation !== station) {
-                    currStation = station
+                // let station = dataETD.root.station.name
+                // // var station = dataETD.root.station.name
+                // if (currStation !== station) {
+                //     currStation = station
+                // } else {
+                //     station = ""
+                // }
+
+                let station = ""
+                if (evenOddForStationLabels % 2 !== 0) {
+                    station = dataETD.root.station.name
                 } else {
                     station = ""
                 }
