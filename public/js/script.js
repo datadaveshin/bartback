@@ -546,129 +546,132 @@ function checkDirection(here, there) {
         // Remove previous etd data from view
         $( "div" ).remove( "#results" );
 
-        let dataETD = data[0][0];
-        let dataPlanner = data[0][1];
-        console.log("\n\n\n\n\n $$$$$$ All Train ETD data $$$$$$$$$")
-        console.log(dataETD);
-        console.log("\n\n\n\n\n $$$$$$ All Train Planner data $$$$$$$$$")
-        console.log(dataPlanner);
-        console.log("\n\n\n\n\n $$$$$$ All Train Planner data.root $$$$$$$$$")
-        console.log(dataPlanner.root);
-        console.log("\n\n\n\n\n $$$$$$ All Train Planner data.root.schedule $$$$$$$$$")
-        console.log(dataPlanner.root.schedule);
+        data.forEach(function(requestPair) {
+            let dataETDpre = requestPair[0];
+            var dataPlannerPre = requestPair[1];
+            console.log("\n\n\n\n\n $$$$$$ All Train ETD data $$$$$$$$$")
+            console.log(dataETDpre);
+            console.log("\n\n\n\n\n $$$$$$ All Train Planner data $$$$$$$$$")
+            console.log(dataPlannerPre);
+            console.log("\n\n\n\n\n $$$$$$ All Train Planner data.root $$$$$$$$$")
+            console.log(dataPlannerPre.root);
+            console.log("\n\n\n\n\n $$$$$$ All Train Planner data.root.schedule $$$$$$$$$")
+            console.log(dataPlannerPre.root.schedule);
 
-        setup()
-        function setup() {
+            setup(dataETDpre, dataPlannerPre)
+        })
 
-        let tripArr = dataPlanner.root.schedule.request.trip
-        let tripArr2 = tripArr.map(function(item){
-            if (Array.isArray(item.leg)) {
-                return {
-                    'direct': false,
-                    'line': item.leg[0].line,
-                    'trainHeadStation': item.leg[0].trainHeadStation,
-                    'destination': item.leg[0].destination,
-                    'transfercode': item.leg[0].transfercode
+        function setup(dataETD, dataPlanner) {
+
+            let tripArr = dataPlanner.root.schedule.request.trip
+            let tripArr2 = tripArr.map(function(item){
+                if (Array.isArray(item.leg)) {
+                    return {
+                        'direct': false,
+                        'line': item.leg[0].line,
+                        'trainHeadStation': item.leg[0].trainHeadStation,
+                        'destination': item.leg[0].destination,
+                        'transfercode': item.leg[0].transfercode
+                    }
+                } else if (typeof item.leg === 'object') {
+                    return {
+                        'direct': true,
+                        'line': item.leg.line,
+                        'trainHeadStation' : item.leg.trainHeadStation,
+                        'destination': item.leg.destination,
+                        'transfercode': item.leg.transfercode
+                    }
                 }
-            } else if (typeof item.leg === 'object') {
-                return {
-                    'direct': true,
-                    'line': item.leg.line,
-                    'trainHeadStation' : item.leg.trainHeadStation,
-                    'destination': item.leg.destination,
-                    'transfercode': item.leg.transfercode
+            })
+
+            var mySet = new Set();
+            tripArr2.forEach(function(item) {
+                mySet.add(JSON.stringify(item))
+            })
+
+            let tripArr3 = [];
+            mySet.forEach(function(item) {
+                tripArr3.push(JSON.parse(item))
+            })
+
+            let tripArr3direct = tripArr3.filter(function(item){
+                if (item.direct) { return item }
+            })
+
+            console.log("\n\ntripArr2: ~~~~~~~~~~~*")
+            console.log(tripArr2)
+            console.log("\n\nmySet: ~~~~~~~~~~~*")
+            console.log(mySet)
+            console.log("\n\ntripArr3: ~~~~~~~~~~~*")
+            console.log(tripArr3)
+            console.log("\n\ntripArr3direct: ~~~~~~~~~~~*")
+            console.log(tripArr3direct)
+
+            let trip3trainHeads = tripArr3.map(function(item) {
+                return item.trainHeadStation
+            });
+            let trip3directTrainHeads = tripArr3direct.map(function(item) {
+                return item.trainHeadStation
+            });
+            console.log("\n\trip3trainHeads: ~~~~~~~~~~~*")
+            console.log(trip3trainHeads)
+            console.log("\n\trip3directTrainHeads: ~~~~~~~~~~~*")
+            console.log(trip3directTrainHeads)
+
+            let departureObjArrAllTrains = [];
+            if (Array.isArray(dataETD.root.station.etd)) {
+                $$each(dataETD.root.station.etd, function(departureObj) {
+                    departureObjArrAllTrains.push(departureObj)
+                });
+            } else if (typeof dataETD.root.station.etd === 'object') {
+                departureObjArrAllTrains.push(dataETD.root.station.etd)
+            }
+            console.log("$$ THE returnCondition $$", returnCondition);
+            console.log("OUR NEW departureObjArrAllTrains", departureObjArrAllTrains);
+
+            let departureObjArrRouteAll = [];
+            if (Array.isArray(dataETD.root.station.etd)) {
+                $$each(dataETD.root.station.etd, function(departureObj) {
+                    if (trip3trainHeads.indexOf(departureObj.abbreviation) > -1) {
+                        departureObjArrRouteAll.push(departureObj)
+                    }
+                });
+            } else if (typeof dataETD.root.station.etd === 'object') {
+                if (trip3trainHeads.indexOf(dataETD.root.station.etd.abbreviation) > -1) {
+                    departureObjArrRouteAll.push(dataETD.root.station.etd)
                 }
             }
-        })
+            console.log("$$ THE returnCondition $$", returnCondition);
+            console.log("OUR NEW departureObjArrRouteAll", departureObjArrRouteAll);
 
-        var mySet = new Set();
-        tripArr2.forEach(function(item) {
-            mySet.add(JSON.stringify(item))
-        })
-
-        let tripArr3 = [];
-        mySet.forEach(function(item) {
-            tripArr3.push(JSON.parse(item))
-        })
-
-        let tripArr3direct = tripArr3.filter(function(item){
-            if (item.direct) { return item }
-        })
-
-        console.log("\n\ntripArr2: ~~~~~~~~~~~*")
-        console.log(tripArr2)
-        console.log("\n\nmySet: ~~~~~~~~~~~*")
-        console.log(mySet)
-        console.log("\n\ntripArr3: ~~~~~~~~~~~*")
-        console.log(tripArr3)
-        console.log("\n\ntripArr3direct: ~~~~~~~~~~~*")
-        console.log(tripArr3direct)
-
-        let trip3trainHeads = tripArr3.map(function(item) {
-            return item.trainHeadStation
-        });
-        let trip3directTrainHeads = tripArr3direct.map(function(item) {
-            return item.trainHeadStation
-        });
-        console.log("\n\trip3trainHeads: ~~~~~~~~~~~*")
-        console.log(trip3trainHeads)
-        console.log("\n\trip3directTrainHeads: ~~~~~~~~~~~*")
-        console.log(trip3directTrainHeads)
-
-        let departureObjArrAllTrains = [];
-        if (Array.isArray(dataETD.root.station.etd)) {
-            $$each(dataETD.root.station.etd, function(departureObj) {
-                departureObjArrAllTrains.push(departureObj)
-            });
-        } else if (typeof dataETD.root.station.etd === 'object') {
-            departureObjArrAllTrains.push(dataETD.root.station.etd)
-        }
-        console.log("$$ THE returnCondition $$", returnCondition);
-        console.log("OUR NEW departureObjArrAllTrains", departureObjArrAllTrains);
-
-        let departureObjArrRouteAll = [];
-        if (Array.isArray(dataETD.root.station.etd)) {
-            $$each(dataETD.root.station.etd, function(departureObj) {
-                if (trip3trainHeads.indexOf(departureObj.abbreviation) > -1) {
-                    departureObjArrRouteAll.push(departureObj)
+            let departureObjArrDirect = [];
+            if (Array.isArray(dataETD.root.station.etd)) {
+                $$each(dataETD.root.station.etd, function(departureObj) {
+                    if (trip3directTrainHeads.indexOf(departureObj.abbreviation) > -1) {
+                        departureObjArrDirect.push(departureObj)
+                    }
+                });
+            } else if (typeof dataETD.root.station.etd === 'object') {
+                if (trip3directTrainHeads.indexOf(dataETD.root.station.etd.abbreviation) > -1) {
+                    departureObjArrDirect.push(dataETD.root.station.etd)
                 }
-            });
-        } else if (typeof dataETD.root.station.etd === 'object') {
-            if (trip3trainHeads.indexOf(dataETD.root.station.etd.abbreviation) > -1) {
-                departureObjArrRouteAll.push(dataETD.root.station.etd)
+            }
+            console.log("$$ THE returnCondition $$", returnCondition);
+            console.log("OUR NEW departureObjArrDirect", departureObjArrDirect);
+
+
+            if (returnCondition === 'all-trains') {
+                output3(departureObjArrAllTrains)
+            } else if (returnCondition === 'route-all') {
+                console.log("IS ROUTE ALL SELECTED?");
+                output3(departureObjArrRouteAll)
+            } else if (returnCondition === 'direct') {
+                output3(departureObjArrDirect, dataETD)
             }
         }
-        console.log("$$ THE returnCondition $$", returnCondition);
-        console.log("OUR NEW departureObjArrRouteAll", departureObjArrRouteAll);
-
-        let departureObjArrDirect = [];
-        if (Array.isArray(dataETD.root.station.etd)) {
-            $$each(dataETD.root.station.etd, function(departureObj) {
-                if (trip3directTrainHeads.indexOf(departureObj.abbreviation) > -1) {
-                    departureObjArrDirect.push(departureObj)
-                }
-            });
-        } else if (typeof dataETD.root.station.etd === 'object') {
-            if (trip3directTrainHeads.indexOf(dataETD.root.station.etd.abbreviation) > -1) {
-                departureObjArrDirect.push(dataETD.root.station.etd)
-            }
-        }
-        console.log("$$ THE returnCondition $$", returnCondition);
-        console.log("OUR NEW departureObjArrDirect", departureObjArrDirect);
-
-
-        if (returnCondition === 'all-trains') {
-            output3(departureObjArrAllTrains)
-        } else if (returnCondition === 'route-all') {
-            console.log("IS ROUTE ALL SELECTED?");
-            output3(departureObjArrRouteAll)
-        } else if (returnCondition === 'direct') {
-            output3(departureObjArrDirect)
-        }
-    }
 
         // OUTPUT3 - Generates the output to view
-        function output3(departureObjArr) {
+        function output3(departureObjArr, dataETD) {
             var point4 = $('#point4')
             $$each(departureObjArr, function(departureObj) {
                 var dest = departureObj.destination
