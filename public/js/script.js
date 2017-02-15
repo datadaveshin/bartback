@@ -677,7 +677,8 @@ function checkDirection(here, there) {
             var time1 = 0;
             var time2 = 0;
             var time3 = 0;
-
+            var currStation = "";
+            let station;
             $$each(departureObjArr, function(departureObj) {
 
 
@@ -701,7 +702,19 @@ function checkDirection(here, there) {
                 // var point3 = $('#point3')
                 // var div2 = $('<div id="results" class="container">')
 
-                var station = dataETD.root.station.name
+                let station = dataETD.root.station.name
+                // var station = dataETD.root.station.name
+                if (currStation !== station) {
+                    currStation = station
+                } else {
+                    station = ""
+                }
+
+                // if (station !== dataETD.root.station.name) {
+                //     station = dataETD.root.station.name
+                // } else {
+                //     station = ""
+                // }
 
                 let forwardLine;
                 if (count === 0) {
