@@ -521,18 +521,19 @@ function checkDirection(here, there) {
                     //     $(div2colA).css("backgroundColor", 'green');
                     // }
 
-                    if (userName === "") {
-                        $(div2colA).css("backgroundColor", routeColor);
-                    } else {
-                        let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-                        if (val === 1) {
-                            $(div2colA).css("backgroundColor", 'red');
-                        } else if (val === 2) {
-                            $(div2colA).css("backgroundColor", 'yellow');
-                        } else {
-                            $(div2colA).css("backgroundColor", 'green');
-                        }
-                    }
+                    // ***Toggle to let it depend on if you are logged in
+                    // if (userName === "") {
+                    //     $(div2colA).css("backgroundColor", routeColor);
+                    // } else {
+                    //     let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                    //     if (val === 1) {
+                    //         $(div2colA).css("backgroundColor", 'red');
+                    //     } else if (val === 2) {
+                    //         $(div2colA).css("backgroundColor", 'yellow');
+                    //     } else {
+                    //         $(div2colA).css("backgroundColor", 'green');
+                    //     }
+                    // }
 
                     $(div2row).append(div2col);
                     $(div2col).append(div2colA);
@@ -544,8 +545,8 @@ function checkDirection(here, there) {
 
     let printHead;
     let station;
-    let colorCounter = 0;
     function SuccessRouteAll2(data) {
+        let colorCounter = 0;
         // Remove previous etd data from view
         $( "div" ).remove( "#results" );
 
