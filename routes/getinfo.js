@@ -395,10 +395,54 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
         // var returnJsonDep7 = parser.toJson(promises[14]);
         // var returnJsonPlan7 = parser.toJson(promises[15]);
 
-        // console.log("\n\n$%$%$%$ THE DEP 0 PROMISE JSON $%$%$%$%$");
-        // console.log(returnJsonDep0);
-        // console.log("\n\n$%$%$%$ THE PLAN 0 PROMISE JSON $%$%$%$%$");
-        // console.log(returnJsonPlan0);
+        console.log("\n\n$%$%$%$ THE DEP 0 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDep0);
+        console.log("\n\n$%$%$%$ THE PLAN 0 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonPlan0);
+        console.log("\n\n$%$%$%$ THE DEP 0 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDepB0);
+        console.log("\n\n$%$%$%$ THE PLAN 0 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonBack0);
+
+        console.log("\n\n$%$%$%$ THE DEP 1 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDep1);
+        console.log("\n\n$%$%$%$ THE PLAN 1 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonPlan1);
+        console.log("\n\n$%$%$%$ THE DEP 1 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDepB1);
+        console.log("\n\n$%$%$%$ THE PLAN 1 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonBack1);
+
+        console.log("\n\n$%$%$%$ THE DEP 2 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDep2);
+        console.log("\n\n$%$%$%$ THE PLAN 2 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonPlan2);
+        console.log("\n\n$%$%$%$ THE DEP 2 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDepB2);
+        console.log("\n\n$%$%$%$ THE PLAN 2 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonBack2);
+
+        console.log("\n\n$%$%$%$ THE DEP 3 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDep3);
+        console.log("\n\n$%$%$%$ THE PLAN 3 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonPlan3);
+        console.log("\n\n$%$%$%$ THE DEP 3 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDepB3);
+        console.log("\n\n$%$%$%$ THE PLAN 3 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonBack3);
+
+        // console.log("\n\n$%$%$%$ THE DEP 4 PROMISE JSON $%$%$%$%$");
+        // console.log(returnJsonDep4);
+        // console.log("\n\n$%$%$%$ THE PLAN 4 PROMISE JSON $%$%$%$%$");
+        // console.log(returnJsonPlan4);
+        // console.log("\n\n$%$%$%$ THE DEP 4 PROMISE JSON $%$%$%$%$");
+        // console.log(returnJsonDepB4);
+        // console.log("\n\n$%$%$%$ THE PLAN 4 PROMISE JSON $%$%$%$%$");
+        // console.log(returnJsonBack4);
+
+
+
+
         //
         // console.log("\n\n$%$%$%$ THE DEP 1 PROMISE JSON $%$%$%$%$");
         // console.log(returnJsonDep1);
