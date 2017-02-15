@@ -345,15 +345,30 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
         var returnJsonDep4 = parser.toJson(promises[8]);
         var returnJsonPlan4 = parser.toJson(promises[9]);
 
-        console.log("\n\n$%$%$%$ THE FIRST DEP PROMISE JSON $%$%$%$%$");
+        console.log("\n\n$%$%$%$ THE DEP 0 PROMISE JSON $%$%$%$%$");
         console.log(returnJsonDep0);
-        console.log("\n\n$%$%$%$ THE FIRST PLAN PROMISE JSON $%$%$%$%$");
+        console.log("\n\n$%$%$%$ THE PLAN 0 PROMISE JSON $%$%$%$%$");
         console.log(returnJsonPlan0);
 
-        // console.log("\n\n$%$%$%$ THE LAST DEP PROMISE JSON $%$%$%$%$");
-        // console.log(returnJsonDep4);
-        // console.log("\n\n$%$%$%$ THE LAST PLAN PROMISE JSON $%$%$%$%$");
-        // console.log(returnJsonPlan4);
+        console.log("\n\n$%$%$%$ THE DEP 1 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDep1);
+        console.log("\n\n$%$%$%$ THE PLAN 1 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonPlan1);
+
+        console.log("\n\n$%$%$%$ THE DEP 2 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDep2);
+        console.log("\n\n$%$%$%$ THE PLAN 2 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonPlan2);
+
+        console.log("\n\n$%$%$%$ THE DEP 3 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDep3);
+        console.log("\n\n$%$%$%$ THE PLAN 3 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonPlan3);
+
+        console.log("\n\n$%$%$%$ THE DEP 4 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonDep4);
+        console.log("\n\n$%$%$%$ THE PLAN 4 PROMISE JSON $%$%$%$%$");
+        console.log(returnJsonPlan4);
 
         if (TESTMODE) {
             res.json( [ etdJSON,  plannerJSON ] );

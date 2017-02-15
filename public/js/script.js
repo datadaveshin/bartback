@@ -546,7 +546,7 @@ function checkDirection(here, there) {
         // Remove previous etd data from view
         $( "div" ).remove( "#results" );
 
-        data.forEach(function(requestPair) {
+        data.forEach(function(requestPair, idx) {
             let dataETDpre = requestPair[0];
             var dataPlannerPre = requestPair[1];
             console.log("\n\n\n\n\n $$$$$$ All Train ETD data $$$$$$$$$")
@@ -672,10 +672,14 @@ function checkDirection(here, there) {
 
         // OUTPUT3 - Generates the output to view
         function output3(departureObjArr, dataETD) {
-            var point4 = $('#point4')
-            var count = 0
+            var point4 = $('#point4');
+            var count = 0;
+            var time1 = 0;
+            var time2 = 0;
+            var time3 = 0;
+
             $$each(departureObjArr, function(departureObj) {
-                count++
+
 
                 var dest = departureObj.destination
                 console.log("\n#### DESTINATION!!!!!!", dest, "\n")
@@ -698,6 +702,12 @@ function checkDirection(here, there) {
                 // var div2 = $('<div id="results" class="container">')
 
                 var station = dataETD.root.station.name
+
+                let forwardLine;
+                if (count === 0) {
+                    forwardLine = station
+                    count++
+                }
 
                 var div2container = $('<div id="results" class="container">')
 
@@ -730,13 +740,17 @@ function checkDirection(here, there) {
                 console.log(times);
                 console.log("div2container", div2container);
                 console.log("div2row", div2row);
+
+
                 times.forEach(function(time){
+
                     var div2col = $('<div class="col l2 m3 s4">')
                     var div2colA = $('<div class="forSquare">')
                     var div2colB = $('<div class="forTime">')
                     let processedTime;
                     if (time === "Leaving") {
                         processedTime = time;
+                        if (count === 1) {time1 === 1}
                     } else if (time === "1") {
                         processedTime = time + " min";
                     } else {
