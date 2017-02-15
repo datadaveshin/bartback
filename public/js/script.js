@@ -285,13 +285,13 @@ function checkDirection(here, there) {
 
     $('#homeToAway').click(function() {
         returnCondition = 'direct';
-        sendRequest2(homeStation, awayStation);
+        sendRequest3(homeStation, awayStation);
     });
 
 
     $('#awayToHome').click(function() {
         returnCondition = 'direct';
-        sendRequest2(awayStation, homeStation);
+        sendRequest3(awayStation, homeStation);
     });
 
     $('#bartBack').click(function() {
