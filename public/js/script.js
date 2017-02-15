@@ -541,16 +541,23 @@ function checkDirection(here, there) {
             })
         }
     };
-
+    let printHead;
+    let station;
     function SuccessRouteAll2(data) {
         // Remove previous etd data from view
         $( "div" ).remove( "#results" );
 
         var evenOddForStationLabels = 0;
-
         data.forEach(function(requestPair, idx) {
 
-            evenOddForStationLabels++
+            // evenOddForStationLabels++
+            // console.log("\n\nevenOddForStationLabels", evenOddForStationLabels);
+
+            if (idx % 2 === 0) {
+                printHead = true
+            } else {
+                printHead = false
+            }
 
             let dataETDpre = requestPair[0];
             var dataPlannerPre = requestPair[1];
@@ -683,8 +690,8 @@ function checkDirection(here, there) {
             var time1 = 0;
             var time2 = 0;
             var time3 = 0;
-            var currStation = "";
-            let station;
+            // var currStation = "";
+            // let station;
             $$each(departureObjArr, function(departureObj) {
 
 
@@ -716,8 +723,17 @@ function checkDirection(here, there) {
                 //     station = ""
                 // }
 
-                let station = ""
-                if (evenOddForStationLabels % 2 !== 0) {
+                // let station = ""
+                // if (evenOddForStationLabels % 2 === 0) {
+                //     station = dataETD.root.station.name
+                // } else {
+                //     station = ""
+                // }
+                // console.log("\n\n%%%STATION", station, "\n#$#$#evenOddForStationLabels", evenOddForStationLabels, "\n$$$$$evenOddForStationLabels % 2", evenOddForStationLabels % 2);
+                //
+                // evenOddForStationLabels++
+
+                if (printHead) {
                     station = dataETD.root.station.name
                 } else {
                     station = ""
@@ -738,13 +754,20 @@ function checkDirection(here, there) {
                 var div2container = $('<div id="results" class="container">')
 
                 var stationResultsDiv = $('<div class="station">')
-                var stationResults = $("<h6 class='station-results'>")
+                var stationResults = $("<h4 class='station-results'>")
                 $(stationResults).text(station);
 
 
                 var destinationResultsDiv = $('<div class="destination">')
-                var destinationResults = $("<h5>")
-                $(destinationResults).text(dest);
+                if (printHead) {
+                    var destinationResults = $("<h5>")
+                    $(destinationResults).text(dest);
+                } else {
+                    var destinationResults = $("<h6>")
+                    $(destinationResults).text("<<< " + dest);
+                    $(destinationResults).css({'font-weight': '300i'})
+                    // $(div2colA).css({borderRadius: '0px'});
+                }
 
 
                 var div2row = $('<div class="row report">')
@@ -769,7 +792,6 @@ function checkDirection(here, there) {
 
 
                 times.forEach(function(time){
-
                     var div2col = $('<div class="col l2 m3 s4">')
                     var div2colA = $('<div class="forSquare">')
                     var div2colB = $('<div class="forTime">')
@@ -800,6 +822,10 @@ function checkDirection(here, there) {
                         }
                     }
 
+                    if (!printHead) {
+                        $(div2colA).css("backgroundColor", '#ddd');
+                        $(div2colA).css({borderRadius: '0px'});
+                    }
                     $(div2row).append(div2col);
                     $(div2col).append(div2colA);
                     $(div2col).append(div2colB);

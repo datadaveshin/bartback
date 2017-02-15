@@ -151,7 +151,8 @@ function checkDirection(here, there, allowedRoutes) {
         console.log("filtered", filtered);
         let backArr = Array.from(new Set(filtered))
         if (backArr.length >= 1) {
-            backStations2.push(backArr)
+            // NOTE LATER HERE, WILL NEED TO PUSH WHOLE backArr
+            backStations2.push(backArr[0])
         }
     })
 
