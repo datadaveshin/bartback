@@ -557,6 +557,9 @@ function checkDirection(here, there) {
         console.log("\n\n\n\n\n $$$$$$ All Train Planner data.root.schedule $$$$$$$$$")
         console.log(dataPlanner.root.schedule);
 
+        setup()
+        function setup() {
+
         let tripArr = dataPlanner.root.schedule.request.trip
         let tripArr2 = tripArr.map(function(item){
             if (Array.isArray(item.leg)) {
@@ -653,6 +656,7 @@ function checkDirection(here, there) {
         console.log("$$ THE returnCondition $$", returnCondition);
         console.log("OUR NEW departureObjArrDirect", departureObjArrDirect);
 
+
         if (returnCondition === 'all-trains') {
             output3(departureObjArrAllTrains)
         } else if (returnCondition === 'route-all') {
@@ -661,6 +665,7 @@ function checkDirection(here, there) {
         } else if (returnCondition === 'direct') {
             output3(departureObjArrDirect)
         }
+    }
 
         // OUTPUT3 - Generates the output to view
         function output3(departureObjArr) {
