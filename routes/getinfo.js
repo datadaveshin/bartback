@@ -192,6 +192,8 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
     let requestObjPlan3;
     let requestObjDep4;
     let requestObjPlan4;
+    let requestObjDep5;
+    let requestObjPlan5;
 
     requestObjDep0 = {
         url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
@@ -204,31 +206,41 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
     };
 
     requestObjDep1 = {
-        url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[0]}&key=${getin}`,
+        url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
         method: "GET",
     };
 
     requestObjPlan1 = {
-        url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${stationList[0]}&dest=${stationList[1]}&date=now&key=${getin}&b=2&a=2&l=1`,
+        url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${departureStation}&dest=${stationList[0]}&date=now&key=${getin}&b=2&a=2&l=1`,
         method: "GET",
     };
 
     requestObjDep2 = {
-        url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[1]}&key=${getin}`,
+        url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[0]}&key=${getin}`,
         method: "GET",
     };
 
     requestObjPlan2 = {
-        url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${stationList[1]}&dest=${stationList[2]}&date=now&key=${getin}&b=2&a=2&l=1`,
+        url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${stationList[0]}&dest=${stationList[1]}&date=now&key=${getin}&b=2&a=2&l=1`,
         method: "GET",
     };
 
     requestObjDep3 = {
-        url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[2]}&key=${getin}`,
+        url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[1]}&key=${getin}`,
         method: "GET",
     };
 
     requestObjPlan3 = {
+        url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${stationList[1]}&dest=${stationList[2]}&date=now&key=${getin}&b=2&a=2&l=1`,
+        method: "GET",
+    };
+
+    requestObjDep4 = {
+        url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationList[2]}&key=${getin}`,
+        method: "GET",
+    };
+
+    requestObjPlan4 = {
         url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${stationList[2]}&dest=${stationList[3]}&date=now&key=${getin}&b=2&a=2&l=1`,
         method: "GET",
     };
@@ -288,8 +300,8 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
     console.log("requestObjPlan2", requestObjPlan2);
     console.log("requestObjDep3", requestObjDep3);
     console.log("requestObjPlan3", requestObjPlan3);
-    // console.log("requestObjDep4", requestObjDep4);
-    // console.log("requestObjPlan4", requestObjPlan4);
+    console.log("requestObjDep4", requestObjDep4);
+    console.log("requestObjPlan4", requestObjPlan4);
 
 
     // stationList.forEach(backArray => {
@@ -313,7 +325,7 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
         requestPromise(requestObjDep1), requestPromise(requestObjPlan1),
         requestPromise(requestObjDep2), requestPromise(requestObjPlan2),
         requestPromise(requestObjDep3), requestPromise(requestObjPlan3),
-        // requestPromise(requestObjDep4), requestPromise(requestObjPlan4),
+        requestPromise(requestObjDep4), requestPromise(requestObjPlan4),
     ])
     // return requestPromise(requestObj)
     .then((promises) => {
@@ -330,8 +342,8 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
         var returnJsonPlan2 = parser.toJson(promises[5]);
         var returnJsonDep3 = parser.toJson(promises[6]);
         var returnJsonPlan3 = parser.toJson(promises[7]);
-        // var returnJsonDep4 = parser.toJson(promises[8]);
-        // var returnJsonPlan4 = parser.toJson(promises[9]);
+        var returnJsonDep4 = parser.toJson(promises[8]);
+        var returnJsonPlan4 = parser.toJson(promises[9]);
 
         console.log("\n\n$%$%$%$ THE FIRST DEP PROMISE JSON $%$%$%$%$");
         console.log(returnJsonDep0);
@@ -352,6 +364,7 @@ router.get('/bartback/:departureStation/:arrivalStation/', (req, res) => {
                 [JSON.parse(returnJsonDep1), JSON.parse(returnJsonPlan1)],
                 [JSON.parse(returnJsonDep2), JSON.parse(returnJsonPlan2)],
                 [JSON.parse(returnJsonDep3), JSON.parse(returnJsonPlan3)],
+                [JSON.parse(returnJsonDep4), JSON.parse(returnJsonPlan4)],
                 // [returnJsonDep4, returnJsonPlan4],
             ])
         }
