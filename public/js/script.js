@@ -541,8 +541,10 @@ function checkDirection(here, there) {
             })
         }
     };
+
     let printHead;
     let station;
+    let colorCounter = 0;
     function SuccessRouteAll2(data) {
         // Remove previous etd data from view
         $( "div" ).remove( "#results" );
@@ -790,7 +792,9 @@ function checkDirection(here, there) {
                 console.log("div2container", div2container);
                 console.log("div2row", div2row);
 
-
+                if (printHead) {
+                    colorCounter++
+                }
                 times.forEach(function(time){
                     var div2col = $('<div class="col l2 m3 s4">')
                     var div2colA = $('<div class="forSquare">')
@@ -809,16 +813,52 @@ function checkDirection(here, there) {
                     // *** Toggle for routeColor for squares
                     // $(div2colA).css("backgroundColor", routeColor);
 
+                    // For Random colors
+                    // if (userName === "") {
+                    //     $(div2colA).css("backgroundColor", routeColor);
+                    // } else {
+                    //     let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                    //     if (val === 1) {
+                    //         $(div2colA).css("backgroundColor", 'red');
+                    //     } else if (val === 2) {
+                    //         $(div2colA).css("backgroundColor", 'yellow');
+                    //     } else {
+                    //         $(div2colA).css("backgroundColor", 'green');
+                    //     }
+                    // }
+
+                    // For Demo
                     if (userName === "") {
                         $(div2colA).css("backgroundColor", routeColor);
                     } else {
-                        let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-                        if (val === 1) {
-                            $(div2colA).css("backgroundColor", 'red');
-                        } else if (val === 2) {
-                            $(div2colA).css("backgroundColor", 'yellow');
-                        } else {
+                        let val = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+
+                        if (colorCounter === 1) {
+                           $(div2colA).css("backgroundColor", 'red');
+                        //    colorCounter++
+                        }
+
+                        else if (colorCounter === 2) {
+                            if (val === 1) {
+                                $(div2colA).css("backgroundColor", 'red');
+                            } else if (val === 2) {
+                                $(div2colA).css("backgroundColor", 'yellow');
+                            }
+                            // colorCounter++
+                        }
+
+                        else if (colorCounter === 3) {
+                            if (val === 1) {
+                                $(div2colA).css("backgroundColor", 'yellow');
+                            } else if (val === 2) {
+                                $(div2colA).css("backgroundColor", 'green');
+                            }
+                            // colorCounter++
+                        }
+
+                        else if (colorCounter > 3) {
                             $(div2colA).css("backgroundColor", 'green');
+                            // colorCounter++
                         }
                     }
 
