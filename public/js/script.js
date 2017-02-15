@@ -233,6 +233,10 @@ function checkDirection(here, there) {
         window.location.href = "http://localhost:3031/register"
     });
 
+    $('#report').click(function() {
+        window.location.href = "http://localhost:3031/report"
+    });
+
     // ================================================
     // Global resets for departure and arrival stations
     // ================================================

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- ###### HEAD ####### -->
+<%- include("head") %>
+
+<body>
+    <!-- ###### NAV BAR ####### -->
+    <%- include("nav") %>
+
+
+    <!-- ###### MAIN ####### -->
+    <main>
+        <%- include("banner") %>
+        <div class="container">
+            <!-- <h5 class="loggedIn">Hi <%= typeof userName!= "undefined" ? userName : "noname" %>!</h5> -->
+            <input type="hidden" name="" id="loggedInToo" value="<%= typeof userName!= "undefined" ? userName : "noname" %>">
+            <h5 class="loggedIn"></h5>
+
+            <h4>Report</h4>
+
+            <div class="row">
+                <section id="point0"></section>
+            </div>
+
+            <div class="row">
+                <section id="point1"></section>
+            </div>
+
+            <div class="row">
+                <section id="point2"></section>
+            </div>
+
+            <div class="row">
+                <section id="point3"></section>
+            </div>
+
+            <div class="row">
+                <section id="point4"></section>
+            </div>
+
+            <div class="form-container">
+                <form class="" action="/preferences" method="post">
+                    <div class="input-field col s12">
+                        <select class="" name="home">
+                            <option value="" disabled selected>Bart station</option>
+                            <option value="12th">12th St. Oakland City Center</option>
+                            <option value="16th">16th St. Mission (SF)</option>
+                            <option value="19th">19th St. Oakland</option>
+                            <option value="24th">24th St. Mission (SF)</option>
+                            <option value="ashb">Ashby (Berkeley)</option>
+                            <option value="balb">Balboa Park (SF)</option>
+                            <option value="bayf">Bay Fair (San Leandro)</option>
+                            <option value="cast">Castro Valley</option>
+                            <option value="civc">Civic Center / UN Plaza</option>
+                            <option value="cols">Coliseum</option>
+                            <option value="colm">Colma</option>
+                            <option value="conc">Concord</option>
+                            <option value="daly">Daly City</option>
+                            <option value="dbrk">Downtown Berkeley</option>
+                            <option value="dubl">Dublin / Pleasanton</option>
+                            <option value="deln">El Cerrito del Norte</option>
+                            <option value="plza">El Cerrito Plaza</option>
+                            <option value="embr">Embarcadero (SF)</option>
+                            <option value="frmt">Fremont</option>
+                            <option value="ftvl">Fruitvale (Oakland)</option>
+                            <option value="glen">Glen Park (SF)</option>
+                            <option value="hayw">Hayward</option>
+                            <option value="lafy">Lafayette</option>
+                            <option value="lake">Lake Merritt (Oakland)</option>
+                            <option value="mcar">MacArthur (Oakland)</option>
+                            <option value="mlbr">Millbrae</option>
+                            <option value="mont">Montgomery St. (SF)</option>
+                            <option value="nbrk">North Berkeley</option>
+                            <option value="ncon">North Concord / Martinez</option>
+                            <option value="oakl">Oakland Int'l Airport</option>
+                            <option value="orin">Orinda</option>
+                            <option value="pitt">Pittsburg / Bay Point</option>
+                            <option value="phil">Pleasant Hill / Contra Costa Centre</option>
+                            <option value="powl">Powell St. (SF)</option>
+                            <option value="rich">Richmond</option>
+                            <option value="rock">Rockridge (Oakland)</option>
+                            <option value="sbrn">San Bruno</option>
+                            <option value="sfia">San Francisco Int'l Airport</option>
+                            <option value="sanl">San Leandro</option>
+                            <option value="shay">South Hayward</option>
+                            <option value="ssan">South San Francisco</option>
+                            <option value="ucty">Union City</option>
+                            <option value="wcrk">Walnut Creek</option>
+                            <!-- <option value="warm">Warm Springs/South Fremont</option> -->
+                            <option value="wdub">West Dublin / Pleasanton</option>
+                            <option value="woak">West Oakland</option>
+                        </select>
+                        <!-- <label>Home Station</label> -->
+                    </div>
+                    <div class="input-field col s12">
+                        <select class="" name="away">
+                            <option value="" disabled selected>Choose Train</option>
+                            <option value="24th">24th St. (SF)</option>
+                            <option value="conc">Concord</option>
+                            <option value="daly">Daly City</option>
+                            <option value="dubl">Dublin / Pleasanton</option>
+                            <option value="frmt">Fremont</option>
+                            <option value="pitt">Pittsburg / Bay Point</option>
+                            <option value="phil">Pleasant Hill / Contra Costa Centre</option>
+                            <option value="rich">Richmond</option>
+                        </select>
+                        <!-- <label>Away Station</label> -->
+                    </div>
+                    <div class="input-field col s12">
+                        <select class="" name="away">
+                            <option value="" disabled selected>Get a seat?</option>
+                            <option value="seat">Seat</option>
+                            <option value="noSeat">No seat</option>
+                        </select>
+                        <!-- <label>Away Station</label> -->
+                    </div>
+                    <!-- <div class="input-field col s12">
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i>
+                        </button>
+                    </div> -->
+                    <div class='row center'>
+                      <button class='submit btn waves-effect waves-light' type='submit' name='action'>Submit
+                        <i class='material-icons right'>send</i>
+                      </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- ###### FOOTER ####### -->
+    <%- include("footer") %>
+
+    <!-- ###### JAVASCRIPT SCRIPTS ####### -->
+    <script type="text/javascript" src="js/helperFunctions-1.js"></script>
+    <script type="text/javascript" src="js/data.js"></script>
+    <script type="text/javascript" src="js/preferences2.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+</body>
+
+</html>
+<!-- Copyright David Shin 2016
+All Rights Reserved -->
