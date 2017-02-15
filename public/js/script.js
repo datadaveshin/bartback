@@ -673,7 +673,10 @@ function checkDirection(here, there) {
         // OUTPUT3 - Generates the output to view
         function output3(departureObjArr, dataETD) {
             var point4 = $('#point4')
+            var count = 0
             $$each(departureObjArr, function(departureObj) {
+                count++
+
                 var dest = departureObj.destination
                 console.log("\n#### DESTINATION!!!!!!", dest, "\n")
                 console.log("departureObj", departureObj)
