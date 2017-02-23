@@ -22,16 +22,16 @@ function Station(abbrev, fullname) {
 //* Array that contains a Station instance for each Bart Station
 var stationObjArray = [];
 $$each(stationAbbrev, function(_dummy, idx) {
-   let retArr = []
-   let stationObj = new Station(stationAbbrev[idx], stationFull[idx])
-   stationObjArray.push(stationObj)
-})
+   let retArr = [];
+   let stationObj = new Station(stationAbbrev[idx], stationFull[idx]);
+   stationObjArray.push(stationObj);
+});
 
 console.log("stationObjArray:", stationObjArray);
 
 // Setup Selectors
-genSelector("Departure", "#point3")
-genSelector("Arrival", "#point3")
+genSelector("Departure", "#point3");
+genSelector("Arrival", "#point3");
 
 //* Generates the <select> menu
 function genSelector(selectorName, attachmentPoint) {
@@ -124,71 +124,54 @@ if (userName === "") {
     addButton("bartBack", "BARTBack", "#point2", 2);
     addButton("report", "Report", "#point2", 2);
 
-    let preferenceLink = $('<li><a href="/preferences" class="white-text">Preferences</a></li>')
-    $(navInjector).append(preferenceLink)
+    let preferenceLink = $('<li><a href="/preferences" class="white-text">Preferences</a></li>');
+    $(navInjector).append(preferenceLink);
 
-    let preferenceLink2 = $("<li><a href='/preferences'>Preferences</a></li>")
-    $(navInjector2).append(preferenceLink2)
+    let preferenceLink2 = $("<li><a href='/preferences'>Preferences</a></li>");
+    $(navInjector2).append(preferenceLink2);
 
     let logoutLink = $('<li><a href="/auth/logout" class="white-text">Log Out</a></li>')
-    $(navInjector).append(logoutLink)
+    $(navInjector).append(logoutLink);
 
-    let logoutLink2 = $("<li><a href='/auth/logout'>Log Out</a></li>")
-    $(navInjector2).append(logoutLink2)
+    let logoutLink2 = $("<li><a href='/auth/logout'>Log Out</a></li>");;
+    $(navInjector2).append(logoutLink2);
 }
-//
-// function checkDirection(here, there) {
-//     /* TODO use a full route array and check for here and there in it all of them, return a subArray, then do the calculation. For now, using route8 for a test*/
-//     let routeArr = route8 // THE TEST ARRAY TO BE REMOVED
-//     let hereIdx = routeArr.indexOf(here);
-//     let thereIdx = routeArr.indexOf(there);
-//     console.log("hereIdx", hereIdx, "thereIdx", thereIdx);
-//     if (thereIdx > hereIdx) {
-//         return "North"
-//     } else if (thereIdx < hereIdx) {
-//         return "South"
-//     } else if (thereIdx === hereIdx) {
-//         return "Same"
-//     }
-// }
-function checkDirection(here, there) {
-    /* TODO use a full route array and check for here and there in it all of them, return a subArray, then do the calculation. For now, using route8 for a test*/
-    // let routeArr = route8 // THE TEST ARRAY TO BE REMOVED
-    // let hereIdx = routeArr.indexOf(here);
-    // let thereIdx = routeArr.indexOf(there);
 
+
+function checkDirection(here, there) {
     let routeCandidates = sfRoutes.filter(route => {
         console.log("routz", route);
         console.log("here", here, "there", there);
         if (route.indexOf(here) > -1 && route.indexOf(there) > -1) {
-            return route
+            return route;
         }
-    })
+    });
 
     let backStations = {
         back1: [],
         back2: [],
         back3: [],
         back4: [],
-    }
+    };
 
     let hereIdx;
     let thereIdx;
+
     routeCandidates.forEach(route => {
         hereIdx = route.indexOf(here);
         thereIdx = route.indexOf(there);
         if (hereIdx < thereIdx) {
-            backStations.back1.push(route[hereIdx - 1])
-            backStations.back2.push(route[hereIdx - 2])
-            backStations.back3.push(route[hereIdx - 3])
-            backStations.back4.push(route[hereIdx - 4])
+            backStations.back1.push(route[hereIdx - 1]);
+            backStations.back2.push(route[hereIdx - 2]);
+            backStations.back3.push(route[hereIdx - 3]);
+            backStations.back4.push(route[hereIdx - 4]);
         } else if (hereIdx > thereIdx) {
-            backStations.back1.push(route[hereIdx + 1])
-            backStations.back2.push(route[hereIdx + 2])
-            backStations.back3.push(route[hereIdx + 3])
-            backStations.back4.push(route[hereIdx + 4])
+            backStations.back1.push(route[hereIdx + 1]);
+            backStations.back2.push(route[hereIdx + 2]);
+            backStations.back3.push(route[hereIdx + 3]);
+            backStations.back4.push(route[hereIdx + 4]);
         }
-    })
+    });
 
     console.log("routeCandidates", routeCandidates);
     console.log("backStations", backStations);
@@ -481,13 +464,6 @@ function checkDirection(here, there) {
 
                 console.log("$(timeResults)", $(timeResults))
                 $(destinationResults).text(dest);
-
-                // *** Toggle to bring back bart colors to destination
-                // $(destinationResults).css("backgroundColor", routeColor)
-                //
-                // if (["RED", "GREEN", "BLUE"].indexOf(routeColor) !== -1) {
-                //     $(destinationResults).css("color", "white");
-                // }
 
                 $(point4).append(div2container);
                 $(div2container).append(destinationResultsDiv);
