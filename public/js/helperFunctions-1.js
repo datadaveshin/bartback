@@ -1,3 +1,5 @@
+"use strict";
+
 // Helper Functions
 function $$each(collection, callback) {
     if (typeof collection === 'string') {

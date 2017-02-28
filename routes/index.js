@@ -32,6 +32,11 @@ router.get('/', (req, res) => {
     }
 });
 
+// Favicon issues
+router.get('/favicon.ico', function(req, res) {
+    res.sendStatus(204);
+});
+
 // Instructions
 router.get('/instructions', (req, res) => {
    res.render('instructions');
