@@ -17,7 +17,7 @@
             <input type="hidden" name="" id="loggedInToo" value="<%= typeof userName!= "undefined" ? userName : "noname" %>">
             <h5 class="loggedIn"></h5>
 
-            <h4>Report</h4>
+            <!-- <h4>Report</h4> -->
 
             <div class="row">
                 <section id="point0"></section>
@@ -40,9 +40,109 @@
             </div>
 
             <div class="form-container">
+                <div class="row">
+                    <div class="col s12">
+                        <h5>Did you get a seat?</h5>
+                    </div>
+                    <!-- <div class="col s6 m6 l6">
+                        <h6>Day of the week</h6>
+                    </div> -->
+                </div>
                 <form class="" action="http://localhost:3031/" method="get">
-                    <div class="input-field col s12">
-                        <select class="" name="home">
+
+                    <div class="row">
+                        <div class='col s12'>
+                          <p>
+                            <input required class="with-gap" name="got-seat" type="radio" id="seat-yes" />
+                            <label for="seat-yes">Got a seat!</label>
+                          </p>
+
+                          <p>
+                            <input  class="with-gap" name="got-seat" type="radio" id="seat-no" />
+                            <label for="seat-no">Had to stand...</label>
+                          </p>
+                        </div>
+                    </div>
+
+                    <!-- div class="row center">
+                        <div class='col s3 m3 l3'>
+                          <p>
+                            <input class="with-gap" name="day-of-week" type="radio" id="monday" />
+                            <label for="monday">Monday</label>
+                          </p>
+                          <p>
+                            <input class="with-gap" name="day-of-week" type="radio" id="tuesday" />
+                            <label for="tuesday">Tuesday</label>
+                          </p>
+                          <p>
+                            <input class="with-gap" name="day-of-week" type="radio" id="wednesday" />
+                            <label for="wednesday">Wednesday</label>
+                          </p>
+                          <p>
+                            <input class="with-gap" name="day-of-week" type="radio" id="thursday" />
+                            <label for="thursday">Thursday</label>
+                          </p>
+                        </div>
+
+                        <div class='col s3 m3 l3'>
+                          <p>
+                            <input class="with-gap" name="day-of-week" type="radio" id="friday" />
+                            <label for="friday">Friday</label>
+                          </p>
+                          <p>
+                            <input class="with-gap" name="day-of-week" type="radio" id="saturday" />
+                            <label for="saturday">Saturday</label>
+                          </p>
+                          <p>
+                            <input class="with-gap" name="day-of-week" type="radio" id="sunday" />
+                            <label for="sunday">Sunday</label>
+                          </p>
+                        </div>
+                    </div-->
+
+                    <div class="row">
+                      <!-- <div class="input-field col s12">
+                        <select class="" name="away">
+                            <option value="" disabled selected>Time</option>
+                            <option value="time1">5:00 am - 5:59 am</option>
+                            <option value="time1">6:00 am - 6:29 am</option>
+                            <option value="time2">6:30 am - 6:59 am</option>
+                            <option value="time1">7:00 am - 7:29 am</option>
+                            <option value="time2">7:30 am - 7:59 am</option>
+                            <option value="time1">8:00 am - 8:29 am</option>
+                            <option value="time2">8:30 am - 8:59 am</option>
+                            <option value="time1">9:00 am - 9:29 am</option>
+                            <option value="time2">9:30 am - 9:59 am</option>
+                            <option value="time2">10:00 am - 11:00 am</option>
+                            <option value="time2">11:00 am - 11:59 am</option>
+                            <option value="time2">Noon - 12:59 pm</option>
+                            <option value="time2">1:00 pm - 1:59 pm</option>
+                            <option value="time2">2:00 pm - 2:59 pm</option>
+                            <option value="time2">3:00 pm - 3:29 pm</option>
+                            <option value="time2">3:30 pm - 3:59 pm</option>
+                            <option value="time2">4:00 pm - 4:29 pm</option>
+                            <option value="time2">4:30 pm - 4:59 pm</option>
+                            <option value="time2">5:00 pm - 5:29 pm</option>
+                            <option value="time2">5:30 pm - 5:59 pm</option>
+                            <option value="time2">6:00 pm - 6:29 pm</option>
+                            <option value="time2">6:30 pm - 6:59 pm</option>
+                            <option value="time2">7:00 pm - 7:29 pm</option>
+                            <option value="time2">7:30 pm - 7:59 pm</option>
+                            <option value="time2">8:00 pm - 8:29 pm</option>
+                            <option value="time2">8:30 pm - 8:59 pm</option>
+                            <option value="time2">9:00 pm - 9:29 pm</option>
+                            <option value="time2">9:30 pm - 9:59 pm</option>
+                            <option value="time2">10:00 pm - 10:29 pm</option>
+                            <option value="time2">10:30 pm - 10:59 pm</option>
+                            <option value="time2">11:00 pm - 11:29 pm</option>
+                            <option value="time2">11:30 pm - 11:59 pm</option>
+                            <option value="time2">Midnight - 12:30 am</option>
+                        </select>
+                        <label>Away Station</label>
+                      </div> -->
+
+                      <div class="input-field col s12">
+                        <select required class="" name="home">
                             <option value="" disabled selected>Bart station</option>
                             <option value="12th">12th St. Oakland City Center</option>
                             <option value="16th">16th St. Mission (SF)</option>
@@ -92,10 +192,11 @@
                             <option value="woak">West Oakland</option>
                         </select>
                         <!-- <label>Home Station</label> -->
-                    </div>
-                    <div class="input-field col s12">
-                        <select class="" name="away">
-                            <option value="" disabled selected>Choose Train</option>
+                      </div>
+
+                      <div class="input-field col s12">
+                        <select required class="" name="away">
+                            <option value="" disabled selected>Train</option>
                             <option value="24th">24th St. (SF)</option>
                             <option value="conc">Concord</option>
                             <option value="daly">Daly City</option>
@@ -106,20 +207,15 @@
                             <option value="rich">Richmond</option>
                         </select>
                         <!-- <label>Away Station</label> -->
+                      </div>
                     </div>
-                    <div class="input-field col s12">
-                        <select class="" name="away">
-                            <option value="" disabled selected>Get a seat?</option>
-                            <option value="seat">Seat</option>
-                            <option value="noSeat">No seat</option>
-                        </select>
-                        <!-- <label>Away Station</label> -->
-                    </div>
+
                     <!-- <div class="input-field col s12">
                         <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                         <i class="material-icons right">send</i>
                         </button>
                     </div> -->
+
                     <div class='row center'>
                       <button class='submit btn waves-effect waves-light' type='submit' name='action'>Submit
                         <i class='material-icons right'>send</i>
