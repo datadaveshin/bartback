@@ -339,7 +339,8 @@ function checkDirection(here, there) {
                     'line': item.leg[0].line,
                     'trainHeadStation': item.leg[0].trainHeadStation,
                     'destination': item.leg[0].destination,
-                    'transfercode': item.leg[0].transfercode
+                    'transfercode': item.leg[0].transfercode,
+                    // 'afterTransferTrainHeadStation': item.leg[1].trainHeadStation
                 }
             } else if (typeof item.leg === 'object') {
                 return {

@@ -3,11 +3,12 @@
 // ======================================================
 // TOGGLE TO GO BACK AND FORTH BETWEEN TEST AND LIVE MODE
 // ======================================================
-const TESTMODE = false;
+const TESTMODE = true;
 
 // For testing
-const etdJSON = require('../data/examples/exampleJson').etdJson2;
-const plannerJSON = require('../data/examples/exampleJson').plannerJson2;
+const etdJSON = require('../data/examples/exampleJson').etdJson;
+const plannerJSON = require('../data/examples/exampleJson').plannerJson;
+console.log("\n\nThe plannerJSON is:\n", plannerJSON);
 
 // ======================================================
 // GET STATION INFO
@@ -56,39 +57,42 @@ const router = express.Router();
 // Get ETD for trains for selected start and end points
 // ====================================================
 router.get('/routeall/:departureStation/:arrivalStation/', (req, res) => {
-    let departureStation = req.params.departureStation;
-    let arrivalStation = req.params.arrivalStation;
-    let requestObj1 = {
-        url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
-        method: "GET",
-    };
-    let requestObj2 = {
-        // url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
-        url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${departureStation}&dest=${arrivalStation}&date=now&key=${getin}&b=2&a=2&l=1`,
-        method: "GET",
-    };
-    Promise.all([requestPromise(requestObj1), requestPromise(requestObj2)])
-    // return requestPromise(requestObj)
-    .then((promises) => {
-        // console.log("\n\n$%$%$%$ THE FIRST PROMISE XML $%$%$%$%$");
-        // console.log(promises[0]);
-        // console.log("\n\n$%$%$%$ THE SECOND PROMISE XML $%$%$%$%$");
-        // console.log(promises[1]);
+    if (TESTMODE) {
+        console.log('goinga');
+        res.json( [ etdJSON, plannerJSON ] );
+    } else {
+        let departureStation = req.params.departureStation;
+        let arrivalStation = req.params.arrivalStation;
+        let requestObj1 = {
+            url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
+            method: "GET",
+        };
+        let requestObj2 = {
+            // url: `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${departureStation}&key=${getin}`,
+            url: `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${departureStation}&dest=${arrivalStation}&date=now&key=${getin}&b=2&a=2&l=1`,
+            method: "GET",
+        };
+        Promise.all([requestPromise(requestObj1), requestPromise(requestObj2)])
+        // return requestPromise(requestObj)
+        .then((promises) => {
+            // console.log("\n\n$%$%$%$ THE FIRST PROMISE XML $%$%$%$%$");
+            // console.log(promises[0]);
+            // console.log("\n\n$%$%$%$ THE SECOND PROMISE XML $%$%$%$%$");
+            // console.log(promises[1]);
 
-        var returnJson1 = parser.toJson(promises[0]);
-        var returnJson2 = parser.toJson(promises[1]);
+            var returnJson1 = parser.toJson(promises[0]);
+            var returnJson2 = parser.toJson(promises[1]);
 
-        console.log("\n\n$%$%$%$ THE FIRST PROMISE JSON $%$%$%$%$");
-        console.log(returnJson1);
-        // console.log("\n\n$%$%$%$ THE SECOND PROMISE JSON $%$%$%$%$");
-        // console.log(returnJson2);
+            console.log("\n\n$%$%$%$ THE FIRST PROMISE JSON $%$%$%$%$");
+            console.log(returnJson1);
+            // console.log("\n\n$%$%$%$ THE SECOND PROMISE JSON $%$%$%$%$");
+            // console.log(returnJson2);
 
-        if (TESTMODE) {
-            res.json( [ etdJSON,  plannerJSON ] );
-        } else {
+
             res.json( [ JSON.parse(returnJson1), JSON.parse(returnJson2) ] );
-        }
-    });
+
+        });
+    }
 });
 
 // ====================================================
