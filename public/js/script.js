@@ -35,6 +35,8 @@ genSelector("Arrival", "#point3");
 
 //* Generates the <select> menu
 function genSelector(selectorName, attachmentPoint) {
+    $('select').material_select();
+
     // Build the elements
     let point1 = $(attachmentPoint);
     let selectorDiv = $('<div>');

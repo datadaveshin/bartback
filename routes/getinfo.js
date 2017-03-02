@@ -22,9 +22,8 @@ const request = require('request');
 const requestPromise = require('request-promise');
 const parser = require('xml2json');
 
-// API key
-// const getin = 'MW9S-E7SL-26DU-VV8V';
-const getin = 'QQ4L-5VSE-9T3T-DWE9';
+// Getin
+const getin = 'MW9S-E7SL-26DU-VV8V';
 
 // Start instance
 const router = express.Router();
