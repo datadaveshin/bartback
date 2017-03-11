@@ -3,7 +3,7 @@
 // ======================================================
 // TOGGLE TO GO BACK AND FORTH BETWEEN TEST AND LIVE MODE
 // ======================================================
-const TESTMODE = true;
+const TESTMODE = false;
 
 // For testing
 const etdJSON = require('../data/examples/exampleJson').etdJson;

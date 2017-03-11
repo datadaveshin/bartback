@@ -340,7 +340,7 @@ function checkDirection(here, there) {
                     'trainHeadStation': item.leg[0].trainHeadStation,
                     'destination': item.leg[0].destination,
                     'transfercode': item.leg[0].transfercode,
-                    // 'afterTransferTrainHeadStation': item.leg[1].trainHeadStation
+                    'afterTransferTrainHeadStation': item.leg[1].trainHeadStation
                 }
             } else if (typeof item.leg === 'object') {
                 return {
@@ -379,12 +379,17 @@ function checkDirection(here, there) {
         let trip3trainHeads = tripArr3.map(function(item) {
             return item.trainHeadStation
         });
+        let trip3transferInfo = tripArr3.filter(function(item) {
+            item.transfercode === "T"
+        });
         let trip3directTrainHeads = tripArr3direct.map(function(item) {
             return item.trainHeadStation
         });
-        console.log("\n\trip3trainHeads: ~~~~~~~~~~~*")
+        console.log("\ntrip3trainHeads: ~~~~~~~~~~~*")
         console.log(trip3trainHeads)
-        console.log("\n\trip3directTrainHeads: ~~~~~~~~~~~*")
+        console.log("\ntrip3transferInfo: ~~~~~~~~~~~*")
+        console.log(trip3transferInfo)
+        console.log("\ntrip3directTrainHeads: ~~~~~~~~~~~*")
         console.log(trip3directTrainHeads)
 
         let departureObjArrAllTrains = [];
@@ -612,9 +617,9 @@ function checkDirection(here, there) {
             let trip3directTrainHeads = tripArr3direct.map(function(item) {
                 return item.trainHeadStation
             });
-            console.log("\n\trip3trainHeads: ~~~~~~~~~~~*")
+            console.log("\ntrip3trainHeads: ~~~~~~~~~~~*")
             console.log(trip3trainHeads)
-            console.log("\n\trip3directTrainHeads: ~~~~~~~~~~~*")
+            console.log("\ntrip3directTrainHeads: ~~~~~~~~~~~*")
             console.log(trip3directTrainHeads)
 
             let departureObjArrAllTrains = [];
