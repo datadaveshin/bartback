@@ -1,3 +1,4 @@
+
 "use strict";
 //* Needed by Materialize to implement <select> tags
 $(document).ready(function() {
