@@ -804,53 +804,53 @@ function checkDirection(here, there) {
                     // $(div2colA).css("backgroundColor", routeColor);
 
                     // For Random colors
-                    // if (userName === "") {
-                    //     $(div2colA).css("backgroundColor", routeColor);
-                    // } else {
-                    //     let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-                    //     if (val === 1) {
-                    //         $(div2colA).css("backgroundColor", 'red');
-                    //     } else if (val === 2) {
-                    //         $(div2colA).css("backgroundColor", 'yellow');
-                    //     } else {
-                    //         $(div2colA).css("backgroundColor", 'green');
-                    //     }
-                    // }
-
-                    // For Demo
                     if (userName === "") {
                         $(div2colA).css("backgroundColor", routeColor);
                     } else {
-                        let val = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
-
-                        if (colorCounter === 1) {
-                           $(div2colA).css("backgroundColor", 'red');
-                        //    colorCounter++
-                        }
-
-                        else if (colorCounter === 2) {
-                            if (val === 1) {
-                                $(div2colA).css("backgroundColor", 'red');
-                            } else if (val === 2) {
-                                $(div2colA).css("backgroundColor", 'yellow');
-                            }
-                            // colorCounter++
-                        }
-
-                        else if (colorCounter === 3) {
-                            if (val === 1) {
-                                $(div2colA).css("backgroundColor", 'yellow');
-                            } else if (val === 2) {
-                                $(div2colA).css("backgroundColor", 'green');
-                            }
-                            // colorCounter++
-                        }
-
-                        else if (colorCounter > 3) {
+                        let val = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                        if (val === 1) {
+                            $(div2colA).css("backgroundColor", 'red');
+                        } else if (val === 2) {
+                            $(div2colA).css("backgroundColor", 'yellow');
+                        } else {
                             $(div2colA).css("backgroundColor", 'green');
-                            // colorCounter++
                         }
                     }
+
+                    // For Demo
+                    // if (userName === "") {
+                    //     $(div2colA).css("backgroundColor", routeColor);
+                    // } else {
+                    //     let val = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+                    //
+                    //     if (colorCounter === 1) {
+                    //        $(div2colA).css("backgroundColor", 'red');
+                    //     //    colorCounter++
+                    //     }
+                    //
+                    //     else if (colorCounter === 2) {
+                    //         if (val === 1) {
+                    //             $(div2colA).css("backgroundColor", 'red');
+                    //         } else if (val === 2) {
+                    //             $(div2colA).css("backgroundColor", 'yellow');
+                    //         }
+                    //         // colorCounter++
+                    //     }
+                    //
+                    //     else if (colorCounter === 3) {
+                    //         if (val === 1) {
+                    //             $(div2colA).css("backgroundColor", 'yellow');
+                    //         } else if (val === 2) {
+                    //             $(div2colA).css("backgroundColor", 'green');
+                    //         }
+                    //         // colorCounter++
+                    //     }
+                    // 
+                    //     else if (colorCounter > 3) {
+                    //         $(div2colA).css("backgroundColor", 'green');
+                    //         // colorCounter++
+                    //     }
+                    // }
 
                     if (!printHead) {
                         $(div2colA).css("backgroundColor", '#ddd');
