@@ -6,9 +6,11 @@ process.env.NODE_ENV = 'test';
 // Set up testing
 const assert = require('chai').assert;
 const expect = require('chai').expect;
+
+// Test to see if file is being accessed
 let testVal = require('../models/stationGraph').testVal;
 
-// Get graph
+// Test the Graph
 let stationGraph = require('../models/stationGraph').stationGraph;
 console.log("\n\nTHE STATION GRAPH IS\n", stationGraph);
 
@@ -47,7 +49,7 @@ describe('Generic Bart Map Graph', () => {
     });
 
     it("should report that 'RICH' has an edgelist that equals ['DELN']", () => {
-        expect(stationGraph.RICH).to.equal(['DELN']);
+        expect(stationGraph.RICH).to.eql(['DELN']);
     });
 
     it("should report that 'MLBR' has an edglist length of 2", () => {
