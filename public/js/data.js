@@ -119,6 +119,30 @@ let allRoutesLower = [
     route20lower,
 ];
 
+let allRoutesUpper = [
+    route1upper,
+    route2upper,
+    route3upper,
+    route4upper,
+    route5upper,
+    route6upper,
+    route7upper,
+    route8upper,
+    route11upper,
+    route12upper,
+    route19upper,
+    route20upper,
+];
+
+let allRoutesUpperStoN = [
+    route2upper,
+    route4upper,
+    route6upper,
+    route8upper,
+    route12upper,
+    route20upper,
+];
+
 let sfRoutes = [
     route2lower,
     route6lower,
@@ -134,5 +158,6 @@ var clusterSFIA = ["MLBR", "SFIA", "SBRN", "SSAN", "COLM"]
 var clusterSanFran = ["DALY", "BALB", "GLEN", "24TH", "16TH", "CIVC", "POWL", "MONT", "EMBR"]
 
 module.exports = {
-    sfRoutes: sfRoutes
+    allRoutesUpperStoN: allRoutesUpperStoN,
+    sfRoutes: sfRoutes,
 }
