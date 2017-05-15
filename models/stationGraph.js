@@ -3,6 +3,8 @@
 let testVal = 7;
 let routes = require('../public/js/data').allRoutesUpperStoN
 let stationGraph = {};
+let getPath;
+
 console.log("\n\nTHE UPPER ROUTES", routes)
 
 routes.forEach(route => {
@@ -22,18 +24,63 @@ routes.forEach(route => {
                 stationGraph[station].push(stationAfter);
             }
         }
-
-        // if (stationBefore && stationGraph[station].includes(stationBefore)) {
-        //     stationGraph[station].push(stationBefore);
-        // }
-        //
-        // if (stationBefore && stationGraph[station].includes(stationBefore)) {
-        //     stationGraph[station].push(stationBefore);
-        // }
     })
 })
 
+class Queue {
+    constructor() {
+        this.queue = [];
+        this.size = 0;
+    }
+
+    enqueue(val) {
+        this.queue.push(val);
+        this.size++;
+        return this;
+    }
+
+    dequeue() {
+        this.size--;
+        return this.queue.shift();
+    }
+}
+
+getPath = (graph, start, destination) => {
+    let currStation = start;
+    let edges;
+    let frontier = new Queue;
+    let visited = [];
+    let path = [];
+
+    frontier.enqueue(currStation)
+    while (frontier.size > 0) {
+        currStation = frontier.dequeue();
+        edges = graph[currStation];
+
+        if (visited.includes(currStation)) {
+            continue;
+        }
+
+        path.push(currStation);
+
+        if (currStation === destination) {
+            console.log("######THE path\n", path);
+            return path;
+        }
+
+        edges.forEach(item => {
+            frontier.enqueue(item);
+        });
+
+        visited.push(currStation);
+    }
+
+    return "Destination not found";
+}
+
 module.exports = {
+    testVal: testVal,
     stationGraph: stationGraph,
-    testVal: testVal
+    Queue: Queue,
+    getPath: getPath
 };

@@ -7,11 +7,11 @@ process.env.NODE_ENV = 'test';
 const assert = require('chai').assert;
 const expect = require('chai').expect;
 
-// Test to see if file is being accessed
+// Set variables for things to be tested
 let testVal = require('../models/stationGraph').testVal;
-
-// Test the Graph
 let stationGraph = require('../models/stationGraph').stationGraph;
+let Queue = require('../models/stationGraph').Queue
+let getPath = require('../models/stationGraph').getPath;
 console.log("\n\nTHE STATION GRAPH IS\n", stationGraph);
 
 
@@ -19,7 +19,7 @@ console.log("\n\nTHE STATION GRAPH IS\n", stationGraph);
 // Tests
 // -----------------------------------------------
 
-// Dummy test
+// Dummy test to check if files are being read, etc.
 describe('Test this file', () => {
     it("should return true for true===true", () => {
         expect(true === true).to.be.true;
@@ -64,4 +64,45 @@ describe('Generic Bart Map Graph', () => {
         expect(stationGraph.MLBR.includes('SBRN')).to.be.true;
     });
 
+});
+
+// Test Queue for searching and returning a path
+describe('Queue for using for searching', () => {
+    var testQueue
+    beforeEach('make and load a test queue', ()=>{
+        testQueue = new Queue;
+        testQueue.enqueue(-2);
+        testQueue.enqueue('minusOne')
+        testQueue.enqueue('zero')
+        testQueue.enqueue(1)
+        testQueue.enqueue('two');
+        testQueue.enqueue(3);
+        testQueue.dequeue();
+        testQueue.dequeue();
+        console.log("\n\nTEST QUEUE\n",testQueue );
+    })
+
+    it("should be an array with 'zero', 1, 'two', 3", () => {
+        expect(testQueue.queue).to.eql(['zero', 1, 'two', 3]);
+    })
+
+    it("should have size of 4", () => {
+        expect(testQueue.size).to.equal(4);
+    })
+
+    it("should return 'zero' if dequeuing", () => {
+        expect(testQueue.dequeue()).to.equal('zero')
+    })
+})
+
+// Get a path from start station to destination station
+describe('BFS path to from start to destination station', () => {
+
+    it("should return 'MONT' as the start station", () => {
+        expect(getPath(stationGraph, 'MONT', 'PLZA')[0]).to.equal('MONT');
+    });
+
+    it("should return 'PLZA' as the destination station", () => {
+        expect(getPath(stationGraph, 'MONT', 'PLZA')[getPath(stationGraph, 'MONT', 'PLZA').length - 1]).to.equal('PLZA');
+    });
 });
