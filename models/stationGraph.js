@@ -7,6 +7,12 @@ let getPath;
 
 console.log("\n\nTHE UPPER ROUTES", routes)
 
+// const StationGraph = () => {
+//     this.graph = {};
+// }
+
+// let myGraph = new StationGraph;
+
 routes.forEach(route => {
     route.forEach((station, index) => {
         let stationBefore = route[index - 1]
@@ -81,6 +87,7 @@ getPath = (graph, start, destination) => {
 module.exports = {
     testVal: testVal,
     stationGraph: stationGraph,
+    // StationGraph: StationGraph,
     Queue: Queue,
     getPath: getPath
 };

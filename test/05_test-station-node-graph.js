@@ -95,6 +95,30 @@ describe('Queue for using for searching', () => {
     })
 })
 
+// Test return statements for enqueue and dequeue
+describe('Check chaining enqueue, and returning items from dequeue', () => {
+    var testQueue2;
+    var retVal;
+
+    beforeEach('Make and load another test queue', () => {
+        testQueue2 = new Queue;
+        testQueue2.enqueue(1).enqueue(2).enqueue(3).enqueue(4);
+        retVal = testQueue2.dequeue()
+    })
+
+    it("should have a size of 4", () => {
+        expect(testQueue2.size).to.equal(3);
+    })
+
+    it("should have a value of 1", () => {
+        expect(retVal).to.equal(1);
+    })
+
+    it("should be an array with value of [2, 3, 4]", () => {
+        expect(testQueue2.queue).to.eql([2, 3, 4]);
+    })
+})
+
 // Get a path from start station to destination station
 describe('BFS path to from start to destination station', () => {
 
