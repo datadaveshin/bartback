@@ -11,7 +11,8 @@ const expect = require('chai').expect;
 let testVal = require('../models/stationGraph').testVal;
 let stationGraph = require('../models/stationGraph').stationGraph;
 let Queue = require('../models/stationGraph').Queue
-let getPath = require('../models/stationGraph').getPath;
+let searchPath = require('../models/stationGraph').searchPath;
+let routes = require('../public/js/data').allRoutesUpperStoN
 console.log("\n\nTHE STATION GRAPH IS\n", stationGraph);
 
 
@@ -28,10 +29,15 @@ describe('Test this file', () => {
     it("should equal 7", () => {
         expect(testVal).to.equal(7);
     });
+
+    it("should have a length of 6", () => {
+        expect(routes.length).to.be.equal(6);
+    })
 })
 
 // Create a graph
 describe('Generic Bart Map Graph', () => {
+
     it("should have length of 46", () => {
         expect(Object.keys(stationGraph).length).to.equal(46)
     });
@@ -123,10 +129,10 @@ describe('Check chaining enqueue, and returning items from dequeue', () => {
 describe('BFS path to from start to destination station', () => {
 
     it("should return 'MONT' as the start station", () => {
-        expect(getPath(stationGraph, 'MONT', 'PLZA')[0]).to.equal('MONT');
+        expect(searchPath(stationGraph, 'MONT', 'PLZA')[0]).to.equal('MONT');
     });
 
     it("should return 'PLZA' as the destination station", () => {
-        expect(getPath(stationGraph, 'MONT', 'PLZA')[getPath(stationGraph, 'MONT', 'PLZA').length - 1]).to.equal('PLZA');
+        expect(searchPath(stationGraph, 'MONT', 'PLZA')[searchPath(stationGraph, 'MONT', 'PLZA').length - 1]).to.equal('PLZA');
     });
 });

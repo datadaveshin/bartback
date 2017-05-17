@@ -3,7 +3,7 @@
 let testVal = 7;
 let routes = require('../public/js/data').allRoutesUpperStoN
 let stationGraph = {};
-let getPath;
+let searchPath;
 
 console.log("\n\nTHE UPPER ROUTES", routes)
 
@@ -51,7 +51,7 @@ class Queue {
     }
 }
 
-getPath = (graph, start, destination) => {
+searchPath = (graph, start, destination) => {
     let currStation = start;
     let edges;
     let frontier = new Queue;
@@ -87,7 +87,7 @@ getPath = (graph, start, destination) => {
 module.exports = {
     testVal: testVal,
     stationGraph: stationGraph,
-    // StationGraph: StationGraph,
+    StationGraph: StationGraph,
     Queue: Queue,
-    getPath: getPath
+    searchPath: searchPath
 };
