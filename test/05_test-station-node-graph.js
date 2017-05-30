@@ -10,6 +10,7 @@ const expect = require('chai').expect;
 // Set variables for things to be tested
 let testVal = require('../models/stationGraph').testVal;
 let stationGraph = require('../models/stationGraph').stationGraph;
+let Graph = require('../models/stationGraph').Graph
 let Queue = require('../models/stationGraph').Queue
 let searchPath = require('../models/stationGraph').searchPath;
 let routes = require('../public/js/data').allRoutesUpperStoN
@@ -67,6 +68,56 @@ describe('Generic Bart Map Graph', () => {
     });
 
     it("should report that 'MLBR' has an edgelist that includes 'SBRN'", () => {
+        expect(stationGraph.MLBR.includes('SBRN')).to.be.true;
+    });
+
+});
+
+// Create a graph from Graph class
+describe('Generic Bart Map Graph', () => {
+
+    var testGraph;
+
+    beforeEach("Generate a new graph", () => {
+        testGraph = new Graph;
+        routes.forEach(route => {
+            testGraph(add)
+        })
+    })
+
+    it('should be equal to an empty object', () => {
+        expect(testGraph.graph).to.be.eql({});
+    })
+
+    xit("should have length of 46", () => {
+        expect(Object.keys(stationGraph).length).to.equal(46)
+    });
+
+    xit("should report that the number of edges for 'MONT' is 2", () => {
+        expect(stationGraph.MONT.length).to.equal(2)
+    });
+
+    xit("should report that 'MONT' has an edge 'EMBR'", () => {
+        expect(stationGraph.MONT.includes('EMBR')).to.be.true;
+    });
+
+    xit("should report that 'MONT' has an edge 'POWL'", () => {
+        expect(stationGraph.MONT.includes('POWL')).to.be.true;
+    });
+
+    xit("should report that 'RICH' has an edgelist that equals ['DELN']", () => {
+        expect(stationGraph.RICH).to.eql(['DELN']);
+    });
+
+    xit("should report that 'MLBR' has an edglist length of 2", () => {
+        expect(stationGraph.MLBR.length).to.equal(2);
+    });
+
+    xit("should report that 'MLBR' has an edgelist that includes 'SFIA'", () => {
+        expect(stationGraph.MLBR.includes('SFIA')).to.be.true;
+    });
+
+    xit("should report that 'MLBR' has an edgelist that includes 'SBRN'", () => {
         expect(stationGraph.MLBR.includes('SBRN')).to.be.true;
     });
 

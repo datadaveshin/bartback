@@ -7,11 +7,41 @@ let searchPath;
 
 console.log("\n\nTHE UPPER ROUTES", routes)
 
-// const StationGraph = () => {
-//     this.graph = {};
-// }
+function Graph() {
+    this.graph = {};
+    this.size = 0;
+}
 
-// let myGraph = new StationGraph;
+Graph.prototype.addNode = function (node) {
+    if (!this.graph[node]) {
+       this.size++;
+       this.graph[node] = [];
+    }
+};
+
+Graph.prototype.addEdge = function (node, edge) {
+    if (this.graph[node].indexOf(edge) < 0) {
+        this.graph[node].push(edge);
+    }
+};
+
+Graph.prototype.addNodes = function (routeArray) {
+    routeArray.forEach((station, idx, route) => {
+        if (!this.graph[station]) {
+            this.size++;
+            this.graph[station] = [];
+            if (route[idx] - 1) {
+                this.graph[station].addEdge(route[idx] - 1)
+            }
+            if (route[idx] + 1) {
+                this.graph[station].addEdge(route[idx] + 1)
+            }
+        }
+    })
+};
+
+
+// let myGraph = new Graph;
 
 routes.forEach(route => {
     route.forEach((station, index) => {
@@ -87,7 +117,7 @@ searchPath = (graph, start, destination) => {
 module.exports = {
     testVal: testVal,
     stationGraph: stationGraph,
-    StationGraph: StationGraph,
+    Graph: Graph,
     Queue: Queue,
     searchPath: searchPath
 };
